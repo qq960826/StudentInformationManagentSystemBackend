@@ -11,4 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Semester extends Model
 {
     protected $table = 'Semester';
+    public function coursescore(){
+        return $this->hasMany("App\Models\Semester","semesterid","id");
+    }
 }

@@ -24,7 +24,16 @@ class UserService
         if($user->locked==true)
             return 102;
         return 100;
-
+    }
+    public function delete($id){
+        if(!isset($id))
+            return 201;
+        if($this->userRepository->delete_user($id))
+            return 202;
+        return 200;
+    }
+    public function changeselfpassword($id,$oldpassword,$newpassword){
+//        if ()
     }
 
 }

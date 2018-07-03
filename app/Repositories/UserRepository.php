@@ -97,6 +97,10 @@ class UserRepository extends BaseRepository
         return $account->save();
     }
 
+    public function get_by_condition(){
+
+    }
+
 
 
 

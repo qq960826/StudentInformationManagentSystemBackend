@@ -10,4 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserInfo extends Model
 {
     protected $table = 'UserInfo';
+    public function useraccount(){
+        return $this->belongsTo("App\Models\UserAccount","id","uid");
+    }
 }

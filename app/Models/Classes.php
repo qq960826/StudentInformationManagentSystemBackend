@@ -11,4 +11,11 @@ use Illuminate\Database\Eloquent\Model;
 class Classes extends Model
 {
     protected $table = 'Classes';
+    public function instructor(){
+        return $this->belongsTo('App\Model\Instructor','classid','id');
+    }
+    public function studentinfo(){
+        return $this->hasMany('App\Model\StudentInfo','classid','id');
+    }
+
 }

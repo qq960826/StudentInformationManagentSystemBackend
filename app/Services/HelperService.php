@@ -35,6 +35,11 @@ class HelperService
         $messagemap[102] = "帐号已锁定";
         $messagemap[103] = "登录信息不完整";
 
+        $messagemap[200] = "用户删除成功";
+        $messagemap[201] = "用户删除参数不完整";
+        $messagemap[202] = "指定用户不存在";
+
+
         return $messagemap[$code];
     }
 
