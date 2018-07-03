@@ -15,21 +15,19 @@ class Init extends Migration
     {
         Schema::create('UserAccount', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('username',16)->nullable(false);
+            $table->string('username',16)->nullable(false)->unique()->index();
             $table->string('password',16)->nullable(false);
-            $table->enum('type', ['Student', 'Instructor','Manager']);
+            $table->unsignedTinyInteger('type');
             $table->timestamps();
-            $table->index('username');
         });
 
         Schema::create('UserInfo', function(Blueprint $table) {
-            $table->integer("uid")->unsigned();
-            $table->foreign('uid')->references('id')->on('UserAccount');
-            $table->index('uid');
+            $table->integer("uid")->unsigned()->unique()->index();
+            $table->foreign('uid')->references('id')->on('UserAccount')->onDelete('cascade');;
 
-            $table->string('name',16)->nullable(false);
+            $table->string('name',16)->nullable(false)->index();
             $table->boolean('sex')->nullable(false);
-            $table->string('identity',18)->nullable(true);
+            $table->string('identity',18)->nullable(false)->unique()->index();
             $table->date("birthday")->nullable(false);
             $table->string("nativeplace",20)->nullable(false);
             $table->string("hobby",100)->nullable(true);
@@ -37,8 +35,6 @@ class Init extends Migration
 
             $table->timestamps();
 
-            $table->index('identity');
-            $table->index('name');
         });
 
         Schema::create('Classes', function(Blueprint $table) {
@@ -50,14 +46,11 @@ class Init extends Migration
         Schema::create('Instructor', function(Blueprint $table) {
             $table->increments('id');
 
-            $table->integer("uid")->unsigned();
-            $table->foreign('uid')->references('id')->on('UserAccount');
-            $table->index('uid');
+            $table->integer("uid")->unsigned()->index();
+            $table->foreign('uid')->references('id')->on('UserAccount')->onDelete('cascade');;
 
-            $table->integer("classid")->unsigned();
-            $table->foreign('classid')->references('id')->on('Class');
-            $table->index('classid');
-
+            $table->integer("classid")->unsigned()->index();
+            $table->foreign('classid')->references('id')->on('Classes')->onDelete('cascade');;
 
             $table->unique(['uid','classid']);
             $table->timestamps();
@@ -66,10 +59,10 @@ class Init extends Migration
 
         Schema::create('StudentInfo', function(Blueprint $table) {
             $table->integer("uid")->unsigned()->index();
-            $table->foreign('uid')->references('id')->on('UserAccount');
+            $table->foreign('uid')->references('id')->on('UserAccount')->onDelete('cascade');
 
             $table->integer("classid")->unsigned()->index();
-            $table->foreign('classid')->references('id')->on('Class');
+            $table->foreign('classid')->references('id')->on('Classes')->onDelete('cascade');;
 
             $table->string('studentid',20)->nullable(false)->unique()->index();
 
@@ -94,13 +87,13 @@ class Init extends Migration
             $table->increments('id');
 
             $table->integer("uid")->unsigned()->index();
-            $table->foreign('uid')->references('id')->on('UserAccount');
+            $table->foreign('uid')->references('id')->on('UserAccount')->onDelete('cascade');;
 
             $table->integer("courseid")->unsigned()->index();
-            $table->foreign('courseid')->references('id')->on('Course');
+            $table->foreign('courseid')->references('id')->on('Course')->onDelete('cascade');;
 
             $table->integer("semesterid")->unsigned()->index();
-            $table->foreign('semesterid')->references('id')->on('Semester');
+            $table->foreign('semesterid')->references('id')->on('Semester')->onDelete('cascade');;
 
             $table->float('score');
 
@@ -122,7 +115,7 @@ class Init extends Migration
         Schema::dropIfExists("StudentInfo");
 
         Schema::dropIfExists("Instructor");
-        Schema::dropIfExists("Class");
+        Schema::dropIfExists("Classes");
 
         Schema::dropIfExists("UserInfo");
 
