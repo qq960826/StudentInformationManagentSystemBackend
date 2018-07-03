@@ -31,8 +31,10 @@ class HelperService
         $messagemap[1] = "验证码错误";
 
         $messagemap[100] = "登陆成功";
-        $messagemap[101] = "密码错误";
-        $messagemap[102] = "账号密码不存在";
+        $messagemap[101] = "帐号或密码错误";
+        $messagemap[102] = "帐号已锁定";
+        $messagemap[103] = "登录信息不完整";
+
         return $messagemap[$code];
     }
 

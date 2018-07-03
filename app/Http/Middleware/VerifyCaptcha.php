@@ -26,7 +26,7 @@ class VerifyCaptcha{
         if(in_array($page_permission_id,$this->PageNeedCaptcha)){
             $captcha_system=$request->session()->pull('captcha');
             $captcha_user=$request->get('captcha');
-            if($captcha_system!=$captcha_user){
+            if($captcha_system!=$captcha_user||$captcha_user==""||!isset($captcha_user)){
                 return $this->helper->MakeMessageResponse(1);
             }
         }

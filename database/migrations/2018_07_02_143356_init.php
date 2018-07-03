@@ -18,6 +18,8 @@ class Init extends Migration
             $table->string('username',16)->nullable(false)->unique()->index();
             $table->string('password',16)->nullable(false);
             $table->unsignedTinyInteger('type');
+            $table->boolean('locked')->default(false);
+
             $table->timestamps();
         });
 

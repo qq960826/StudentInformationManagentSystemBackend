@@ -14,17 +14,20 @@ class UserRepository extends BaseRepository
     protected $userinfo;
     protected $useraccount;
     protected $salt="q23esdatgf43g6yrtdcvweqrfhgetryg2435132sdhgesdgt34";
+    private function hash($password){
+        return md5($password.$this->salt);
+    }
+
     public function __construct(UserInfo $userinfo,UserAccount $useraccount)
     {
         $this->userinfo = $userinfo;
         $this->useraccount = $useraccount;
     }
 
-
     public function get_login_user($login_name, $login_pass, $type = 0)
     {
         return $this->useraccount->where("username", $login_name)
-            ->where('password', md5($login_pass.$this->salt))
+            ->where('password', $this->hash($login_pass))
             ->where('type',$type)
             ->first();
     }
@@ -45,6 +48,7 @@ class UserRepository extends BaseRepository
 
     public function add_useraccount($info)
     {
+        $this->useraccount=new UserAccount();
         $this->useraccount->username=$info["username"];
         $this->useraccount->password=md5($info["password"]);
         $this->useraccount->type=$info["type"];
@@ -53,6 +57,7 @@ class UserRepository extends BaseRepository
 
     public function add_userinfo($info)
     {
+        $this->userinfo=new UserInfo();
         $this->userinfo->uid=$info["uid"];
         $this->userinfo->name=$info["name"];
         $this->userinfo->sex=$info["sex"];
@@ -73,6 +78,25 @@ class UserRepository extends BaseRepository
     public function delete_user($id){
         return $this->useraccount->find($id)->delete();
     }
+
+    public function change_password($id,$password){
+        $account=$this->useraccount->find($id);
+        $account->password=$this->hash($password);
+        return $account->save();
+    }
+    public function reset_password($id){
+        $userinfo=$this->userinfo->where('uid',$id)->first();
+        $account=$this->useraccount->find($id);
+        $account->password=$this->hash($userinfo->identity);
+        return $account->save();
+    }
+
+    public function change_hobby($id,$hobby){
+        $account=$this->useraccount->find($id);
+        $account->hobby=$hobby;
+        return $account->save();
+    }
+
 
 
 
