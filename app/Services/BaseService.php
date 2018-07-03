@@ -9,8 +9,9 @@
 namespace App\Services;
 
 
-class BaseService
+abstract class BaseService
 {
+    protected $model;
     protected function message($condition, $message, $data=null) {
         $result = array();
         $result['condition'] = intval($condition);
@@ -21,4 +22,12 @@ class BaseService
         }
         return $result;
     }
+    public function get_by_id($id) {
+        return $this->model->find($id);
+    }
+    public function delete($id) {
+        return $this->model->get_by_id($id)->delete();
+    }
+
+
 }

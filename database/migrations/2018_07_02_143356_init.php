@@ -41,7 +41,7 @@ class Init extends Migration
             $table->index('name');
         });
 
-        Schema::create('Class', function(Blueprint $table) {
+        Schema::create('Classes', function(Blueprint $table) {
             $table->increments('id');
             $table->string('name',100)->unique()->index();
             $table->timestamps();
