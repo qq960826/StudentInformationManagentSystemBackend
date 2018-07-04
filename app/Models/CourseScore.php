@@ -7,17 +7,25 @@
  */
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Model;
+
 class CourseScore extends BaseModel
 {
     protected $table = 'CourseScore';
-    public function useraccount(){
-        return $this->belongsTo("App\Models\UserAccount","id","uid");
+
+    public function useraccount()
+    {
+        return $this->belongsTo("App\Models\UserAccount", "id", "uid");
     }
-    public function course(){
-        return $this->belongsTo("App\Models\Course","id","courseid");
+
+    public function course()
+    {
+        return $this->belongsTo("App\Models\Course", "id", "courseid");
     }
-    public function semester(){
-        return $this->belongsTo("App\Models\Semester","id","semesterid");
+
+    public function semester()
+    {
+        return $this->belongsTo("App\Models\Semester", "id", "semesterid");
     }
 }

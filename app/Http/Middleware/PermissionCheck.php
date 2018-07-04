@@ -10,11 +10,14 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Services\HelperService;
+
 class PermissionCheck
 {
     protected $helper;
-    public function __construct(HelperService $helperService){
-        $this->helper=$helperService;
+
+    public function __construct(HelperService $helperService)
+    {
+        $this->helper = $helperService;
     }
 
     public function handle($request, Closure $next)
@@ -28,7 +31,7 @@ class PermissionCheck
             $user_role_id = $request->session()->get('role_id');
         }
 
-        if(!$this->check_permission($user_role_id,$page_permission_id)){
+        if (!$this->check_permission($user_role_id, $page_permission_id)) {
             return $this->helper->MakeMessageResponse(0);
         }
 
@@ -36,23 +39,23 @@ class PermissionCheck
     }
 
 
-
-    private function check_permission($user_role_id,$page_permission_id){
-        if($user_role_id==0)
-            return in_array($page_permission_id,$this->guest);
-        elseif ($user_role_id==1)
-            return in_array($page_permission_id,$this->student);
-        elseif ($user_role_id==2)
-            return in_array($page_permission_id,$this->instructor);
-        elseif ($user_role_id==3)
-            return in_array($page_permission_id,$this->manager);
+    private function check_permission($user_role_id, $page_permission_id)
+    {
+        if ($user_role_id == 0)
+            return in_array($page_permission_id, $this->guest);
+        elseif ($user_role_id == 1)
+            return in_array($page_permission_id, $this->student);
+        elseif ($user_role_id == 2)
+            return in_array($page_permission_id, $this->instructor);
+        elseif ($user_role_id == 3)
+            return in_array($page_permission_id, $this->manager);
         else
             return false;
     }
 
     //permission table
-    private $guest = [1, 2,3];
-    private $student = [1, 2, 3,4];
-    private $instructor = [1, 2, 3,4];
-    private $manager = [1, 2, 3,4];
+    private $guest = [1, 2, 3];
+    private $student = [1, 2, 3, 4];
+    private $instructor = [1, 2, 3, 4];
+    private $manager = [1, 2, 3, 4];
 }

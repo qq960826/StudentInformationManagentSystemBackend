@@ -5,17 +5,20 @@
  * Date: 2018/7/3
  * Time: 10:09 AM
  */
+
 namespace App\Repositories;
+
 use App\Models\UserInfo;
 use App\Models\UserAccount;
 use App\Services\HelperService;
+
 class UserRepository extends BaseRepository
 {
     public $userinfo;
     public $useraccount;
     public $helperService;
 
-    public function __construct(UserInfo $userinfo,UserAccount $useraccount,HelperService $helperService)
+    public function __construct(UserInfo $userinfo, UserAccount $useraccount, HelperService $helperService)
     {
         $this->userinfo = $userinfo;
         $this->useraccount = $useraccount;
@@ -27,70 +30,67 @@ class UserRepository extends BaseRepository
     {
         return $this->useraccount->where("username", $login_name)
             ->where('password', $this->helperService->hash($login_pass))
-            ->where('type',$type)
+            ->where('type', $type)
             ->first();
     }
 
 
     public function add_useraccount($info)
     {
-        $this->useraccount=new UserAccount();
-        $this->useraccount->username=$info["username"];
-        $this->useraccount->password=$this->helperService->hash($info["password"]);
-        $this->useraccount->type=$info["type"];
+        $this->useraccount = new UserAccount();
+        $this->useraccount->username = $info["username"];
+        $this->useraccount->password = $this->helperService->hash($info["password"]);
+        $this->useraccount->type = $info["type"];
         $this->useraccount->save();
         return $this->useraccount;
     }
 
     public function add_userinfo($info)
     {
-        $this->userinfo=new UserInfo();
-        $this->userinfo->uid=$info["uid"];
-        $this->userinfo->name=$info["name"];
-        $this->userinfo->sex=$info["sex"];
-        $this->userinfo->identity=$info["identity"];
-        $this->userinfo->birthday=$info["birthday"];
-        $this->userinfo->nativeplace=$info["nativeplace"];
-        $this->userinfo->hobby=$info["hobby"];
+        $this->userinfo = new UserInfo();
+        $this->userinfo->uid = $info["uid"];
+        $this->userinfo->name = $info["name"];
+        $this->userinfo->sex = $info["sex"];
+        $this->userinfo->identity = $info["identity"];
+        $this->userinfo->birthday = $info["birthday"];
+        $this->userinfo->nativeplace = $info["nativeplace"];
+        $this->userinfo->hobby = $info["hobby"];
         return $this->userinfo->save();
     }
 
     public function add_user($info)
     {
-        $userinfo=$this->add_useraccount($info);
-        $info['uid']=$userinfo->id;
+        $userinfo = $this->add_useraccount($info);
+        $info['uid'] = $userinfo->id;
         return $this->add_userinfo($info);
     }
 
-    public function delete_user($id){
+    public function delete_user($id)
+    {
         return $this->useraccount->delete_by_id($id);
     }
 
-    public function change_password($id,$password){
-        $account=$this->useraccount->find($id);
-        $account->password=$this->helperService->hash($password);
-        return $account->save();
-    }
-    public function reset_password($id){
-        $userinfo=$this->userinfo->where('uid',$id)->first();
-        $account=$userinfo->useraccount()->first();
-        $account->password=$this->helperService->hash($userinfo->identity);
+    public function change_password($id, $password)
+    {
+        $account = $this->useraccount->find($id);
+        $account->password = $this->helperService->hash($password);
         return $account->save();
     }
 
-    public function change_hobby($id,$hobby){
-        $account=$this->useraccount->find($id);
-        $account->hobby=$hobby;
+    public function reset_password($id)
+    {
+        $userinfo = $this->userinfo->where('uid', $id)->first();
+        $account = $userinfo->useraccount()->first();
+        $account->password = $this->helperService->hash($userinfo->identity);
         return $account->save();
     }
 
-
-
-
-
-
-
-
+    public function change_hobby($id, $hobby)
+    {
+        $account = $this->useraccount->find($id);
+        $account->hobby = $hobby;
+        return $account->save();
+    }
 
 
 }

@@ -13,7 +13,9 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends BaseModel
 {
     protected $table = 'Course';
-    public function coursescore(){
-        return $this->hasMany("App\Models\CourseScore","courseid","id");
+
+    public function coursescore()
+    {
+        return $this->hasMany("App\Models\CourseScore", "courseid", "id");
     }
 }

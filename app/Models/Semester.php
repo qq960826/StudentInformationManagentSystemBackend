@@ -7,11 +7,15 @@
  */
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Model;
+
 class Semester extends BaseModel
 {
     protected $table = 'Semester';
-    public function coursescore(){
-        return $this->hasMany("App\Models\Semester","semesterid","id");
+
+    public function coursescore()
+    {
+        return $this->hasMany("App\Models\Semester", "semesterid", "id");
     }
 }

@@ -13,39 +13,39 @@ class Init extends Migration
      */
     public function up()
     {
-        Schema::create('UserAccount', function(Blueprint $table) {
+        Schema::create('UserAccount', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('username',16)->nullable(false)->unique()->index();
-            $table->string('password',32)->nullable(false);
+            $table->string('username', 16)->nullable(false)->unique()->index();
+            $table->string('password', 32)->nullable(false);
             $table->unsignedTinyInteger('type');
             $table->boolean('locked')->default(false);
 
             $table->timestamps();
         });
 
-        Schema::create('UserInfo', function(Blueprint $table) {
+        Schema::create('UserInfo', function (Blueprint $table) {
             $table->integer("uid")->unsigned()->unique()->index();
             $table->foreign('uid')->references('id')->on('UserAccount')->onDelete('cascade');;
 
-            $table->string('name',16)->nullable(false)->index();
+            $table->string('name', 16)->nullable(false)->index();
             $table->boolean('sex')->nullable(false);
-            $table->string('identity',18)->nullable(false)->unique()->index();
+            $table->string('identity', 18)->nullable(false)->unique()->index();
             $table->date("birthday")->nullable(false);
-            $table->string("nativeplace",20)->nullable(false);
-            $table->string("hobby",100)->nullable(true);
+            $table->string("nativeplace", 20)->nullable(false);
+            $table->string("hobby", 100)->nullable(true);
 
 
             $table->timestamps();
 
         });
 
-        Schema::create('Classes', function(Blueprint $table) {
+        Schema::create('Classes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',100)->unique()->index();
+            $table->string('name', 100)->unique()->index();
             $table->timestamps();
         });
 
-        Schema::create('Instructor', function(Blueprint $table) {
+        Schema::create('Instructor', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer("uid")->unsigned()->index();
@@ -54,38 +54,38 @@ class Init extends Migration
             $table->integer("classid")->unsigned()->index();
             $table->foreign('classid')->references('id')->on('Classes')->onDelete('cascade');;
 
-            $table->unique(['uid','classid']);
+            $table->unique(['uid', 'classid']);
             $table->timestamps();
         });
 
 
-        Schema::create('StudentInfo', function(Blueprint $table) {
+        Schema::create('StudentInfo', function (Blueprint $table) {
             $table->integer("uid")->unsigned()->index();
             $table->foreign('uid')->references('id')->on('UserAccount')->onDelete('cascade');
 
             $table->integer("classid")->unsigned()->index();
             $table->foreign('classid')->references('id')->on('Classes')->onDelete('cascade');;
 
-            $table->string('studentid',20)->nullable(false)->unique()->index();
+            $table->string('studentid', 20)->nullable(false)->unique()->index();
 
             $table->date("enrollyear")->nullable(false);
 
             $table->timestamps();
         });
 
-        Schema::create('Course', function(Blueprint $table) {
+        Schema::create('Course', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',100)->unique()->index();
+            $table->string('name', 100)->unique()->index();
             $table->timestamps();
         });
 
-        Schema::create('Semester', function(Blueprint $table) {
+        Schema::create('Semester', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',100)->unique()->index();
+            $table->string('name', 100)->unique()->index();
             $table->timestamps();
         });
 
-        Schema::create('CourseScore', function(Blueprint $table) {
+        Schema::create('CourseScore', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer("uid")->unsigned()->index();

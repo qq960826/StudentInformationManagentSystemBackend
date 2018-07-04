@@ -145,6 +145,6 @@ class HelperService
 
     function idcard_get_sex($idcard)
     {
-        return ((int)substr($idcard, 16, 1))%2==0?false:true;
+        return ((int)substr($idcard, 16, 1)) % 2 == 0 ? false : true;
     }
 }
