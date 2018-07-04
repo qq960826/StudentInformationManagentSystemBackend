@@ -16,7 +16,7 @@ class Init extends Migration
         Schema::create('UserAccount', function(Blueprint $table) {
             $table->increments('id');
             $table->string('username',16)->nullable(false)->unique()->index();
-            $table->string('password',16)->nullable(false);
+            $table->string('password',32)->nullable(false);
             $table->unsignedTinyInteger('type');
             $table->boolean('locked')->default(false);
 

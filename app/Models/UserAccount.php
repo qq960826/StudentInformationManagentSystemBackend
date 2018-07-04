@@ -8,7 +8,7 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
-class UserAccount extends Model
+class UserAccount extends BaseModel
 {
     protected $table = 'UserAccount';
     public function userinfo(){
@@ -23,5 +23,4 @@ class UserAccount extends Model
     public function instructor(){
         return $this->hasMany("App\Models\Instructor","uid","id");
     }
-
 }

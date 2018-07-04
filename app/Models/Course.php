@@ -10,7 +10,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Course extends Model
+class Course extends BaseModel
 {
     protected $table = 'Course';
     public function coursescore(){

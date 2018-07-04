@@ -8,7 +8,7 @@
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
-class Instructor extends Model
+class Instructor extends BaseModel
 {
     protected $table = 'Instructor';
     public function useraccount(){

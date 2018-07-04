@@ -7,10 +7,11 @@
  */
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
-class UserInfo extends Model
+class UserInfo extends BaseModel
 {
     protected $table = 'UserInfo';
     public function useraccount(){
-        return $this->belongsTo("App\Models\UserAccount","id","uid");
+        return $this->belongsTo("App\Models\UserAccount","uid","id");
     }
+
 }

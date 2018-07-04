@@ -7,7 +7,7 @@
  */
 use Illuminate\Database\Eloquent\Model;
 
-class StudentInfo extends Model
+class StudentInfo extends BaseModel
 {
     protected $table = 'StudentInfo';
     public function useraccount()

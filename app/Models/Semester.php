@@ -8,7 +8,7 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
-class Semester extends Model
+class Semester extends BaseModel
 {
     protected $table = 'Semester';
     public function coursescore(){

@@ -8,51 +8,38 @@
 namespace App\Repositories;
 use App\Models\UserInfo;
 use App\Models\UserAccount;
-
+use App\Services\HelperService;
 class UserRepository extends BaseRepository
 {
-    protected $userinfo;
-    protected $useraccount;
-    protected $salt="q23esdatgf43g6yrtdcvweqrfhgetryg2435132sdhgesdgt34";
-    private function hash($password){
-        return md5($password.$this->salt);
-    }
+    public $userinfo;
+    public $useraccount;
+    public $helperService;
 
-    public function __construct(UserInfo $userinfo,UserAccount $useraccount)
+    public function __construct(UserInfo $userinfo,UserAccount $useraccount,HelperService $helperService)
     {
         $this->userinfo = $userinfo;
         $this->useraccount = $useraccount;
+        $this->helperService = $helperService;
+
     }
 
     public function get_login_user($login_name, $login_pass, $type = 0)
     {
         return $this->useraccount->where("username", $login_name)
-            ->where('password', $this->hash($login_pass))
+            ->where('password', $this->helperService->hash($login_pass))
             ->where('type',$type)
             ->first();
     }
 
-    public function get_userinfo_by_id($id)
-    {
-        return $this->userinfo
-            ->where('uid',$id)
-            ->first();
-    }
-
-    public function get_useraccount_by_id($id)
-    {
-        return $this->useraccount
-            ->where('id',$id)
-            ->first();
-    }
 
     public function add_useraccount($info)
     {
         $this->useraccount=new UserAccount();
         $this->useraccount->username=$info["username"];
-        $this->useraccount->password=md5($info["password"]);
+        $this->useraccount->password=$this->helperService->hash($info["password"]);
         $this->useraccount->type=$info["type"];
-        return $this->useraccount->save();
+        $this->useraccount->save();
+        return $this->useraccount;
     }
 
     public function add_userinfo($info)
@@ -72,22 +59,22 @@ class UserRepository extends BaseRepository
     {
         $userinfo=$this->add_useraccount($info);
         $info['uid']=$userinfo->id;
-        return $this->add_useraccount($info);
+        return $this->add_userinfo($info);
     }
 
     public function delete_user($id){
-        return $this->useraccount->find($id)->delete();
+        return $this->useraccount->delete_by_id($id);
     }
 
     public function change_password($id,$password){
         $account=$this->useraccount->find($id);
-        $account->password=$this->hash($password);
+        $account->password=$this->helperService->hash($password);
         return $account->save();
     }
     public function reset_password($id){
         $userinfo=$this->userinfo->where('uid',$id)->first();
-        $account=$this->useraccount->find($id);
-        $account->password=$this->hash($userinfo->identity);
+        $account=$userinfo->useraccount()->first();
+        $account->password=$this->helperService->hash($userinfo->identity);
         return $account->save();
     }
 
@@ -97,9 +84,10 @@ class UserRepository extends BaseRepository
         return $account->save();
     }
 
-    public function get_by_condition(){
 
-    }
+
+
+
 
 
 
