@@ -23,13 +23,14 @@ class UserServiceTest extends TestCase
 
     public function testBasicTest()
     {
-//        $this->logintest();
-//        $this->changepasswordtest();
-//        $this->resetpasswordtest();
-//        $this->addusertest();
-//        $this->deleteusertest();
+        $this->logintest();
+        $this->changepasswordtest();
+        $this->resetpasswordtest();
+        $this->addusertest();
+        $this->deleteusertest();
         $this->viewinfotest();
         $this->usersearchtest();
+        $this->updateusertest();
     }
 
     public function logintest()
@@ -227,8 +228,39 @@ class UserServiceTest extends TestCase
 
     }
 
-    public function updateusertest(){
+    public function updateusertest()
+    {
+        $this->assertEquals(800, $this->userservice->viewinfo(7));//获取页面成功
+        $result = $this->userservice->getdata();
+        $this->assertEquals('卢宏业',$result["name"]);
 
+
+        $info = array();
+        $info['name']='卢本伟';
+        $this->assertEquals(900, $this->userservice->updateuser(7,$info));//修改成功
+        $this->assertEquals(800, $this->userservice->viewinfo(7));//获取页面成功
+        $result = $this->userservice->getdata();
+        $this->assertEquals('卢本伟',$result["name"]);
+
+
+        $info = array();
+        $info['identity']='370611199812060014';
+        $this->assertEquals(900, $this->userservice->updateuser(7,$info));//修改成功
+        $this->assertEquals(800, $this->userservice->viewinfo(7));//获取页面成功
+        $result = $this->userservice->getdata();
+        $this->assertEquals('370611199812060014',$result["identity"]);
+
+        $info = array();
+        $info['identity']='370611199812060015';
+        $this->assertEquals(902, $this->userservice->updateuser(7,$info));//身份证不合法
+
+        $info = array();
+        $info['identity']='430602199608264511';
+        $this->assertEquals(901, $this->userservice->updateuser(7,$info));//身份证已注册
+
+        $info = array();
+        $info['username']='admin';
+        $this->assertEquals(903, $this->userservice->updateuser(7,$info));//用户名已注册
     }
 
 }

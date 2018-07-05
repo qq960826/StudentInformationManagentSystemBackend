@@ -104,7 +104,7 @@ class UserService extends BaseService
 
         $user_info = array();
         $user_account = array();
-        if (!isset($id) || $id = '')
+        if (!isset($id) || $id == '')
             return 909;
         if (isset($info['username']) && $info['username'] != '') {
             if (strlen($info['username']) > 16)
@@ -117,7 +117,7 @@ class UserService extends BaseService
         if (isset($info['identity']) && $info['identity'] != '') {
             if (!$this->helperService->idcard_checks($info['identity']))
                 return 902;//身份证不合法
-            if ($this->userRepository->userinfo->exist_by_condition([['identity', '=', $info['identity']], ['id', '!=', $id]]))
+            if ($this->userRepository->userinfo->exist_by_condition([['identity', '=', $info['identity']], ['uid', '!=', $id]]))
                 return 901;//身份证已注册
 
             $user_info['identity'] = $info['identity'];
@@ -149,8 +149,10 @@ class UserService extends BaseService
             $user_info['name'] = $info['name'];
 
         }
-        $this->userRepository->change_useraccount($id, $user_account);
-        $this->userRepository->change_userinfo($id, $user_info);
+        if(count($user_account)>0)
+            $this->userRepository->change_useraccount($id, $user_account);
+        if(count($user_info)>0)
+            $this->userRepository->change_userinfo($id, $user_info);
         return 900;
     }
 

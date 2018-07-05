@@ -56,6 +56,6 @@ class BaseModel extends Model
 
     public function update_by_id($id, $content, $idname = 'id')
     {
-        return $this->get_by_id($id, $idname)->save($content);
+        return $this->get_by_id($id, $idname)->update($content);
     }
 }
