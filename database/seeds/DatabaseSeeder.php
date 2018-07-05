@@ -116,5 +116,24 @@ class DatabaseSeeder extends Seeder
         DB::table('UserAccount')->insert($test_user_account);
         DB::table('UserInfo')->insert($test_user_info);
 
+
+        //用户搜索
+        $test_user_account = array(
+            'id' => 6,
+            'username' => 'test0',
+            'password' => $this->hash('test2test2'),
+            'type' => 1
+        );
+        $test_user_info = array(
+            'uid' => 6,
+            "name" => "王姝爽",
+            'identity' => "370602199809290023",
+            'birthday' => "19980929",
+            'sex' => false,
+            'nativeplace' => "山东青岛",
+
+        );
+        DB::table('UserAccount')->insert($test_user_account);
+        DB::table('UserInfo')->insert($test_user_info);
     }
 }

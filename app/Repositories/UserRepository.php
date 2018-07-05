@@ -112,12 +112,12 @@ class UserRepository extends BaseRepository
                 if (!is_null($userinfo_condition))
                     $userinfo->where($userinfo_condition);
                 if (!is_null($orderby) && isset($orderby['method']) && $orderby['method'] = 'userinfo' && $orderby['key'] != '')
-                    $userinfo->orderBy($orderby, $order);
+                    $userinfo->orderBy($orderby['key'], $order);
             });
         if (!is_null($useraccount_condition))
             $res_query = $res_query->where($useraccount_condition);
         if (!is_null($orderby) && isset($orderby['method']) && $orderby['method'] = 'useraccount' && $orderby['key'] != '')
-            $res_query->orderBy($orderby, $order);
+            $res_query->orderBy($orderby['key'], $order);
         return $res_query;
     }
 

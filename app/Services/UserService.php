@@ -190,9 +190,9 @@ class UserService extends BaseService
 
     public function usersearch($info)
     {
-        if (!isset($info["currentpage"]) || $info["currentpage"] = '')
+        if (!isset($info["currentpage"]) || $info["currentpage"] == '')
             $info["currentpage"] = 0;
-        if (!isset($info["sep"]) || $info["sep"] = '')
+        if (!isset($info["sep"]) || $info["sep"] == '')
             $info["sep"] = 50;
         $user_account_key = ['id', 'username', 'type'];
         $user_info_key = ['name', 'identity', 'nativeplace'];
@@ -215,11 +215,11 @@ class UserService extends BaseService
             if (in_array($info["orderby"], $user_account_key)) {
                 $orderby = array();
                 $orderby['method'] = 'useraccount';
-                $info["key"] = $info["orderby"];
+                $orderby["key"] = $info["orderby"];
             } elseif (in_array($info["orderby"], $user_info_key)) {
                 $orderby = array();
                 $orderby['method'] = 'userinfo';
-                $info["key"] = $info["orderby"];
+                $orderby["key"] = $info["orderby"];
             }
         }
         $order = 'ASC';
