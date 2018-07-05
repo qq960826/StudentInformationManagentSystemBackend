@@ -60,6 +60,8 @@ class Init extends Migration
 
 
         Schema::create('StudentInfo', function (Blueprint $table) {
+            $table->increments('id');
+
             $table->integer("uid")->unsigned()->index();
             $table->foreign('uid')->references('id')->on('UserAccount')->onDelete('cascade');
 
