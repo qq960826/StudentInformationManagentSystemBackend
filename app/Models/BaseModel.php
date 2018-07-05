@@ -53,4 +53,9 @@ class BaseModel extends Model
     {
         return !is_null($this->get_by_id_first($id, $idname));
     }
+
+    public function update_by_id($id, $content, $idname = 'id')
+    {
+        return $this->get_by_id($id, $idname)->save($content);
+    }
 }

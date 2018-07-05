@@ -42,10 +42,6 @@ class HelperService
         $messagemap[102] = "帐号已锁定";
         $messagemap[103] = "登录信息不完整";
 
-        $messagemap[200] = "用户删除成功";
-        $messagemap[201] = "用户删除参数不完整";
-        $messagemap[202] = "指定用户不存在";
-
         $messagemap[300] = "密码修改成功";
         $messagemap[301] = "原始密码错误";
         $messagemap[302] = "指定用户不存在";
@@ -71,13 +67,27 @@ class HelperService
 
         $messagemap[600] = "用户删除成功";
         $messagemap[601] = "用户不存在";
+        $messagemap[602] = "用户不存在";
 
         $messagemap[700] = "爱好修改成功";
         $messagemap[701] = "用户不存在";
-        $messagemap[702] = "爱好长度不能超过100";
+        $messagemap[702] = "用户删除参数不完整";
 
         $messagemap[800] = "用户信息获取成功";
         $messagemap[801] = "用户不存在";
+
+
+        $messagemap[900] = "用户添加成功";
+        $messagemap[901] = "身份证已存在";
+        $messagemap[902] = "身份证信息非法";
+        $messagemap[903] = "用户名已存在";
+        $messagemap[904] = "用户名长度不能超过16";
+        $messagemap[905] = "姓名长度不能超过16";
+        $messagemap[906] = "籍贯长度不能超过20";
+        $messagemap[907] = "角色类型不合法";
+        $messagemap[908] = "爱好长度不能超过100";
+        $messagemap[909] = "id参数非法";
+
         return $messagemap[$code];
     }
 
@@ -146,5 +156,31 @@ class HelperService
     function idcard_get_sex($idcard)
     {
         return ((int)substr($idcard, 16, 1)) % 2 == 0 ? false : true;
+    }
+    function array_flatten($array) {
+        if (!is_array($array)) {
+            return false;
+        }
+        $result = array();
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $result = array_merge($result,$this->array_flatten($value));
+            } else {
+                $result = array_merge($result, array($key => $value));
+            }
+        }
+        return $result;
+    }
+    function search_condition_process($item){
+        if (!isset($item['fuzzy']) || $item['fuzzy'] == false)
+            $fuzzy = false;
+        else
+            $fuzzy = true;
+        if (!isset($item['data']) || $item['data'] == '')
+            return null;
+        if (!isset($item['key']) || $item['key'] == '')
+            return null;
+        $condition = [$item['key'], $fuzzy ? 'like' : '=',$fuzzy? $item['data'].'%':$item['data']];
+        return $condition;
     }
 }

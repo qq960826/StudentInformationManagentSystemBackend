@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserInfo extends BaseModel
 {
     protected $table = 'UserInfo';
+    protected $hidden = ['created_at', 'updated_at','uid'];
 
     public function useraccount()
     {

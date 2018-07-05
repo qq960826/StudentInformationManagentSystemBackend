@@ -39,15 +39,6 @@ class UserService extends BaseService
         return 100;
     }
 
-    public function delete($id)
-    {
-        if (!isset($id))
-            return 201;
-        if ($this->userRepository->delete_user($id))
-            return 202;
-        return 200;
-    }
-
     public function changespassword($id, $oldpassword, $newpassword)
     {
         if (!isset($id) || !isset($oldpassword) || !isset($newpassword) || $id == '' || $oldpassword == '' || $newpassword == '')
@@ -108,8 +99,65 @@ class UserService extends BaseService
         return 500;
     }
 
+    public function updateuser($id, $info)
+    {
+
+        $user_info = array();
+        $user_account = array();
+        if (!isset($id) || $id = '')
+            return 909;
+        if (isset($info['username']) && $info['username'] != '') {
+            if (strlen($info['username']) > 16)
+                return 904;//用户名长度超过16
+            if ($this->userRepository->useraccount->exist_by_condition([['username', '=', $info['username']], ['id', '!=', $id]]))
+                return 903;//用户名已注册
+            $user_account['username'] = $info['username'];
+        }
+
+        if (isset($info['identity']) && $info['identity'] != '') {
+            if (!$this->helperService->idcard_checks($info['identity']))
+                return 902;//身份证不合法
+            if ($this->userRepository->userinfo->exist_by_condition([['identity', '=', $info['identity']], ['id', '!=', $id]]))
+                return 901;//身份证已注册
+
+            $user_info['identity'] = $info['identity'];
+            $user_info['sex'] = $this->helperService->idcard_get_sex($info['identity']);
+            $user_info['birthday'] = $this->helperService->idcard_get_birthday($info['identity']);
+        }
+
+        if (isset($info['type']) && $info['type'] != '') {
+            if (intval($info['type']) < 0 || intval($info['type']) > 3)
+                return 907;//角色类型不合法
+            $user_account['type'] = $info['type'];
+        }
+
+        if (isset($info['hobby']) && $info['hobby'] != '') {
+            if (strlen($info['hobby']) > 100)
+                return 908;//爱好长度不能超过100
+            $user_info['hobby'] = $info['hobby'];
+        }
+
+        if (isset($info['nativeplace']) && $info['nativeplace'] != '') {
+            if (strlen($info['nativeplace']) > 20)
+                return 906;//籍贯长度超过20
+            $user_info['nativeplace'] = $info['nativeplace'];
+        }
+
+        if (isset($info['name']) && $info['name'] != '') {
+            if (strlen($info['name']) > 16)
+                return 905;//姓名长度超过16
+            $user_info['name'] = $info['name'];
+
+        }
+        $this->userRepository->change_useraccount($id, $user_account);
+        $this->userRepository->change_userinfo($id, $user_info);
+        return 900;
+    }
+
     public function deleteuser($id)
     {
+        if (!isset($id) || $id == '')
+            return 602;
         if (!$this->userRepository->useraccount->exist_by_condition([['id', '=', $id]]))
             return 601;//用户不存在
         $this->userRepository->useraccount->get_by_id($id)->delete();
@@ -129,14 +177,65 @@ class UserService extends BaseService
 
     public function viewinfo($id)
     {
-        if (!$this->userRepository->useraccount->exist_by_id($id) || !$this->userRepository->userinfo->exist_by_id($id, 'uid'))
+        $result = $this->userRepository->view_info($id);
+        if (!isset($result))
             return 801;//用户不存在
-        $useraccount = ($this->userRepository->useraccount->get_by_id_first($id));
-        $userinfo = $useraccount->userinfo()->first();
-        $result_userinfo = $userinfo->makeHidden(['uid'])->toArray();
-        $result_useraccount = $useraccount->makeHidden(['password', 'locked'])->toArray();
-        $this->setdata(array_merge($result_useraccount, $result_userinfo));
+        $result->makeHidden(['password', 'locked']);
+        $result->userinfo->makeHidden(['uid']);
+        $result = $result->toArray();
+        $result = $this->helperService->array_flatten($result);
+        $this->setdata($result);
         return 800;
+    }
+
+    public function usersearch($info)
+    {
+        if (!isset($info["currentpage"]) || $info["currentpage"] = '')
+            $info["currentpage"] = 0;
+        if (!isset($info["sep"]) || $info["sep"] = '')
+            $info["sep"] = 50;
+        $user_account_key = ['id', 'username', 'type'];
+        $user_info_key = ['name', 'identity', 'nativeplace'];
+        $useraccount_condition = array();
+        $userinfo_condition = array();
+        if (isset($info["condition"]) && !is_null($info["condition"]) && is_array($info["condition"])) {
+
+            foreach ($info["condition"] as $index => $item) {
+                $condition = $this->helperService->search_condition_process($item);
+                if (is_null($condition))
+                    continue;
+                if (in_array($item['key'], $user_account_key))
+                    $useraccount_condition[] = $condition;
+                elseif (in_array($item['key'], $user_info_key))
+                    $userinfo_condition[] = $condition;
+            }
+        }
+        $orderby = null;
+        if (isset($info["orderby"])) {
+            if (in_array($info["orderby"], $user_account_key)) {
+                $orderby = array();
+                $orderby['method'] = 'useraccount';
+                $info["key"] = $info["orderby"];
+            } elseif (in_array($info["orderby"], $user_info_key)) {
+                $orderby = array();
+                $orderby['method'] = 'userinfo';
+                $info["key"] = $info["orderby"];
+            }
+        }
+        $order = 'ASC';
+        if (isset($info["order"]) && $info["order"] == 'DESC')
+            $order = 'DESC';
+        $query = $this->userRepository->search_user($useraccount_condition, $userinfo_condition, $orderby, $order);
+
+
+        $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
+        $data = $paginate->toArray()['data'];
+        foreach ($data as $key => $val) {
+            $data[$key] = $this->helperService->array_flatten($val);
+        }
+        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->lastPage(), 'current' => $paginate->currentPage(),'data'=>$data);
+
+        return $result;
     }
 
 
