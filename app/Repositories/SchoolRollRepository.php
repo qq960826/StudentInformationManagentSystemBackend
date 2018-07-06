@@ -15,10 +15,10 @@ use App\Models\Instructor;
 
 class SchoolRollRepository
 {
-    protected $classes;
-    protected $studentInfo;
-    protected $semester;
-    protected $instructor;
+    public $classes;
+    public $studentInfo;
+    public $semester;
+    public $instructor;
 
     public function __construct(Classes $classes, StudentInfo $studentInfo, Semester $semester, Instructor $instructor)
     {
@@ -106,7 +106,7 @@ class SchoolRollRepository
 
     function studentInfo_change($id, $info)
     {
-        return $this->studentInfo->update_by_id($id, $info, 'uid');
+        return $this->studentInfo->update_by_id($id, $info, 'id');
     }
 
     function studentInfo_search($condition = null, $orderby = null, $order = 'ASC')

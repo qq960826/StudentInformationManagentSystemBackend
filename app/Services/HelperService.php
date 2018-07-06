@@ -76,7 +76,6 @@ class HelperService
         $messagemap[800] = "用户信息获取成功";
         $messagemap[801] = "用户不存在";
 
-
         $messagemap[900] = "用户添加成功";
         $messagemap[901] = "身份证已存在";
         $messagemap[902] = "身份证信息非法";
@@ -88,6 +87,76 @@ class HelperService
         $messagemap[908] = "爱好长度不能超过100";
         $messagemap[909] = "id参数非法";
 
+        $messagemap[1000] = "班级添加成功";
+        $messagemap[1001] = "班级名称参数不完整";
+        $messagemap[1002] = "班级名称长度不能大于100";
+        $messagemap[1003] = "班级名称已存在";
+
+        $messagemap[1100] = "班级删除成功";
+        $messagemap[1101] = "班级id非法";
+        $messagemap[1102] = "班级id不存在";
+
+        $messagemap[1200] = "班级编辑成功";
+        $messagemap[1201] = "班级id非法";
+        $messagemap[1202] = "班级id不存在";
+        $messagemap[1203] = "班级名称已存在";
+        $messagemap[1204] = "班级名称不能为空";
+        $messagemap[1205] = "班级名称长度不能大于100";
+
+        $messagemap[1400] = "学期添加成功";
+        $messagemap[1401] = "学期名称参数不完整";
+        $messagemap[1402] = "学期名称长度不能大于100";
+        $messagemap[1403] = "学期名称已存在";
+
+        $messagemap[1500] = "学期删除成功";
+        $messagemap[1501] = "学期id非法";
+        $messagemap[1502] = "学期id不存在";
+
+        $messagemap[1600] = "学期编辑成功";
+        $messagemap[1601] = "学期id非法";
+        $messagemap[1602] = "学期id不存在";
+        $messagemap[1603] = "学期名称已存在";
+        $messagemap[1604] = "学期名称参数不完整";
+        $messagemap[1605] = "学期名称长度不能大于100";
+
+        $messagemap[1800] = "辅导员添加成功";
+        $messagemap[1801] = "用户id参数不完整";
+        $messagemap[1802] = "班级id参数不完整";
+        $messagemap[1803] = "辅导员信息已存在";
+        $messagemap[1804] = "用户id不存在";
+        $messagemap[1805] = "用户身份不是辅导员";
+        $messagemap[1806] = "班级不存在";
+
+        $messagemap[1900] = "辅导员删除成功";
+        $messagemap[1901] = "辅导员id非法";
+        $messagemap[1902] = "辅导员id不存在";
+
+        $messagemap[2000] = "学期编辑成功";
+        $messagemap[2001] = "学期id非法";
+        $messagemap[2002] = "辅导员id不存在";
+        $messagemap[2003] = "用户id不存在";
+        $messagemap[2004] = "用户身份不是辅导员";
+        $messagemap[2005] = "班级不存在";
+        $messagemap[2006] = "辅导员信息已存在";
+
+        $messagemap[2200] = "学期编辑成功";
+        $messagemap[2201] = "参数不完整";
+        $messagemap[2202] = "学号长度不能大于20";
+        $messagemap[2203] = "班级id不存在";
+        $messagemap[2204] = "该学生学籍信息已存在";
+        $messagemap[2205] = "学籍信息添加成功";
+
+        $messagemap[2300] = "学籍信息删除成功";
+        $messagemap[2301] = "学籍id非法";
+        $messagemap[2302] = "学籍信息不存在";
+
+        $messagemap[2400] = "学籍信息修改成功";
+        $messagemap[2401] = "学籍id非法";
+        $messagemap[2402] = "学籍id不存在";
+        $messagemap[2403] = "学号长度不能大于20";
+        $messagemap[2404] = "该学生学籍信息已存在";
+        $messagemap[2405] = "该学生用户信息不存在";
+        $messagemap[2406] = "班级id不存在";
         return $messagemap[$code];
     }
 
