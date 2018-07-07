@@ -66,6 +66,41 @@ class SchoolRollService extends BaseService
 
     function classes_search($info)
     {
+        if (!isset($info["currentpage"]) || $info["currentpage"] == '')
+            $info["currentpage"] = 0;
+        if (!isset($info["sep"]) || $info["sep"] == '')
+            $info["sep"] = 50;
+        $classes_key = ['id', 'name'];
+        $classes_condition = array();
+        if (isset($info["condition"]) && !is_null($info["condition"]) && is_array($info["condition"])) {
+            foreach ($info["condition"] as $index => $item) {
+                $condition = $this->helperService->search_condition_process($item);
+                if (is_null($condition))
+                    continue;
+                if (in_array($item['key'], $classes_key))
+                    $classes_condition[] = $condition;
+            }
+        }
+        $orderby = null;
+        if (isset($info["orderby"])) {
+            if (in_array($info["orderby"], $classes_key)) {
+                $orderby = array();
+                $orderby['method'] = 'classes';
+                $orderby["key"] = $info["orderby"];
+            }
+        }
+        $order = 'ASC';
+        if (isset($info["order"]) && $info["order"] == 'DESC')
+            $order = 'DESC';
+        $query = $this->schoolRollRepository->classes_search($classes_condition, $orderby, $order);
+        $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
+        $data = $paginate->toArray()['data'];
+        foreach ($data as $key => $val) {
+            $data[$key] = $this->helperService->array_flatten($val);
+        }
+        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
+
+        return $result;
 
     }
 
@@ -88,7 +123,7 @@ class SchoolRollService extends BaseService
             return 1501;//学期id非法
         if (!$this->schoolRollRepository->semester->exist_by_id($id))
             return 1502;//学期id不存在
-        $this->schoolRollRepository->classes_delete($id);
+        $this->schoolRollRepository->semester_delete($id);
         return 1500;//学期删除成功
     }
 
@@ -110,6 +145,41 @@ class SchoolRollService extends BaseService
 
     function semester_search($info)
     {
+        if (!isset($info["currentpage"]) || $info["currentpage"] == '')
+            $info["currentpage"] = 0;
+        if (!isset($info["sep"]) || $info["sep"] == '')
+            $info["sep"] = 50;
+        $semester_key = ['id', 'name'];
+        $semester_condition = array();
+        if (isset($info["condition"]) && !is_null($info["condition"]) && is_array($info["condition"])) {
+            foreach ($info["condition"] as $index => $item) {
+                $condition = $this->helperService->search_condition_process($item);
+                if (is_null($condition))
+                    continue;
+                if (in_array($item['key'], $semester_key))
+                    $semester_condition[] = $condition;
+            }
+        }
+        $orderby = null;
+        if (isset($info["orderby"])) {
+            if (in_array($info["orderby"], $semester_key)) {
+                $orderby = array();
+                $orderby['method'] = 'classes';
+                $orderby["key"] = $info["orderby"];
+            }
+        }
+        $order = 'ASC';
+        if (isset($info["order"]) && $info["order"] == 'DESC')
+            $order = 'DESC';
+        $query = $this->schoolRollRepository->semester_search($semester_condition, $orderby, $order);
+        $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
+        $data = $paginate->toArray()['data'];
+        foreach ($data as $key => $val) {
+            $data[$key] = $this->helperService->array_flatten($val);
+        }
+        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
+
+        return $result;
     }
 
     function instructor_add($userid, $classid)
@@ -174,6 +244,7 @@ class SchoolRollService extends BaseService
 
     function instructor_search($info)
     {
+
     }
 
 
@@ -231,5 +302,10 @@ class SchoolRollService extends BaseService
         }
         $this->schoolRollRepository->studentInfo_change($id, $studentinfoupdate);
         return 2400;//学籍信息修改成功
+    }
+
+    function studentinfo_search($info)
+    {
+
     }
 }

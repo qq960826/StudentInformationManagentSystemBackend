@@ -154,5 +154,122 @@ class DatabaseSeeder extends Seeder
         );
         DB::table('UserAccount')->insert($test_user_account);
         DB::table('UserInfo')->insert($test_user_info);
+
+
+        $this->addClass();
+        $this->addSemester();
+    }
+    public function addClass(){
+        $classes=array(
+            'id'=>1,
+            'name'=>'测试班级1'
+        );
+        DB::table('Classes')->insert($classes);
+
+        $classes=array(
+            'id'=>2,
+            'name'=>'测试班级2'
+        );
+        DB::table('Classes')->insert($classes);
+
+        $classes=array(
+            'id'=>3,
+            'name'=>'删除班级1'
+        );
+        DB::table('Classes')->insert($classes);
+
+        $classes=array(
+            'id'=>4,
+            'name'=>'编辑班级1'
+        );
+        DB::table('Classes')->insert($classes);
+
+        $classes=array(
+            'id'=>5,
+            'name'=>'编辑班级2'
+        );
+        DB::table('Classes')->insert($classes);
+
+        $classes=array(
+            'id'=>6,
+            'name'=>'查找班级1'
+        );
+        DB::table('Classes')->insert($classes);
+
+        $classes=array(
+            'id'=>7,
+            'name'=>'查找班级2'
+        );
+        DB::table('Classes')->insert($classes);
+
+
+        $classes=array(
+            'id'=>8,
+            'name'=>'查找班级3'
+        );
+        DB::table('Classes')->insert($classes);
+
+        $classes=array(
+            'id'=>9,
+            'name'=>'查找班级0'
+        );
+        DB::table('Classes')->insert($classes);
+    }
+
+    public function addSemester(){
+        $classes=array(
+            'id'=>1,
+            'name'=>'测试学期1'
+        );
+        DB::table('Semester')->insert($classes);
+
+        $classes=array(
+            'id'=>2,
+            'name'=>'测试学期2'
+        );
+        DB::table('Semester')->insert($classes);
+
+        $classes=array(
+            'id'=>3,
+            'name'=>'删除学期1'
+        );
+        DB::table('Semester')->insert($classes);
+
+        $classes=array(
+            'id'=>4,
+            'name'=>'编辑学期1'
+        );
+        DB::table('Semester')->insert($classes);
+
+        $classes=array(
+            'id'=>5,
+            'name'=>'编辑学期2'
+        );
+        DB::table('Semester')->insert($classes);
+
+        $classes=array(
+            'id'=>6,
+            'name'=>'查找学期1'
+        );
+        DB::table('Semester')->insert($classes);
+
+        $classes=array(
+            'id'=>7,
+            'name'=>'查找学期2'
+        );
+        DB::table('Semester')->insert($classes);
+
+
+        $classes=array(
+            'id'=>8,
+            'name'=>'查找学期3'
+        );
+        DB::table('Semester')->insert($classes);
+
+        $classes=array(
+            'id'=>9,
+            'name'=>'查找学期0'
+        );
+        DB::table('Semester')->insert($classes);
     }
 }
