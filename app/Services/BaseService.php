@@ -23,13 +23,25 @@ class BaseService
         return $this->data;
     }
 
+    function isAssociative($arr)
+    {
+        foreach ($arr as $key => $value) {
+            if (is_string($key)) return true;
+        }
+        return false;
+    }
+
     function condition_process($filter, $condition)
     {
         $result = array();
         foreach ($condition as $condition_key => $condition_value) {
             foreach ($filter as $filter_key => $filter_value) {
                 if (in_array($condition_key, $filter_value)) {
-                    $temp = $this->condition_translate($condition_key,$condition_value);
+                    $temp = $this->condition_translate($condition_key, $condition_value);
+                    if (!is_null($temp))
+                        $result[$filter_key][] = $temp;
+                } elseif (key_exists($condition_key, $filter_value)) {
+                    $temp = $this->condition_translate($filter_value[$condition_key], $condition_value);
                     if (!is_null($temp))
                         $result[$filter_key][] = $temp;
                 }
@@ -49,13 +61,18 @@ class BaseService
                 $result[$filter_key]['order'] = 'ASC';
                 if (isset($order["order"]) && $order["order"] == 'DESC')
                     $result[$filter_key]['order'] = 'DESC';
+            } elseif (key_exists($order['by'], $filter_value) && $order["order"] == 'DESC') {
+                $result[$filter_key]['key'] = $filter_value[$order['by']];
+                $result[$filter_key]['order'] = 'ASC';
+                if (isset($order["order"]) && $order["order"] == 'DESC')
+                    $result[$filter_key]['order'] = 'DESC';
             }
         }
         return count($result) == 0 ? null : $result;
 
     }
 
-    function condition_translate($key,$item)
+    function condition_translate($key, $item)
     {
         if (!isset($item['fuzzy']) || $item['fuzzy'] == false)
             $fuzzy = false;

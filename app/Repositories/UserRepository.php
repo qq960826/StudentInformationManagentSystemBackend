@@ -104,14 +104,18 @@ class UserRepository extends BaseRepository
 
     public function search_user($condition = null, $order=null)
     {
-        $query = $this->useraccount->search(
+
+        $join_table=[
+            ['table'=>'UserInfo','foreign'=>'uid','local'=>"id",'condition'=>"="],
+        ];
+        $query = $this->useraccount->newsearch(
             array(
-                'userinfo' => ['uid', 'name', 'identity', 'sex', 'nativeplace', 'birthday'],
-                'this' => ['id', 'type', 'username']),
+                'UserInfo' => ['uid', 'name', 'identity', 'sex', 'nativeplace', 'birthday'],
+                'this' => ['type', 'username']),
+            $join_table,
             $condition,
             $order
         );
-
         return $query;
     }
 

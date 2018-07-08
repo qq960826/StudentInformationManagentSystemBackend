@@ -159,6 +159,7 @@ class DatabaseSeeder extends Seeder
         $this->addClass();
         $this->addSemester();
         $this->addInstructor();
+        $this->addStudent();
     }
     public function addClass(){
         $classes=array(
@@ -379,6 +380,9 @@ class DatabaseSeeder extends Seeder
         );
         DB::table('Classes')->insert($classes);
 
+
+
+
         $instructor=array(
             'id'=>1,
             'uid'=>8,
@@ -396,7 +400,7 @@ class DatabaseSeeder extends Seeder
             'uid'=>10,
             'classid'=>12
         );
-        DB::table('Instructor')->insert($instructor);
+        DB::table('Instructor')->insert($instructor);//背编辑
 
         $instructor=array(
             'id'=>4,
@@ -407,9 +411,165 @@ class DatabaseSeeder extends Seeder
 
         $instructor=array(
             'id'=>5,
-            'uid'=>10,
+            'uid'=>11,
             'classid'=>10
         );
         DB::table('Instructor')->insert($instructor);
+        $instructor=array(
+            'id'=>6,
+            'uid'=>9,
+            'classid'=>12
+        );
+        DB::table('Instructor')->insert($instructor);
+
+        $instructor=array(
+            'id'=>7,
+            'uid'=>9,
+            'classid'=>13
+        );
+        DB::table('Instructor')->insert($instructor);
+
+        $instructor=array(
+            'id'=>8,
+            'uid'=>9,
+            'classid'=>14
+        );
+        DB::table('Instructor')->insert($instructor);
+    }
+
+    public function addStudent(){
+        $test_user_account = array(
+            'id' => 12,
+            'username' => '201501120610',
+            'password' => $this->hash('370923199701235020'),
+            'type' => 1
+        );
+        $test_user_info = array(
+            'uid' => 12,
+            "name" => "周永峰",
+            'identity' => "370923199701235020",
+            'birthday' => "19970123",
+            'sex' => false,
+            'nativeplace' => "山东青岛",
+
+        );
+        DB::table('UserAccount')->insert($test_user_account);
+        DB::table('UserInfo')->insert($test_user_info);
+
+        $test_user_account = array(
+            'id' => 13,
+            'username' => '201501120608',
+            'password' => $this->hash('370686199603294114'),
+            'type' => 1
+        );
+        $test_user_info = array(
+            'uid' => 13,
+            "name" => "孙晓峰",
+            'identity' => "370686199603294114",
+            'birthday' => "19960329",
+            'sex' => false,
+            'nativeplace' => "山东青岛",
+
+        );
+        DB::table('UserAccount')->insert($test_user_account);
+        DB::table('UserInfo')->insert($test_user_info);
+
+        $test_user_account = array(
+            'id' => 14,
+            'username' => '201501020833',
+            'password' => $this->hash('622426199808010011'),
+            'type' => 1
+        );
+        $test_user_info = array(
+            'uid' => 14,
+            "name" => "郑明明",
+            'identity' => "622426199808010011",
+            'birthday' => "19980801",
+            'sex' => false,
+            'nativeplace' => "山东青岛",
+
+        );
+        DB::table('UserAccount')->insert($test_user_account);
+        DB::table('UserInfo')->insert($test_user_info);
+
+        $test_user_account = array(
+            'id' => 15,
+            'username' => '201501120710',
+            'password' => $this->hash('622826199706041038'),
+            'type' => 1
+        );
+        $test_user_info = array(
+            'uid' => 15,
+            "name" => "仝晓盈",
+            'identity' => "622826199706041038",
+            'birthday' => "19970604",
+            'sex' => false,
+            'nativeplace' => "山东青岛",
+
+        );
+        DB::table('UserAccount')->insert($test_user_account);
+        DB::table('UserInfo')->insert($test_user_info);
+
+
+        $test_user_account = array(
+            'id' => 16,
+            'username' => '201501120704',
+            'password' => $this->hash('340123199704182092'),
+            'type' => 1
+        );
+        $test_user_info = array(
+            'uid' => 16,
+            "name" => "郑海宁",
+            'identity' => "340123199704182092",
+            'birthday' => "19970604",
+            'sex' => false,
+            'nativeplace' => "山东青岛",
+
+        );
+        DB::table('UserAccount')->insert($test_user_account);
+        DB::table('UserInfo')->insert($test_user_info);
+//
+//
+        $student_class=array(//删除测试
+            'id'=>1,
+            'uid'=>12,
+            'classid'=>10,
+            'studentid'=>'201501120610',
+            'enrollyear'=>'20150912'
+        );
+        DB::table('StudentInfo')->insert($student_class);
+
+        $student_class=array(//修改测试
+            'id'=>2,
+            'uid'=>13,
+            'classid'=>13,
+            'studentid'=>'201501120608',
+            'enrollyear'=>'20150912'
+        );
+        DB::table('StudentInfo')->insert($student_class);
+        $student_class=array(
+            'id'=>3,
+            'uid'=>14,
+            'classid'=>13,
+            'studentid'=>'201501020833',
+            'enrollyear'=>'20150912'
+        );
+        DB::table('StudentInfo')->insert($student_class);
+        $student_class=array(
+            'id'=>4,
+            'uid'=>15,
+            'classid'=>13,
+            'studentid'=>'201501120710',
+            'enrollyear'=>'20150912'
+        );
+        DB::table('StudentInfo')->insert($student_class);
+        $student_class=array(
+            'id'=>5,
+            'uid'=>16,
+            'classid'=>14,
+            'studentid'=>'201501120704',
+            'enrollyear'=>'20150912'
+        );
+        DB::table('StudentInfo')->insert($student_class);
     }
 }

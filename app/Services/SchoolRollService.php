@@ -86,9 +86,6 @@ class SchoolRollService extends BaseService
 
         $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
         $data = $paginate->toArray()['data'];
-        foreach ($data as $key => $val) {
-            $data[$key] = $this->helperService->array_flatten($val);
-        }
         $result = array('sep' => $paginate->perPage(), 'total' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
 
         return $result;
@@ -156,9 +153,6 @@ class SchoolRollService extends BaseService
         $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
 
         $data = $paginate->toArray()['data'];
-        foreach ($data as $key => $val) {
-            $data[$key] = $this->helperService->array_flatten($val);
-        }
         $result = array('sep' => $paginate->perPage(), 'total' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
 
         return $result;
@@ -230,9 +224,9 @@ class SchoolRollService extends BaseService
         $order = null;
         $filter = array(
             'this' => ['id', 'uid', 'classid'],
-            'useraccount' => ['username'],
-            'classes' => ['classname'],
-            'userinfo' => ['peoplename'],
+            'UserAccount' => ['username'=>'name'],
+            'Classes' => ['classname'=>'name'],
+            'UserInfo' => ['peoplename'=>'name'],
         );
         if (!isset($info["currentpage"]) || $info["currentpage"] == '')
             $info["currentpage"] = 0;
@@ -247,11 +241,6 @@ class SchoolRollService extends BaseService
         $query = $this->schoolRollRepository->instructor_search($condition, $order);
         $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
         $data = $paginate->toArray()['data'];
-        foreach ($data as $key => $val) {
-            $data[$key] = $this->helperService->array_flatten($val);
-            $data[$key] ['id']=$data[$key] ['iid'];
-            unset($data[$key] ['iid']);
-        }
 
         $result = array('sep' => $paginate->perPage(), 'total' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
         return $result;
@@ -318,4 +307,5 @@ class SchoolRollService extends BaseService
     {
 
     }
+
 }

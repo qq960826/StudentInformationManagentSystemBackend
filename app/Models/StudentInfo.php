@@ -14,10 +14,14 @@ class StudentInfo extends BaseModel
     protected $table = 'StudentInfo';
     public function useraccount()
     {
-        return $this->belongsTo("App\Models\UserAccount","id","uid");
+        return $this->hasOne("App\Models\UserAccount","id","uid");
     }
     public function classes()
     {
-        return $this->belongsTo("App\Models\Classes","id","classid");
+        return $this->hasOne("App\Models\Classes","id","classid");
+    }
+    public function userinfo(){
+        return $this->hasOne("App\Models\UserInfo","id","uid");
+
     }
 }

@@ -48,11 +48,15 @@ class SchoolRollRepository
 
     function classes_search($condition = null, $order = 'ASC')
     {
-        $query = $this->classes
-            ->search(
-                array('this' => ['id', 'name']),
-                $condition,
-                $order);
+        $join_table=[
+        ];
+        $query = $this->classes->newsearch(
+            array(
+                'this' => ['id', 'name']),
+            $join_table,
+            $condition,
+            $order
+        );
         return $query;
     }
 
@@ -77,11 +81,15 @@ class SchoolRollRepository
 
     function semester_search($condition = null, $order = null)
     {
-        $query = $this->semester
-            ->search(
-                array('this' => ['id', 'name']),
-                $condition,
-                $order);
+        $join_table=[
+        ];
+        $query = $this->semester->newsearch(
+            array(
+                'this' => ['id', 'name']),
+            $join_table,
+            $condition,
+            $order
+        );
         return $query;
     }
 
@@ -107,15 +115,19 @@ class SchoolRollRepository
         return $this->studentInfo->update_by_id($id, $info, 'id');
     }
 
-    function studentInfo_search($condition = null, $orderby = null, $order = 'ASC')
+    function studentInfo_search($condition = null, $order = null)
     {
-//        $res_query = $this->useraccount
-//
-//        if (!is_null($condition))
-//            $res_query = $res_query->where($condition);
-//        if (!is_null($orderby) && isset($orderby['method']) && $orderby['method'] = 'useraccount' && $orderby['key'] != '')
-//            $res_query->orderBy($orderby['key'], $order);
-//        return $res_query;
+
+        $query = $this->instructor->search(
+            array(
+                'useraccount' => ['id', 'username'],
+                'classes' => ['id', 'name as classname'],
+                'userinfo' => ['uid', 'name as peoplename'],
+                'this' => ['id', 'uid', 'classid']),
+            $condition,
+            $order
+        );
+        return $query;
     }
 
     function instructor_add($uid, $classid)
@@ -139,13 +151,18 @@ class SchoolRollRepository
 
     function instructor_search($condition = null, $order = null)
     {
-
-        $query = $this->instructor->search(
+        $join_table=[
+            ['table'=>'UserAccount','foreign'=>'id','local'=>"uid",'condition'=>"="],
+            ['table'=>'Classes','foreign'=>'id','local'=>"classid",'condition'=>"="],
+            ['table'=>'UserInfo','foreign'=>'uid','local'=>"uid",'condition'=>"="],
+        ];
+        $query = $this->instructor->newsearch(
             array(
-                'useraccount' => ['id', 'username'],
-                'classes' => ['id', 'name as classname'],
-                'userinfo' => ['uid', 'name as peoplename'],
-                'this' => ['id as iid', 'uid', 'classid']),
+                'UserAccount' => ['id', 'username as username'],
+                'Classes' => ['id', 'name as classname'],
+                'UserInfo' => ['uid', 'name as peoplename'],
+                'this' => ['id', 'uid', 'classid']),
+            $join_table,
             $condition,
             $order
         );

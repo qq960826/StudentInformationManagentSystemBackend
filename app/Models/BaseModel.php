@@ -62,7 +62,7 @@ class BaseModel extends Model
 
     function search($select = null, $condition = null, $order = null)
     {
-        $query=$this;
+        $query = $this;
         if (!is_null($select) && isset($select['this'])) {
             $query = $query->select($select['this']);
         }
@@ -71,30 +71,61 @@ class BaseModel extends Model
             foreach ($select as $key => $val) {
                 if ($key == 'this')
                     continue;
-                $query = $query->with([$key => function ($query) use ($key, $val) {
+                //with
+                $query = $query->with([$key => function ($query) use ($key, $val, $order) {
                     if (!is_null($val) && isset($val)) {
                         $query->select($val);
                     }
                 }]);
-            }
-        }
-        if (!is_null($condition)) {
-            foreach ($condition as $key => $val) {
-                if ($key == 'this')
-                    continue;
-                $query = $query->whereHas($key, function ($query) use ($key, $val, $order) {
-                    if (!is_null($val) && isset($val))
-                        $query->where($val);
+                //wherehas
+                $query = $query->whereHas($key, function ($query) use ($key, $condition, $order) {
+                    if (!is_null($condition) && isset($condition[$key]))
+                        $query->where($condition[$key]);
                     if (!is_null($order) && isset($order[$key]))
                         $query->orderBy($order[$key]['key'], $order[$key]['order']);
                 });
             }
-            if (isset($condition['this']))
-                $query = $query->where($condition['this']);
+        }
+        if (!is_null($condition) && isset($condition['this'])) {
+            $query = $query->where($condition['this']);
         }
         if (!is_null($order) && isset($order['this'])) {
             $query = $query->orderBy($order['this']['key'], $order['this']['order']);
         }
+        return $query;
+    }
+
+
+    function newsearch($select = null, $joined = null, $condition = null, $order = null)
+    {
+        $query = $this;
+
+        foreach ($joined as $item) {
+            $query = $query->leftJoin($item['table'], $item['table'] . '.' . $item['foreign'], $item['condition'], $this->table . '.' . $item['local']);
+        }
+        $select_transformed = array();
+        if (!is_null($select))
+
+            foreach ($select as $key => $value) {
+                $selected_table = $key == 'this' ? $this->table : $key;
+                foreach ($value as $item) {
+                    $select_transformed[] = $selected_table . '.' . $item;
+                }
+            }
+        $query = $query->select($select_transformed);
+        if (!is_null($condition))
+            foreach ($condition as $key => $value) {
+                $selected_table = $key == 'this' ? $this->table : $key;
+                foreach ($value as $item) {
+                    $query = $query->where($selected_table . '.' . $item[0], $item[1], $item[2]);
+                }
+            }
+        if (!is_null($order))
+            foreach ($order as $key => $value) {
+                $selected_table = $key == 'this' ? $this->table : $key;
+                $query = $query->orderBy($selected_table . '.' . $value['key'], $value['order']);
+                break;
+            }
         return $query;
     }
 }
