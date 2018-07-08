@@ -102,23 +102,17 @@ class UserRepository extends BaseRepository
         return $this->useraccount->update_by_id($id, $info, 'id');
     }
 
-    public function search_user($useraccount_condition = null, $userinfo_condition = null, $orderby = null, $order = 'ASC')
+    public function search_user($condition = null, $order=null)
     {
-        $res_query = $this->useraccount
-            ->select('id','type','username')
-            ->with('userinfo')
-            ->whereHas('userinfo' , function ($userinfo) use ($userinfo_condition, $orderby, $order) {
-                $userinfo->select('uid','name','identity','sex','nativeplace','birthday');
-                if (!is_null($userinfo_condition))
-                    $userinfo->where($userinfo_condition);
-                if (!is_null($orderby) && isset($orderby['method']) && $orderby['method'] = 'userinfo' && $orderby['key'] != '')
-                    $userinfo->orderBy($orderby['key'], $order);
-            });
-        if (!is_null($useraccount_condition))
-            $res_query = $res_query->where($useraccount_condition);
-        if (!is_null($orderby) && isset($orderby['method']) && $orderby['method'] = 'useraccount' && $orderby['key'] != '')
-            $res_query->orderBy($orderby['key'], $order);
-        return $res_query;
+        $query = $this->useraccount->search(
+            array(
+                'userinfo' => ['uid', 'name', 'identity', 'sex', 'nativeplace', 'birthday'],
+                'this' => ['id', 'type', 'username']),
+            $condition,
+            $order
+        );
+
+        return $query;
     }
 
     public function view_info($id)

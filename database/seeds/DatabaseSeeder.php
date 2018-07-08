@@ -158,6 +158,7 @@ class DatabaseSeeder extends Seeder
 
         $this->addClass();
         $this->addSemester();
+        $this->addInstructor();
     }
     public function addClass(){
         $classes=array(
@@ -271,5 +272,144 @@ class DatabaseSeeder extends Seeder
             'name'=>'查找学期0'
         );
         DB::table('Semester')->insert($classes);
+    }
+    public function addInstructor(){
+        $test_user_account = array(
+            'id' => 8,
+            'username' => 'instructor1',
+            'password' => $this->hash('instructor1'),
+            'type' => 2
+        );
+        $test_user_info = array(
+            'uid' => 8,
+            "name" => "于宇彤",
+            'identity' => "371425199707146471",
+            'birthday' => "19970714",
+            'sex' => false,
+            'nativeplace' => "山东青岛",
+
+        );
+        DB::table('UserAccount')->insert($test_user_account);
+        DB::table('UserInfo')->insert($test_user_info);
+
+        $test_user_account = array(
+            'id' => 9,
+            'username' => 'instructor2',
+            'password' => $this->hash('instructor2'),
+            'type' => 2
+        );
+        $test_user_info = array(
+            'uid' => 9,
+            "name" => "王艳坤",
+            'identity' => "370703199705023512",
+            'birthday' => "19970502",
+            'sex' => false,
+            'nativeplace' => "山东青岛",
+
+        );
+        DB::table('UserAccount')->insert($test_user_account);
+        DB::table('UserInfo')->insert($test_user_info);
+
+        $test_user_account = array(
+            'id' => 10,
+            'username' => 'instructor3',
+            'password' => $this->hash('instructor3'),
+            'type' => 2
+        );
+        $test_user_info = array(
+            'uid' => 10,
+            "name" => "杨金宝",
+            'identity' => "37142519960927607X",
+            'birthday' => "19960927",
+            'sex' => false,
+            'nativeplace' => "山东青岛",
+
+        );
+        DB::table('UserAccount')->insert($test_user_account);
+        DB::table('UserInfo')->insert($test_user_info);
+
+        $test_user_account = array(
+            'id' => 11,
+            'username' => 'instructor4',
+            'password' => $this->hash('instructor4'),
+            'type' => 2
+        );
+        $test_user_info = array(
+            'uid' => 11,
+            "name" => "张万泉",
+            'identity' => "371423199608183418",
+            'birthday' => "19960927",
+            'sex' => false,
+            'nativeplace' => "山东青岛",
+
+        );
+        DB::table('UserAccount')->insert($test_user_account);
+        DB::table('UserInfo')->insert($test_user_info);
+
+
+
+        $classes=array(
+            'id'=>10,
+            'name'=>'辅导员班级1'
+        );
+        DB::table('Classes')->insert($classes);
+
+        $classes=array(
+            'id'=>11,
+            'name'=>'辅导员班级2'
+        );
+        DB::table('Classes')->insert($classes);
+
+        $classes=array(
+            'id'=>12,
+            'name'=>'辅导员班级3'
+        );
+        DB::table('Classes')->insert($classes);
+
+
+        $classes=array(
+            'id'=>13,
+            'name'=>'辅导员班级4'
+        );
+        DB::table('Classes')->insert($classes);
+
+        $classes=array(
+            'id'=>14,
+            'name'=>'辅导员班级5'
+        );
+        DB::table('Classes')->insert($classes);
+
+        $instructor=array(
+            'id'=>1,
+            'uid'=>8,
+            'classid'=>10
+        );
+        DB::table('Instructor')->insert($instructor);
+        $instructor=array(
+            'id'=>2,
+            'uid'=>9,
+            'classid'=>11
+        );
+        DB::table('Instructor')->insert($instructor);
+        $instructor=array(
+            'id'=>3,
+            'uid'=>10,
+            'classid'=>12
+        );
+        DB::table('Instructor')->insert($instructor);
+
+        $instructor=array(
+            'id'=>4,
+            'uid'=>10,
+            'classid'=>14
+        );
+        DB::table('Instructor')->insert($instructor);
+
+        $instructor=array(
+            'id'=>5,
+            'uid'=>10,
+            'classid'=>10
+        );
+        DB::table('Instructor')->insert($instructor);
     }
 }

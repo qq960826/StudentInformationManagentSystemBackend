@@ -132,7 +132,7 @@ class HelperService
         $messagemap[1902] = "辅导员id不存在";
 
         $messagemap[2000] = "学期编辑成功";
-        $messagemap[2001] = "学期id非法";
+        $messagemap[2001] = "辅导员id非法";
         $messagemap[2002] = "辅导员id不存在";
         $messagemap[2003] = "用户id不存在";
         $messagemap[2004] = "用户身份不是辅导员";

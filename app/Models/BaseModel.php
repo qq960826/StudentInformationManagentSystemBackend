@@ -58,4 +58,43 @@ class BaseModel extends Model
     {
         return $this->get_by_id($id, $idname)->update($content);
     }
+
+
+    function search($select = null, $condition = null, $order = null)
+    {
+        $query=$this;
+        if (!is_null($select) && isset($select['this'])) {
+            $query = $query->select($select['this']);
+        }
+
+        if (!is_null($select)) {
+            foreach ($select as $key => $val) {
+                if ($key == 'this')
+                    continue;
+                $query = $query->with([$key => function ($query) use ($key, $val) {
+                    if (!is_null($val) && isset($val)) {
+                        $query->select($val);
+                    }
+                }]);
+            }
+        }
+        if (!is_null($condition)) {
+            foreach ($condition as $key => $val) {
+                if ($key == 'this')
+                    continue;
+                $query = $query->whereHas($key, function ($query) use ($key, $val, $order) {
+                    if (!is_null($val) && isset($val))
+                        $query->where($val);
+                    if (!is_null($order) && isset($order[$key]))
+                        $query->orderBy($order[$key]['key'], $order[$key]['order']);
+                });
+            }
+            if (isset($condition['this']))
+                $query = $query->where($condition['this']);
+        }
+        if (!is_null($order) && isset($order['this'])) {
+            $query = $query->orderBy($order['this']['key'], $order['this']['order']);
+        }
+        return $query;
+    }
 }

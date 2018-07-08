@@ -149,9 +149,9 @@ class UserService extends BaseService
             $user_info['name'] = $info['name'];
 
         }
-        if(count($user_account)>0)
+        if (count($user_account) > 0)
             $this->userRepository->change_useraccount($id, $user_account);
-        if(count($user_info)>0)
+        if (count($user_info) > 0)
             $this->userRepository->change_userinfo($id, $user_info);
         return 900;
     }
@@ -192,42 +192,25 @@ class UserService extends BaseService
 
     public function usersearch($info)
     {
+        $condition = array();
+        $order = null;
+        $filter = array(
+            'userinfo' => ['name', 'identity', 'nativeplace'],
+            'this' => ['id', 'username', 'type'],
+            'useraccount'=>[]
+        );
+
         if (!isset($info["currentpage"]) || $info["currentpage"] == '')
             $info["currentpage"] = 0;
         if (!isset($info["sep"]) || $info["sep"] == '')
             $info["sep"] = 50;
-        $user_account_key = ['id', 'username', 'type'];
-        $user_info_key = ['name', 'identity', 'nativeplace'];
-        $useraccount_condition = array();
-        $userinfo_condition = array();
-        if (isset($info["condition"]) && !is_null($info["condition"]) && is_array($info["condition"])) {
-
-            foreach ($info["condition"] as $index => $item) {
-                $condition = $this->helperService->search_condition_process($item);
-                if (is_null($condition))
-                    continue;
-                if (in_array($item['key'], $user_account_key))
-                    $useraccount_condition[] = $condition;
-                elseif (in_array($item['key'], $user_info_key))
-                    $userinfo_condition[] = $condition;
-            }
+        if (isset($info["condition"])) {
+            $condition = $this->condition_process($filter, $info["condition"]);
         }
-        $orderby = null;
-        if (isset($info["orderby"])) {
-            if (in_array($info["orderby"], $user_account_key)) {
-                $orderby = array();
-                $orderby['method'] = 'useraccount';
-                $orderby["key"] = $info["orderby"];
-            } elseif (in_array($info["orderby"], $user_info_key)) {
-                $orderby = array();
-                $orderby['method'] = 'userinfo';
-                $orderby["key"] = $info["orderby"];
-            }
+        if (isset($info["by"])) {
+            $order=$this->order_process($filter,$info);
         }
-        $order = 'ASC';
-        if (isset($info["order"]) && $info["order"] == 'DESC')
-            $order = 'DESC';
-        $query = $this->userRepository->search_user($useraccount_condition, $userinfo_condition, $orderby, $order);
+        $query = $this->userRepository->search_user($condition, $order);
 
 
         $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
@@ -235,7 +218,7 @@ class UserService extends BaseService
         foreach ($data as $key => $val) {
             $data[$key] = $this->helperService->array_flatten($val);
         }
-        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->lastPage(), 'current' => $paginate->currentPage(),'data'=>$data);
+        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
 
         return $result;
     }

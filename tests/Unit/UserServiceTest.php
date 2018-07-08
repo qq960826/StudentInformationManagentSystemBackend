@@ -168,38 +168,38 @@ class UserServiceTest extends TestCase
     public function usersearchtest()
     {
         $info = array();
-        $info['condition'][] = array('data' => '430602', 'fuzzy' => true, 'key' => 'identity');
+        $info['condition']['identity']=array('data' => '430602', 'fuzzy' => true);
         $result = $this->userservice->usersearch($info);
         $this->assertEquals("王梓樯", $result['data'][0]["name"]);//单用户模糊搜索测试
 
         $info = array();
-        $info['condition'][] = array('data' => 'test', 'fuzzy' => true, 'key' => 'username');
+        $info['condition']['username']=array('data' => 'test', 'fuzzy' => true);
         $result = $this->userservice->usersearch($info);
         $this->assertEquals(3, count($result['data']));//多用户模糊搜索测试
 
         $info = array();
-        $info['condition'][] = array('data' => 'test', 'fuzzy' => false, 'key' => 'username');
+        $info['condition']['username']=array('data' => 'test', 'fuzzy' => false);
         $result = $this->userservice->usersearch($info);
         $this->assertEquals(0, count($result['data']));//精准搜索测试
 
         $info = array();
-        $info['condition'][] = array('data' => 'test', 'fuzzy' => true, 'key' => 'username');
-        $info['orderby'] = 'username';
+        $info['condition']['username']=array('data' => 'test', 'fuzzy' => true);
+        $info['by'] = 'username';
         $info['order'] = 'ASC';
         $result = $this->userservice->usersearch($info);//升序搜索测试
         $this->assertEquals('test0', $result['data'][0]['username']);
 
         $info = array();
-        $info['condition'][] = array('data' => 'test', 'fuzzy' => true, 'key' => 'username');
-        $info['orderby'] = 'username';
+        $info['condition']['username']=array('data' => 'test', 'fuzzy' => true);
+        $info['by'] = 'username';
         $info['order'] = 'DESC';
         $result = $this->userservice->usersearch($info);//降序搜索测试
         $this->assertEquals('test2', $result['data'][0]['username']);
 
 
         $info = array();
-        $info['condition'][] = array('data' => 'test', 'fuzzy' => true, 'key' => 'username');
-        $info['orderby'] = 'id';
+        $info['condition']['username']=array('data' => 'test', 'fuzzy' => true);
+        $info['by'] = 'id';
         $info['order'] = 'ASC';
         $result = $this->userservice->usersearch($info);//升序搜索测试
         $this->assertEquals('test1', $result['data'][0]['username']);
@@ -207,7 +207,7 @@ class UserServiceTest extends TestCase
 
         $info = array();
         $info['condition'][] = array();
-        $info['orderby'] = 'id';
+        $info['by'] = 'id';
         $info['order'] = 'ASC';
         $info['currentpage'] = 1;
         $info['sep'] = 3;
@@ -218,7 +218,7 @@ class UserServiceTest extends TestCase
 
         $info = array();
         $info['condition'][] = array();
-        $info['orderby'] = 'id';
+        $info['by'] = 'id';
         $info['order'] = 'ASC';
         $info['currentpage'] = 2;
         $info['sep'] = 3;

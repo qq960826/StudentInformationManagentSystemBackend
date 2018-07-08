@@ -16,13 +16,16 @@ class Instructor extends BaseModel
 
     public function useraccount()
     {
-        return $this->belongsTo("App\Models\UserAccount", "id", "uid");
+        return $this->hasOne("App\Models\UserAccount", "id", "uid");
     }
 
     public function classes()
     {
-        return $this->hasOne('App\Model\Classes', 'id', 'cid');
+        return $this->hasOne('App\Models\Classes', 'id', 'classid');
     }
 
-
+    public function userinfo()
+    {
+        return $this->hasOne('App\Models\UserInfo', 'uid', 'uid');
+    }
 }

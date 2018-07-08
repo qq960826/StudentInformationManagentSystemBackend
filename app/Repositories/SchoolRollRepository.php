@@ -46,15 +46,14 @@ class SchoolRollRepository
         return $this->classes->update_by_id($id, ['name' => $name]);
     }
 
-    function classes_search($condition = null, $orderby = null, $order = 'ASC')
+    function classes_search($condition = null, $order = 'ASC')
     {
-        $res_query = $this->classes
-            ->select('id', 'name');
-        if (!is_null($condition))
-            $res_query = $res_query->where($condition);
-        if (!is_null($orderby) && isset($orderby['method']) && $orderby['method'] = 'classes' && $orderby['key'] != '')
-            $res_query->orderBy($orderby['key'], $order);
-        return $res_query;
+        $query = $this->classes
+            ->search(
+                array('this' => ['id', 'name']),
+                $condition,
+                $order);
+        return $query;
     }
 
 
@@ -76,15 +75,14 @@ class SchoolRollRepository
         return $this->semester->update_by_id($id, ['name' => $name]);
     }
 
-    function semester_search($condition = null, $orderby = null, $order = 'ASC')
+    function semester_search($condition = null, $order = null)
     {
-        $res_query = $this->semester
-            ->select('id', 'name');
-        if (!is_null($condition))
-            $res_query = $res_query->where($condition);
-        if (!is_null($orderby) && isset($orderby['method']) && $orderby['method'] = 'semester' && $orderby['key'] != '')
-            $res_query->orderBy($orderby['key'], $order);
-        return $res_query;
+        $query = $this->semester
+            ->search(
+                array('this' => ['id', 'name']),
+                $condition,
+                $order);
+        return $query;
     }
 
 
@@ -139,7 +137,20 @@ class SchoolRollRepository
         return $this->instructor->update_by_id($id, $info, 'id');
     }
 
-    function instructor_search(){
-        
+    function instructor_search($condition = null, $order = null)
+    {
+
+        $query = $this->instructor->search(
+            array(
+                'useraccount' => ['id', 'username'],
+                'classes' => ['id', 'name as classname'],
+                'userinfo' => ['uid', 'name as peoplename'],
+                'this' => ['id as iid', 'uid', 'classid']),
+            $condition,
+            $order
+        );
+        return $query;
     }
+
+
 }

@@ -66,33 +66,24 @@ class SchoolRollService extends BaseService
 
     function classes_search($info)
     {
+        $condition = array();
+        $order = null;
+        $filter = array(
+            'this' => ['id', 'name']
+        );
         if (!isset($info["currentpage"]) || $info["currentpage"] == '')
             $info["currentpage"] = 0;
         if (!isset($info["sep"]) || $info["sep"] == '')
             $info["sep"] = 50;
-        $classes_key = ['id', 'name'];
-        $classes_condition = array();
-        if (isset($info["condition"]) && !is_null($info["condition"]) && is_array($info["condition"])) {
-            foreach ($info["condition"] as $index => $item) {
-                $condition = $this->helperService->search_condition_process($item);
-                if (is_null($condition))
-                    continue;
-                if (in_array($item['key'], $classes_key))
-                    $classes_condition[] = $condition;
-            }
+        if (isset($info["condition"])) {
+            $condition = $this->condition_process($filter, $info["condition"]);
         }
-        $orderby = null;
-        if (isset($info["orderby"])) {
-            if (in_array($info["orderby"], $classes_key)) {
-                $orderby = array();
-                $orderby['method'] = 'classes';
-                $orderby["key"] = $info["orderby"];
-            }
+        if (isset($info["by"])) {
+            $order = $this->order_process($filter, $info);
         }
-        $order = 'ASC';
-        if (isset($info["order"]) && $info["order"] == 'DESC')
-            $order = 'DESC';
-        $query = $this->schoolRollRepository->classes_search($classes_condition, $orderby, $order);
+        $query = $this->schoolRollRepository->classes_search($condition, $order);
+
+
         $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
         $data = $paginate->toArray()['data'];
         foreach ($data as $key => $val) {
@@ -145,34 +136,25 @@ class SchoolRollService extends BaseService
 
     function semester_search($info)
     {
+        $condition = array();
+        $order = null;
+        $filter = array(
+            'this' => ['id', 'name']
+        );
+
         if (!isset($info["currentpage"]) || $info["currentpage"] == '')
             $info["currentpage"] = 0;
         if (!isset($info["sep"]) || $info["sep"] == '')
             $info["sep"] = 50;
-        $semester_key = ['id', 'name'];
-        $semester_condition = array();
-        if (isset($info["condition"]) && !is_null($info["condition"]) && is_array($info["condition"])) {
-            foreach ($info["condition"] as $index => $item) {
-                $condition = $this->helperService->search_condition_process($item);
-                if (is_null($condition))
-                    continue;
-                if (in_array($item['key'], $semester_key))
-                    $semester_condition[] = $condition;
-            }
+        if (isset($info["condition"])) {
+            $condition = $this->condition_process($filter, $info["condition"]);
         }
-        $orderby = null;
-        if (isset($info["orderby"])) {
-            if (in_array($info["orderby"], $semester_key)) {
-                $orderby = array();
-                $orderby['method'] = 'classes';
-                $orderby["key"] = $info["orderby"];
-            }
+        if (isset($info["by"])) {
+            $order = $this->order_process($filter, $info);
         }
-        $order = 'ASC';
-        if (isset($info["order"]) && $info["order"] == 'DESC')
-            $order = 'DESC';
-        $query = $this->schoolRollRepository->semester_search($semester_condition, $orderby, $order);
+        $query = $this->schoolRollRepository->semester_search($condition, $order);
         $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
+
         $data = $paginate->toArray()['data'];
         foreach ($data as $key => $val) {
             $data[$key] = $this->helperService->array_flatten($val);
@@ -215,7 +197,7 @@ class SchoolRollService extends BaseService
     {
         $instructorupdate = array();
         if (!isset($id) || is_null($id) || $id == '')
-            return 2001;//学期id非法
+            return 2001;//辅导员id非法
         if (!$this->schoolRollRepository->instructor->exist_by_id($id))
             return 2002;//辅导员id不存在
         if (isset($info['uid']) && $info['uid'] != '') {
@@ -244,7 +226,35 @@ class SchoolRollService extends BaseService
 
     function instructor_search($info)
     {
+        $condition = array();
+        $order = null;
+        $filter = array(
+            'this' => ['id', 'uid', 'classid'],
+            'useraccount' => ['username'],
+            'classes' => ['classname'],
+            'userinfo' => ['peoplename'],
+        );
+        if (!isset($info["currentpage"]) || $info["currentpage"] == '')
+            $info["currentpage"] = 0;
+        if (!isset($info["sep"]) || $info["sep"] == '')
+            $info["sep"] = 50;
+        if (isset($info["condition"])) {
+            $condition = $this->condition_process($filter, $info["condition"]);
+        }
+        if (isset($info["by"])) {
+            $order = $this->order_process($filter, $info);
+        }
+        $query = $this->schoolRollRepository->instructor_search($condition, $order);
+        $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
+        $data = $paginate->toArray()['data'];
+        foreach ($data as $key => $val) {
+            $data[$key] = $this->helperService->array_flatten($val);
+            $data[$key] ['id']=$data[$key] ['iid'];
+            unset($data[$key] ['iid']);
+        }
 
+        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
+        return $result;
     }
 
 

@@ -24,6 +24,7 @@ class SchoolRollServiceTest extends TestCase
     {
         $this->classTest();
         $this->semesterTest();
+        $this->instructorTest();
     }
 
     public function classTest(){
@@ -38,6 +39,12 @@ class SchoolRollServiceTest extends TestCase
         $this->semester_deleteTest();
         $this->semester_editTest();
         $this->semester_searchTest();
+    }
+    public function instructorTest(){
+        $this->instructor_addTest();
+        $this->instructor_editTest();
+        $this->instructor_deleteTest();
+        $this->instructor_serachTest();
     }
 
     public function class_addTest()
@@ -89,40 +96,40 @@ class SchoolRollServiceTest extends TestCase
     public function class_searchTest()
     {
         $info = array();
-        $info['condition'][] = array('data' => '查询', 'fuzzy' => true, 'key' => 'name');
+        $info['condition']['name'] = array('data' => '查询', 'fuzzy' => true);
         $result = $this->schoolrollService->classes_search($info);
         $this->assertEquals(0, count($result['data']));//单用户模糊搜索测试
 
         $info = array();
-        $info['condition'][] = array('data' => '查找', 'fuzzy' => true, 'key' => 'name');
+        $info['condition']['name'] = array('data' => '查找', 'fuzzy' => true);
         $result = $this->schoolrollService->classes_search($info);
         $this->assertEquals(4, count($result['data']));//单用户模糊搜索测试
 
         $info = array();
-        $info['condition'][] = array('data' => '查找', 'fuzzy' => true, 'key' => 'name');
-        $info['orderby'] = 'name';
+        $info['condition']['name'] = array('data' => '查找', 'fuzzy' => true,);
+        $info['by'] = 'name';
         $info['order'] = 'ASC';
         $result = $this->schoolrollService->classes_search($info);
         $this->assertEquals('查找班级0', $result['data'][0]['name']);
 
         $info = array();
-        $info['condition'][] = array('data' => '查找', 'fuzzy' => true, 'key' => 'name');
-        $info['orderby'] = 'id';
+        $info['condition']['name'] = array('data' => '查找', 'fuzzy' => true);
+        $info['by'] = 'id';
         $info['order'] = 'ASC';
         $result = $this->schoolrollService->classes_search($info);
         $this->assertEquals('查找班级1', $result['data'][0]['name']);
 
         $info = array();
-        $info['condition'][] = array('data' => '查找', 'fuzzy' => true, 'key' => 'name');
-        $info['orderby'] = 'id';
+        $info['condition']['name'] = array('data' => '查找', 'fuzzy' => true);
+        $info['by'] = 'id';
         $info['order'] = 'DESC';
         $result = $this->schoolrollService->classes_search($info);
         $this->assertEquals('查找班级0', $result['data'][0]['name']);
 
 
         $info = array();
-        $info['condition'][] = array('data' => '查找', 'fuzzy' => true, 'key' => 'name');
-        $info['orderby'] = 'id';
+        $info['condition']['name'] = array('data' => '查找', 'fuzzy' => true);
+        $info['by'] = 'id';
         $info['order'] = 'ASC';
         $info['currentpage'] = 1;
         $info['sep'] = 2;
@@ -131,8 +138,8 @@ class SchoolRollServiceTest extends TestCase
         $this->assertEquals(6, $result['data'][0]['id']);
 
         $info = array();
-        $info['condition'][] = array('data' => '查找', 'fuzzy' => true, 'key' => 'name');
-        $info['orderby'] = 'id';
+        $info['condition']['name'] = array('data' => '查找', 'fuzzy' => true);
+        $info['by'] = 'id';
         $info['order'] = 'ASC';
         $info['currentpage'] = 2;
         $info['sep'] = 2;
@@ -169,8 +176,8 @@ class SchoolRollServiceTest extends TestCase
         $this->assertEquals(1502, $result);
 
         $info = array();
-        $info['condition'][] = array('data' => 3, 'fuzzy' => false, 'key' => 'id');
-        $info['orderby'] = 'id';
+        $info['condition']['id'] = array('data' => 3, 'fuzzy' => false);
+        $info['by'] = 'id';
         $info['order'] = 'ASC';
         $result = $this->schoolrollService->semester_search($info);
         $this->assertEquals(1, count($result['data']));
@@ -179,8 +186,8 @@ class SchoolRollServiceTest extends TestCase
         $this->assertEquals(1500, $result);
 
         $info = array();
-        $info['condition'][] = array('data' => 3, 'fuzzy' => false, 'key' => 'id');
-        $info['orderby'] = 'id';
+        $info['condition']['id'] = array('data' => 3, 'fuzzy' => false);
+        $info['by'] = 'id';
         $info['order'] = 'ASC';
         $result = $this->schoolrollService->semester_search($info);
         $this->assertEquals(0, count($result['data']));
@@ -201,8 +208,8 @@ class SchoolRollServiceTest extends TestCase
 
 
         $info = array();
-        $info['condition'][] = array('data' => 1, 'fuzzy' => false, 'key' => 'id');
-        $info['orderby'] = 'id';
+        $info['condition']['id'] = array('data' => 1, 'fuzzy' => false);
+        $info['by'] = 'id';
         $info['order'] = 'ASC';
         $result = $this->schoolrollService->semester_search($info);
         $this->assertEquals('测试学期1', $result['data'][0]['name']);
@@ -213,8 +220,8 @@ class SchoolRollServiceTest extends TestCase
         $this->assertEquals(1600, $result);
 
         $info = array();
-        $info['condition'][] = array('data' => 1, 'fuzzy' => false, 'key' => 'id');
-        $info['orderby'] = 'id';
+        $info['condition']['id'] = array('data' => 1, 'fuzzy' => false);
+        $info['by'] = 'id';
         $info['order'] = 'ASC';
         $result = $this->schoolrollService->semester_search($info);
         $this->assertEquals('测试学期5', $result['data'][0]['name']);
@@ -223,40 +230,40 @@ class SchoolRollServiceTest extends TestCase
     public function semester_searchTest()
     {
         $info = array();
-        $info['condition'][] = array('data' => '查询', 'fuzzy' => true, 'key' => 'name');
+        $info['condition']['name'] = array('data' => '查询', 'fuzzy' => true);
         $result = $this->schoolrollService->semester_search($info);
         $this->assertEquals(0, count($result['data']));//单用户模糊搜索测试
 
         $info = array();
-        $info['condition'][] = array('data' => '查找', 'fuzzy' => true, 'key' => 'name');
+        $info['condition']['name'] = array('data' => '查找', 'fuzzy' => true);
         $result = $this->schoolrollService->semester_search($info);
         $this->assertEquals(4, count($result['data']));//单用户模糊搜索测试
 
         $info = array();
-        $info['condition'][] = array('data' => '查找', 'fuzzy' => true, 'key' => 'name');
-        $info['orderby'] = 'name';
+        $info['condition']['name'] = array('data' => '查找', 'fuzzy' => true);
+        $info['by'] = 'name';
         $info['order'] = 'ASC';
         $result = $this->schoolrollService->semester_search($info);
         $this->assertEquals('查找学期0', $result['data'][0]['name']);
 
         $info = array();
-        $info['condition'][] = array('data' => '查找', 'fuzzy' => true, 'key' => 'name');
-        $info['orderby'] = 'id';
+        $info['condition']['name'] = array('data' => '查找', 'fuzzy' => true);
+        $info['by'] = 'id';
         $info['order'] = 'ASC';
         $result = $this->schoolrollService->semester_search($info);
         $this->assertEquals('查找学期1', $result['data'][0]['name']);
 
         $info = array();
-        $info['condition'][] = array('data' => '查找', 'fuzzy' => true, 'key' => 'name');
-        $info['orderby'] = 'id';
+        $info['condition']['name'] = array('data' => '查找', 'fuzzy' => true);
+        $info['by'] = 'id';
         $info['order'] = 'DESC';
         $result = $this->schoolrollService->semester_search($info);
         $this->assertEquals('查找学期0', $result['data'][0]['name']);
 
 
         $info = array();
-        $info['condition'][] = array('data' => '查找', 'fuzzy' => true, 'key' => 'name');
-        $info['orderby'] = 'id';
+        $info['condition']['name'] = array('data' => '查找', 'fuzzy' => true);
+        $info['by'] = 'id';
         $info['order'] = 'ASC';
         $info['currentpage'] = 1;
         $info['sep'] = 2;
@@ -265,13 +272,108 @@ class SchoolRollServiceTest extends TestCase
         $this->assertEquals(6, $result['data'][0]['id']);
 
         $info = array();
-        $info['condition'][] = array('data' => '查找', 'fuzzy' => true, 'key' => 'name');
-        $info['orderby'] = 'id';
+        $info['condition']['name'] = array('data' => '查找', 'fuzzy' => true);
+        $info['by'] = 'id';
         $info['order'] = 'ASC';
         $info['currentpage'] = 2;
         $info['sep'] = 2;
         $result = $this->schoolrollService->semester_search($info);
         $this->assertEquals(2, count($result['data']));
         $this->assertEquals(8, $result['data'][0]['id']);
+    }
+
+    public function instructor_addTest(){
+        $result = $this->schoolrollService->instructor_add('','1');
+        $this->assertEquals(1801, $result);
+
+        $result = $this->schoolrollService->instructor_add('1','');
+        $this->assertEquals(1802, $result);
+
+        $result = $this->schoolrollService->instructor_add(100,10);
+        $this->assertEquals(1804, $result);
+
+        $result = $this->schoolrollService->instructor_add(10,100);
+        $this->assertEquals(1806, $result);
+
+        $result = $this->schoolrollService->instructor_add(5,10);
+        $this->assertEquals(1805, $result);
+
+        $result = $this->schoolrollService->instructor_add(8,10);
+        $this->assertEquals(1803, $result);
+
+        $result = $this->schoolrollService->instructor_add(8,11);
+        $this->assertEquals(1800, $result);
+
+        $result = $this->schoolrollService->instructor_add(8,11);
+        $this->assertEquals(1803, $result);
+    }
+
+    public function instructor_editTest(){
+
+        $result = $this->schoolrollService->instructor_edit('','1');
+        $this->assertEquals(2001, $result);
+
+        $info=array();
+        $result = $this->schoolrollService->instructor_edit(100,$info);
+        $this->assertEquals(2002, $result);
+
+        $info=array(
+            'uid'=>100
+        );
+        $result = $this->schoolrollService->instructor_edit(3,$info);
+        $this->assertEquals(2003, $result);
+
+        $info=array(
+            'uid'=>7
+        );
+        $result = $this->schoolrollService->instructor_edit(3,$info);
+        $this->assertEquals(2004, $result);
+
+        $info=array(
+            'classid'=>100
+        );
+        $result = $this->schoolrollService->instructor_edit(3,$info);
+        $this->assertEquals(2005, $result);
+
+        $info=array(
+            'uid'=>9,
+            'classid'=>11
+        );
+        $result = $this->schoolrollService->instructor_edit(3,$info);
+        $this->assertEquals(2006, $result);
+
+        $info=array(
+            'uid'=>10,
+            'classid'=>12
+        );
+        $result = $this->schoolrollService->instructor_edit(3,$info);
+        $this->assertEquals(2000, $result);
+
+        $info=array(
+            'uid'=>11,
+            'classid'=>13
+        );
+        $result = $this->schoolrollService->instructor_edit(3,$info);
+        $this->assertEquals(2000, $result);
+    }
+
+    public function instructor_deleteTest(){
+        $result = $this->schoolrollService->instructor_delete('');
+        $this->assertEquals(1901, $result);//
+
+        $result = $this->schoolrollService->instructor_delete(123);
+        $this->assertEquals(1902, $result);
+
+        $result = $this->schoolrollService->instructor_delete(123);
+        $this->assertEquals(1902, $result);
+
+        $result = $this->schoolrollService->instructor_delete(5);
+        $this->assertEquals(1900, $result);
+
+    }
+
+    public function instructor_serachTest(){
+        $info=array();
+        $this->schoolrollService->instructor_search($info);
     }
 }
