@@ -224,9 +224,9 @@ class SchoolRollService extends BaseService
         $order = null;
         $filter = array(
             'this' => ['id', 'uid', 'classid'],
-            'UserAccount' => ['username'=>'name'],
-            'Classes' => ['classname'=>'name'],
-            'UserInfo' => ['peoplename'=>'name'],
+            'UserAccount' => ['username' => 'name'],
+            'Classes' => ['classname' => 'name'],
+            'UserInfo' => ['peoplename' => 'name'],
         );
         if (!isset($info["currentpage"]) || $info["currentpage"] == '')
             $info["currentpage"] = 0;
@@ -254,7 +254,7 @@ class SchoolRollService extends BaseService
             return 2201;//参数不完整
         if (strlen($info['studentid']) > 20)
             return 2202;//学号长度不能大于20
-        if (!$this->schoolRollRepository->classes->exist_by_id('classid'))
+        if (!$this->schoolRollRepository->classes->exist_by_id($info['classid']))
             return 2203;//班级id不存在
         if ($this->schoolRollRepository->studentInfo->exist_by_condition([['studentid', '=', $info['studentid']]]))
             return 2204;//该学生学籍信息已存在
@@ -270,7 +270,7 @@ class SchoolRollService extends BaseService
     {
         if (!isset($id) || is_null($id) || $id == '')
             return 2301;//学籍id非法
-        if ($this->schoolRollRepository->studentInfo->exist_by_id($id))
+        if (!$this->schoolRollRepository->studentInfo->exist_by_id($id))
             return 2302;//学籍信息不存在；
         $this->schoolRollRepository->studentInfo->delete_by_id($id);
         return 2300;//学籍信息删除成功
@@ -283,6 +283,11 @@ class SchoolRollService extends BaseService
             return 2401;//学籍id非法
         if (!$this->schoolRollRepository->studentInfo->exist_by_id($id))
             return 2402;//学籍id不存在
+        if (isset($info['classid']) && $info['classid'] != '') {
+            if (!$this->schoolRollRepository->classes->exist_by_id($info['classid']))
+                return 2406;//班级id不存在
+            $studentinfoupdate['classid'] = $info['classid'];
+        }
         if (isset($info['studentid']) && $info['studentid'] != '') {
             if (strlen($info['studentid']) > 20)
                 return 2403;//学号长度不能大于20
@@ -294,18 +299,35 @@ class SchoolRollService extends BaseService
             $studentinfoupdate['uid'] = $useraccount->id;
             $studentinfoupdate['studentid'] = $info['studentid'];
         }
-        if (isset($info['classid']) && $info['classid'] != '') {
-            if (!$this->schoolRollRepository->classes->exist_by_id('classid'))
-                return 2406;//班级id不存在
-            $studentinfoupdate['classid'] = $info['classid'];
-        }
         $this->schoolRollRepository->studentInfo_change($id, $studentinfoupdate);
         return 2400;//学籍信息修改成功
     }
 
     function studentinfo_search($info)
     {
+        $condition = array();
+        $order = null;
+        $filter = array(
+            'this' => ['id', 'uid', 'classid', 'studentid', 'enrollyear'],
+            'Classes' => ['classname' => 'name'],
+            'UserInfo' => ['peoplename' => 'name','identity'],
+        );
+        if (!isset($info["currentpage"]) || $info["currentpage"] == '')
+            $info["currentpage"] = 0;
+        if (!isset($info["sep"]) || $info["sep"] == '')
+            $info["sep"] = 50;
+        if (isset($info["condition"])) {
+            $condition = $this->condition_process($filter, $info["condition"]);
+        }
+        if (isset($info["by"])) {
+            $order = $this->order_process($filter, $info);
+        }
+        $query = $this->schoolRollRepository->studentInfo_search($condition, $order);
+        $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
+        $data = $paginate->toArray()['data'];
 
+        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
+        return $result;
     }
 
 }

@@ -161,120 +161,125 @@ class DatabaseSeeder extends Seeder
         $this->addInstructor();
         $this->addStudent();
     }
-    public function addClass(){
-        $classes=array(
-            'id'=>1,
-            'name'=>'测试班级1'
+
+    public function addClass()
+    {
+        $classes = array(
+            'id' => 1,
+            'name' => '测试班级1'
         );
         DB::table('Classes')->insert($classes);
 
-        $classes=array(
-            'id'=>2,
-            'name'=>'测试班级2'
+        $classes = array(
+            'id' => 2,
+            'name' => '测试班级2'
         );
         DB::table('Classes')->insert($classes);
 
-        $classes=array(
-            'id'=>3,
-            'name'=>'删除班级1'
+        $classes = array(
+            'id' => 3,
+            'name' => '删除班级1'
         );
         DB::table('Classes')->insert($classes);
 
-        $classes=array(
-            'id'=>4,
-            'name'=>'编辑班级1'
+        $classes = array(
+            'id' => 4,
+            'name' => '编辑班级1'
         );
         DB::table('Classes')->insert($classes);
 
-        $classes=array(
-            'id'=>5,
-            'name'=>'编辑班级2'
+        $classes = array(
+            'id' => 5,
+            'name' => '编辑班级2'
         );
         DB::table('Classes')->insert($classes);
 
-        $classes=array(
-            'id'=>6,
-            'name'=>'查找班级1'
+        $classes = array(
+            'id' => 6,
+            'name' => '查找班级1'
         );
         DB::table('Classes')->insert($classes);
 
-        $classes=array(
-            'id'=>7,
-            'name'=>'查找班级2'
+        $classes = array(
+            'id' => 7,
+            'name' => '查找班级2'
         );
         DB::table('Classes')->insert($classes);
 
 
-        $classes=array(
-            'id'=>8,
-            'name'=>'查找班级3'
+        $classes = array(
+            'id' => 8,
+            'name' => '查找班级3'
         );
         DB::table('Classes')->insert($classes);
 
-        $classes=array(
-            'id'=>9,
-            'name'=>'查找班级0'
+        $classes = array(
+            'id' => 9,
+            'name' => '查找班级0'
         );
         DB::table('Classes')->insert($classes);
     }
 
-    public function addSemester(){
-        $classes=array(
-            'id'=>1,
-            'name'=>'测试学期1'
+    public function addSemester()
+    {
+        $classes = array(
+            'id' => 1,
+            'name' => '测试学期1'
         );
         DB::table('Semester')->insert($classes);
 
-        $classes=array(
-            'id'=>2,
-            'name'=>'测试学期2'
+        $classes = array(
+            'id' => 2,
+            'name' => '测试学期2'
         );
         DB::table('Semester')->insert($classes);
 
-        $classes=array(
-            'id'=>3,
-            'name'=>'删除学期1'
+        $classes = array(
+            'id' => 3,
+            'name' => '删除学期1'
         );
         DB::table('Semester')->insert($classes);
 
-        $classes=array(
-            'id'=>4,
-            'name'=>'编辑学期1'
+        $classes = array(
+            'id' => 4,
+            'name' => '编辑学期1'
         );
         DB::table('Semester')->insert($classes);
 
-        $classes=array(
-            'id'=>5,
-            'name'=>'编辑学期2'
+        $classes = array(
+            'id' => 5,
+            'name' => '编辑学期2'
         );
         DB::table('Semester')->insert($classes);
 
-        $classes=array(
-            'id'=>6,
-            'name'=>'查找学期1'
+        $classes = array(
+            'id' => 6,
+            'name' => '查找学期1'
         );
         DB::table('Semester')->insert($classes);
 
-        $classes=array(
-            'id'=>7,
-            'name'=>'查找学期2'
+        $classes = array(
+            'id' => 7,
+            'name' => '查找学期2'
         );
         DB::table('Semester')->insert($classes);
 
 
-        $classes=array(
-            'id'=>8,
-            'name'=>'查找学期3'
+        $classes = array(
+            'id' => 8,
+            'name' => '查找学期3'
         );
         DB::table('Semester')->insert($classes);
 
-        $classes=array(
-            'id'=>9,
-            'name'=>'查找学期0'
+        $classes = array(
+            'id' => 9,
+            'name' => '查找学期0'
         );
         DB::table('Semester')->insert($classes);
     }
-    public function addInstructor(){
+
+    public function addInstructor()
+    {
         $test_user_account = array(
             'id' => 8,
             'username' => 'instructor1',
@@ -348,96 +353,94 @@ class DatabaseSeeder extends Seeder
         DB::table('UserInfo')->insert($test_user_info);
 
 
-
-        $classes=array(
-            'id'=>10,
-            'name'=>'辅导员班级1'
+        $classes = array(
+            'id' => 10,
+            'name' => '辅导员班级1'
         );
         DB::table('Classes')->insert($classes);
 
-        $classes=array(
-            'id'=>11,
-            'name'=>'辅导员班级2'
+        $classes = array(
+            'id' => 11,
+            'name' => '辅导员班级2'
         );
         DB::table('Classes')->insert($classes);
 
-        $classes=array(
-            'id'=>12,
-            'name'=>'辅导员班级3'
-        );
-        DB::table('Classes')->insert($classes);
-
-
-        $classes=array(
-            'id'=>13,
-            'name'=>'辅导员班级4'
-        );
-        DB::table('Classes')->insert($classes);
-
-        $classes=array(
-            'id'=>14,
-            'name'=>'辅导员班级5'
+        $classes = array(
+            'id' => 12,
+            'name' => '辅导员班级3'
         );
         DB::table('Classes')->insert($classes);
 
 
+        $classes = array(
+            'id' => 13,
+            'name' => '辅导员班级4'
+        );
+        DB::table('Classes')->insert($classes);
+
+        $classes = array(
+            'id' => 14,
+            'name' => '辅导员班级5'
+        );
+        DB::table('Classes')->insert($classes);
 
 
-        $instructor=array(
-            'id'=>1,
-            'uid'=>8,
-            'classid'=>10
+        $instructor = array(
+            'id' => 1,
+            'uid' => 8,
+            'classid' => 10
         );
         DB::table('Instructor')->insert($instructor);
-        $instructor=array(
-            'id'=>2,
-            'uid'=>9,
-            'classid'=>11
+        $instructor = array(
+            'id' => 2,
+            'uid' => 9,
+            'classid' => 11
         );
         DB::table('Instructor')->insert($instructor);
-        $instructor=array(
-            'id'=>3,
-            'uid'=>10,
-            'classid'=>12
+        $instructor = array(
+            'id' => 3,
+            'uid' => 10,
+            'classid' => 12
         );
         DB::table('Instructor')->insert($instructor);//背编辑
 
-        $instructor=array(
-            'id'=>4,
-            'uid'=>10,
-            'classid'=>14
+        $instructor = array(
+            'id' => 4,
+            'uid' => 10,
+            'classid' => 14
         );
         DB::table('Instructor')->insert($instructor);
 
-        $instructor=array(
-            'id'=>5,
-            'uid'=>11,
-            'classid'=>10
+        $instructor = array(
+            'id' => 5,
+            'uid' => 11,
+            'classid' => 10
         );
         DB::table('Instructor')->insert($instructor);
-        $instructor=array(
-            'id'=>6,
-            'uid'=>9,
-            'classid'=>12
-        );
-        DB::table('Instructor')->insert($instructor);
-
-        $instructor=array(
-            'id'=>7,
-            'uid'=>9,
-            'classid'=>13
+        $instructor = array(
+            'id' => 6,
+            'uid' => 9,
+            'classid' => 12
         );
         DB::table('Instructor')->insert($instructor);
 
-        $instructor=array(
-            'id'=>8,
-            'uid'=>9,
-            'classid'=>14
+        $instructor = array(
+            'id' => 7,
+            'uid' => 9,
+            'classid' => 13
+        );
+        DB::table('Instructor')->insert($instructor);
+
+        $instructor = array(
+            'id' => 8,
+            'uid' => 9,
+            'classid' => 14
         );
         DB::table('Instructor')->insert($instructor);
     }
 
-    public function addStudent(){
+    public function addStudent()
+    {
         $test_user_account = array(
             'id' => 12,
             'username' => '201501120610',
@@ -528,47 +531,66 @@ class DatabaseSeeder extends Seeder
         );
         DB::table('UserAccount')->insert($test_user_account);
         DB::table('UserInfo')->insert($test_user_info);
+
+
+        $test_user_account = array(//数据添加测试
+            'id' => 17,
+            'username' => '201501121002',
+            'password' => $this->hash('371002199703158516'),
+            'type' => 1
+        );
+        $test_user_info = array(
+            'uid' => 17,
+            "name" => "冯志杰",
+            'identity' => "371002199703158516",
+            'birthday' => "19970315",
+            'sex' => false,
+            'nativeplace' => "山东青岛",
+
+        );
+        DB::table('UserAccount')->insert($test_user_account);
+        DB::table('UserInfo')->insert($test_user_info);
 //
 //
-        $student_class=array(//删除测试
-            'id'=>1,
-            'uid'=>12,
-            'classid'=>10,
-            'studentid'=>'201501120610',
-            'enrollyear'=>'20150912'
+        $student_class = array(//删除测试
+            'id' => 1,
+            'uid' => 12,
+            'classid' => 10,
+            'studentid' => '201501120610',
+            'enrollyear' => '20150912'
         );
         DB::table('StudentInfo')->insert($student_class);
 
-        $student_class=array(//修改测试
-            'id'=>2,
-            'uid'=>13,
-            'classid'=>13,
-            'studentid'=>'201501120608',
-            'enrollyear'=>'20150912'
+        $student_class = array(//修改测试
+            'id' => 2,
+            'uid' => 13,
+            'classid' => 13,
+            'studentid' => '201501120608',
+            'enrollyear' => '20150912'
         );
         DB::table('StudentInfo')->insert($student_class);
-        $student_class=array(
-            'id'=>3,
-            'uid'=>14,
-            'classid'=>13,
-            'studentid'=>'201501020833',
-            'enrollyear'=>'20150912'
+        $student_class = array(
+            'id' => 3,
+            'uid' => 14,
+            'classid' => 13,
+            'studentid' => '201501020833',
+            'enrollyear' => '20150912'
         );
         DB::table('StudentInfo')->insert($student_class);
-        $student_class=array(
-            'id'=>4,
-            'uid'=>15,
-            'classid'=>13,
-            'studentid'=>'201501120710',
-            'enrollyear'=>'20150912'
+        $student_class = array(
+            'id' => 4,
+            'uid' => 15,
+            'classid' => 13,
+            'studentid' => '201501120710',
+            'enrollyear' => '20150912'
         );
         DB::table('StudentInfo')->insert($student_class);
-        $student_class=array(
-            'id'=>5,
-            'uid'=>16,
-            'classid'=>14,
-            'studentid'=>'201501120704',
-            'enrollyear'=>'20150912'
+        $student_class = array(
+            'id' => 5,
+            'uid' => 16,
+            'classid' => 14,
+            'studentid' => '201501120704',
+            'enrollyear' => '20150912'
         );
         DB::table('StudentInfo')->insert($student_class);
     }

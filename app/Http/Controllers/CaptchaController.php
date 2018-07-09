@@ -34,13 +34,6 @@ class CaptchaController extends Controller
         //生成图片
         $res = $builder->get();
 
-        //临时测试采用
-//        header("Cache-Control: no-cache, must-revalidate");
-//        header('Content-Type: image/jpeg');
-//        $builder->output();
-//
-//        return $res;
-        //临时测试采用
 
         return base64_encode($res);
     }

@@ -117,13 +117,16 @@ class SchoolRollRepository
 
     function studentInfo_search($condition = null, $order = null)
     {
-
-        $query = $this->instructor->search(
+        $join_table=[
+            ['table'=>'Classes','foreign'=>'id','local'=>"classid",'condition'=>"="],
+            ['table'=>'UserInfo','foreign'=>'uid','local'=>"uid",'condition'=>"="],
+        ];
+        $query = $this->studentInfo->newsearch(
             array(
-                'useraccount' => ['id', 'username'],
-                'classes' => ['id', 'name as classname'],
-                'userinfo' => ['uid', 'name as peoplename'],
-                'this' => ['id', 'uid', 'classid']),
+                'Classes' => [ 'name as classname'],
+                'UserInfo' => ['name as peoplename','identity','sex','hobby','birthday','nativeplace'],
+                'this' => ['id', 'uid', 'classid','studentid','enrollyear']),
+            $join_table,
             $condition,
             $order
         );

@@ -25,6 +25,7 @@ class SchoolRollServiceTest extends TestCase
         $this->classTest();
         $this->semesterTest();
         $this->instructorTest();
+        $this->studentinfoTest();
     }
 
     public function classTest()
@@ -49,6 +50,14 @@ class SchoolRollServiceTest extends TestCase
         $this->instructor_editTest();
         $this->instructor_deleteTest();
         $this->instructor_serachTest();
+    }
+
+    public function studentinfoTest()
+    {
+        $this->student_addTest();
+        $this->student_deleteTest();
+        $this->student_editTest();
+        $this->student_searchTest();
     }
 
     public function class_addTest()
@@ -412,21 +421,147 @@ class SchoolRollServiceTest extends TestCase
         $this->assertEquals(4, count($result['data']));
         $this->assertEquals('辅导员班级5', ($result['data'][0]['classname']));
 
+        $info = array();
+        $info['condition']['peoplename'] = ['data' => '王艳坤', 'fuzzy' => false];
+        $info['by'] = 'classname';
+        $info['order'] = 'DESC';
+        $info['currentpage'] = 1;
+        $info['sep'] = 2;
+        $result = $this->schoolrollService->instructor_search($info);
+        $this->assertEquals(2, count($result['data']));
+        $this->assertEquals('辅导员班级5', ($result['data'][0]['classname']));
+
     }
 
     public function student_addTest()
     {
+        $info = array();
+        $result = $this->schoolrollService->studentinfo_add($info);
+        $this->assertEquals(2201, $result);
+
+        $info = array(
+            'studentid' => '22222222222213134325435364564',
+            'classid' => 13,
+            'enrollyear' => '20150912'
+        );
+        $result = $this->schoolrollService->studentinfo_add($info);
+        $this->assertEquals(2202, $result);
 
 
+        $info = array(
+            'studentid' => '222222222',
+            'classid' => 233,
+            'enrollyear' => '20150912'
+        );
+        $result = $this->schoolrollService->studentinfo_add($info);
+        $this->assertEquals(2203, $result);
+
+        $info = array(
+            'studentid' => '201501120704',
+            'classid' => 14,
+            'enrollyear' => '20150912'
+        );
+        $result = $this->schoolrollService->studentinfo_add($info);
+        $this->assertEquals(2204, $result);
+
+
+        $info = array(
+            'studentid' => '201501104',
+            'classid' => 14,
+            'enrollyear' => '20150912'
+        );
+        $result = $this->schoolrollService->studentinfo_add($info);
+        $this->assertEquals(2205, $result);
+
+
+        $info = array(
+            'studentid' => '201501121002',
+            'classid' => 14,
+            'enrollyear' => '20150912'
+        );
+        $result = $this->schoolrollService->studentinfo_add($info);
+        $this->assertEquals(2200, $result);
+
+
+    }
+
+    public function student_deleteTest()
+    {
+
+        $result = $this->schoolrollService->studentinfo_delete('');
+        $this->assertEquals(2301, $result);//
+
+        $result = $this->schoolrollService->studentinfo_delete(123);
+        $this->assertEquals(2302, $result);
+
+        $result = $this->schoolrollService->studentinfo_delete(1);
+        $this->assertEquals(2300, $result);
     }
 
     public function student_editTest()
     {
+        $info = array();
+        $result = $this->schoolrollService->studentinfo_edit('', $info);
+        $this->assertEquals(2401, $result);
 
+        $info = array();
+        $result = $this->schoolrollService->studentinfo_edit(123123123123, $info);
+        $this->assertEquals(2402, $result);
+
+        $info = array(
+            'studentid' => '22222222222213134325435364564',
+            'classid' => 13,
+            'enrollyear' => '20150912'
+        );
+        $result = $this->schoolrollService->studentinfo_edit(2, $info);
+        $this->assertEquals(2403, $result);
+
+
+        $info = array(
+            'studentid' => '201501120710',
+            'classid' => 13,
+            'enrollyear' => '20150912'
+        );
+        $result = $this->schoolrollService->studentinfo_edit(2, $info);
+        $this->assertEquals(2404, $result);
+
+
+        $info = array(
+        'studentid' => '201501120610',
+        'classid' => 144,
+        'enrollyear' => '20150912'
+    );
+        $result = $this->schoolrollService->studentinfo_edit(2, $info);
+        $this->assertEquals(2406, $result);
+
+        $info = array(
+            'studentid' => '201501120610',
+            'classid' => 12,
+            'enrollyear' => '20150912'
+        );
+        $result = $this->schoolrollService->studentinfo_edit(2, $info);
+        $this->assertEquals(2400, $result);
     }
 
     public function student_searchTest()
     {
+        $info['condition']['classname'] = ['data' => '辅导员班级4', 'fuzzy' => false];
+        $result=$this->schoolrollService->studentinfo_search($info);
+        $this->assertEquals(2, count($result['data']));
+
+        $info['condition']['classname'] = ['data' => '辅导员班级4', 'fuzzy' => false];
+        $info['by'] = 'studentid';
+        $info['order'] = 'ASC';
+        $result=$this->schoolrollService->studentinfo_search($info);
+        $this->assertEquals('郑明明', ($result['data'][0]['peoplename']));
+
+
+        $info['condition']['classname'] = ['data' => '辅导员班级4', 'fuzzy' => false];
+        $info['by'] = 'studentid';
+        $info['order'] = 'DESC';
+        $result=$this->schoolrollService->studentinfo_search($info);
+        $this->assertEquals('仝晓盈', ($result['data'][0]['peoplename']));
+
 
     }
 }
