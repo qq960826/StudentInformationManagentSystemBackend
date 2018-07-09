@@ -176,6 +176,29 @@ class HelperService
         $messagemap[2803] = "课程名称已存在";
         $messagemap[2404] = "课程名称不能为空";
         $messagemap[2805] = "班级名称长度不能大于100";
+
+
+
+        $messagemap[3000] = "课程成绩添加成功";
+        $messagemap[3001] = "用户id参数不完整";
+        $messagemap[3002] = "学生id不存在";
+        $messagemap[3003] = "学期不存在";
+        $messagemap[3004] = "课程不存在";
+        $messagemap[3005] = "课程成绩已存在";
+
+        $messagemap[3100] = "成绩删除成功";
+        $messagemap[3101] = "成绩id非法";
+        $messagemap[3102] = "成绩id不存在";
+
+
+        $messagemap[3100] = "成绩编辑成功";
+        $messagemap[3101] = "成绩id非法";
+        $messagemap[3102] = "成绩id不存在";
+        $messagemap[3103] = "学生id不存在";
+        $messagemap[3104] = "学期不存在";
+        $messagemap[3105] = "课程不存在";
+        $messagemap[3106] = "该成绩信息已存在";
+
         return $messagemap[$code];
     }
 

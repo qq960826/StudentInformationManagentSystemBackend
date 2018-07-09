@@ -17,6 +17,8 @@ class SchoolRollServiceTest extends TestCase
     public function setup()
     {
         parent::setUp();
+        $this->artisan('migrate:refresh');
+        $this->artisan('db:seed',['--class'=>'SchoolRollAndUserServiceTestSeeder']);
         $this->schoolrollService = $this->app->make('App\Services\SchoolRollService');
     }
 

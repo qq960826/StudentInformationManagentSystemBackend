@@ -18,6 +18,8 @@ class UserServiceTest extends TestCase
     public function setup()
     {
         parent::setUp();
+        $this->artisan('migrate:refresh');
+        $this->artisan('db:seed',['--class'=>'SchoolRollAndUserServiceTestSeeder']);
         $this->userservice = $this->app->make('App\Services\UserService');
     }
 
@@ -213,7 +215,7 @@ class UserServiceTest extends TestCase
         $info['sep'] = 3;
 
         $result = $this->userservice->usersearch($info);//分页搜索测试
-        $this->assertEquals(1, $result['data'][0]['id']);
+        $this->assertEquals(1, $result['data'][0]['uid']);
 
 
         $info = array();
@@ -224,7 +226,7 @@ class UserServiceTest extends TestCase
         $info['sep'] = 3;
 
         $result = $this->userservice->usersearch($info);//分页搜索测试
-        $this->assertEquals(4, $result['data'][0]['id']);
+        $this->assertEquals(4, $result['data'][0]['uid']);
 
     }
 
