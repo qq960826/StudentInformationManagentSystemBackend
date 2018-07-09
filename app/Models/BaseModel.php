@@ -101,7 +101,7 @@ class BaseModel extends Model
         $query = $this;
 
         foreach ($joined as $item) {
-            $query = $query->leftJoin($item['table'], $item['table'] . '.' . $item['foreign'], $item['condition'], $this->table . '.' . $item['local']);
+            $query = $query->leftJoin($item['table'], $item['table'] . '.' . $item['foreign'], $item['condition'],(isset($item['localtable'])? $item['condition']: $this->table) . '.' . $item['local']);
         }
         $select_transformed = array();
         if (!is_null($select))

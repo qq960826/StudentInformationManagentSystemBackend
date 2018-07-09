@@ -252,6 +252,8 @@ class SchoolRollService extends BaseService
         if (!isset($info['classid']) || !isset($info['studentid']) || !isset($info['enrollyear']) ||
             $info['classid'] == '' || $info['studentid'] == '' || $info['enrollyear'] == '')
             return 2201;//参数不完整
+        if(!strtotime($info['enrollyear']))
+            return 2206;//学期参数错误
         if (strlen($info['studentid']) > 20)
             return 2202;//学号长度不能大于20
         if (!$this->schoolRollRepository->classes->exist_by_id($info['classid']))
@@ -288,6 +290,8 @@ class SchoolRollService extends BaseService
                 return 2406;//班级id不存在
             $studentinfoupdate['classid'] = $info['classid'];
         }
+        if(isset($info['enrollyear'])&&!strtotime($info['enrollyear']))
+            return 2407;//学期参数错误
         if (isset($info['studentid']) && $info['studentid'] != '') {
             if (strlen($info['studentid']) > 20)
                 return 2403;//学号长度不能大于20
@@ -328,6 +332,14 @@ class SchoolRollService extends BaseService
 
         $result = array('sep' => $paginate->perPage(), 'total' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
         return $result;
+    }
+
+    function studentid_view_by_id($id){
+        $condition=array('this'=>[['uid','=',$id]]);
+        $query = $this->schoolRollRepository->studentInfo_search($condition, null);
+        $result=$query->first();
+        return $result->toArray();
+
     }
 
 }

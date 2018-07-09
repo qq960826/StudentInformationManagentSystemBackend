@@ -145,6 +145,7 @@ class HelperService
         $messagemap[2203] = "班级id不存在";
         $messagemap[2204] = "该学生学籍信息已存在";
         $messagemap[2205] = "学籍信息添加成功";
+        $messagemap[2206] = "学期参数错误";
 
         $messagemap[2300] = "学籍信息删除成功";
         $messagemap[2301] = "学籍id非法";
@@ -157,6 +158,24 @@ class HelperService
         $messagemap[2404] = "该学生学籍信息已存在";
         $messagemap[2405] = "该学生用户信息不存在";
         $messagemap[2406] = "班级id不存在";
+        $messagemap[2407] = "学期参数错误";
+
+        $messagemap[2600] = "学籍信息修改成功";
+        $messagemap[2601] = "课程名称参数不完整";
+        $messagemap[2602] = "课程名称长度不能大于100";
+        $messagemap[2603] = "课程名称已存在";
+
+        $messagemap[2700] = "课程删除成功";
+        $messagemap[2701] = "课程id非法";
+        $messagemap[2702] = "课程id不存在";
+
+
+        $messagemap[2800] = "学籍信息修改成功";
+        $messagemap[2801] = "课程id非法";
+        $messagemap[2802] = "课程id不存在";
+        $messagemap[2803] = "课程名称已存在";
+        $messagemap[2404] = "课程名称不能为空";
+        $messagemap[2805] = "班级名称长度不能大于100";
         return $messagemap[$code];
     }
 
