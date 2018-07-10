@@ -70,7 +70,7 @@ class Init extends Migration
 
             $table->string('studentid', 20)->nullable(false)->unique()->index();
 
-            $table->date("enrollyear")->nullable(false);
+            $table->unsignedSmallInteger("enrollyear")->nullable(false);
 
             $table->timestamps();
         });

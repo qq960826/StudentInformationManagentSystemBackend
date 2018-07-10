@@ -28,9 +28,9 @@ class SchoolRollAndUserServiceTestSeeder extends Seeder
         );
         $test_user_info = array(
             'uid' => 1,
-            "name" => "王梓樯",
-            'identity' => "430602199608264511",
-            'birthday' => "19960826",
+            "name" => '王梓樯',
+            'identity' => '430602199608264511',
+            'birthday' => '19960826',
             'sex' => true,
             'nativeplace' => "湖南岳阳",
 

@@ -244,7 +244,6 @@ class UserServiceTest extends TestCase
         $result = $this->userservice->getdata();
         $this->assertEquals('卢本伟',$result["name"]);
 
-
         $info = array();
         $info['identity']='370611199812060014';
         $this->assertEquals(900, $this->userservice->updateuser(7,$info));//修改成功
