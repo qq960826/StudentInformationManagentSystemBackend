@@ -101,7 +101,7 @@ class CourseRepository extends BaseRepository
         return $query;
     }
 
-    function coursescore_sum($condition = null)
+    private function coursescore_sum_origin($condition = null)
     {
         $join_table = [
             ['table' => 'UserInfo', 'foreign' => 'uid', 'local' => "uid", 'condition' => "="],
@@ -114,16 +114,28 @@ class CourseRepository extends BaseRepository
                 array(
                     'UserInfo' => ['name as peoplename'],
                     'StudentInfo' => ['studentid', 'enrollyear'],
-                    'this' => ['score'],
+                    'this' => [],
                 ),
                 $join_table,
                 $condition,
                 null)
-            ->select('SUM(`CourseScore`.`score`) as sum')
-            ->groupBy('Semester.uid')
-            ->orderBy('sum');
+            ->selectRaw('SUM(CourseScore.score) as sum')
+            ->groupBy('CourseScore.uid')
+            ->orderBy('sum','desc');
         return $query;
     }
 
-
+    public function coursescore_sum($info,$method){//单科排名
+        $condition=array();
+        $condition['StudentInfo']=[['classid','=',$info['classid']]];//所有科目都要的
+        if($method==0){//单科求和
+            $condition['this']=[['courseid','=',$info['courseid']]];
+        }elseif ($method==1){//学期求和
+            $condition['this']=[['semesterid','=',$info['semesterid']]];
+        }else{//全部求和
+            //do nothing
+        }
+        $query = $this->coursescore_sum_origin($condition);
+        return $query;
+    }
 }

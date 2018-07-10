@@ -204,19 +204,45 @@ class CourseService extends BaseService
         return $result;
     }
 
-    public function coursescore_sum($info,$method){//单科排名
-        $condition=array();
-        $condition['StudentInfo']=['classid','=',$info['classid']];//所有科目都要的
-        if($method==0){//单科求和
-            $condition['this']=[['courseid','=',$info['courseid']]];
-        }elseif ($method==1){//学期求和
-            $condition['this']=['semesterid','=',$info['semesterid']];
-        }else{//全部求和
-            //do nothing
+    public function coursescore_rank_list_single_view_by_class($info)
+    {
+        if (!isset($info['courseid']) || !isset($info['classid']) || $info['courseid'] == '' || $info['classid'] == '') {
+            return 3601;//用户id参数不完整
         }
-        $query = $this->courseRepository->coursescore_sum($condition);
+        if (!$this->courseRepository->course->exist_by_id($info['courseid']))
+            return 3602;//课程不存在
+        if (!$this->schoolRollRepository->classes->exist_by_id($info['classid']))
+            return 3603;//班级不存在
+        $query=$this->courseRepository->coursescore_sum($info,0);
+        $data=$query->get()->toArray();
+        return $data;
     }
 
+    public function coursescore_rank_list_semester_view_by_class($info)
+    {
+        if (!isset($info['semesterid']) || !isset($info['classid']) || $info['semesterid'] == '' || $info['classid'] == '') {
+            return 3601;//用户id参数不完整
+        }
+        if (!$this->schoolRollRepository->semester->exist_by_id($info['semesterid']))
+            return 3602;//课程不存在
+        if (!$this->schoolRollRepository->classes->exist_by_id($info['classid']))
+            return 3603;//班级不存在
+        $query=$this->courseRepository->coursescore_sum($info,1);
+        $data=$query->get()->toArray();
+        return $data;
+    }
+
+    public function coursescore_rank_list_all_view_by_class($info)
+    {
+        if (!isset($info['classid'])||  $info['classid'] == '')
+            return 3601;//用户id参数不完整
+
+        if (!$this->schoolRollRepository->classes->exist_by_id($info['classid']))
+            return 3603;//班级不存在
+        $query=$this->courseRepository->coursescore_sum($info,3);
+        $data=$query->get()->toArray();
+        return $data;
+    }
 }
 
 

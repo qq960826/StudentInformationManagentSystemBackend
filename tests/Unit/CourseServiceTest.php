@@ -17,33 +17,37 @@ class CourseServiceTest extends TestCase
     public function setup()
     {
         parent::setUp();
-        $this->artisan('migrate:refresh');
-        $this->artisan('db:seed');
+//        $this->artisan('migrate:refresh');
+//        $this->artisan('db:seed');
         $this->courseService = $this->app->make('App\Services\CourseService');
 
     }
 
     public function testBasicTest()
     {
-        $this->courseTest();
+//        $this->courseTest();
         $this->coursescoreTest();
     }
 
     public function courseTest()
     {
-        $this->course_addTest();
-        $this->course_editTest();
-        $this->course_deleteTest();
-        $this->course_searchTest();
+//        $this->course_addTest();
+//        $this->course_editTest();
+//        $this->course_deleteTest();
+//        $this->course_searchTest();
     }
 
     public function coursescoreTest()
     {
-        $this->coursescore_addTest();
-        $this->coursescore_deleteTest();
-        $this->coursescore_editTest();
+//        $this->coursescore_addTest();
+//        $this->coursescore_deleteTest();
+//        $this->coursescore_editTest();
         $this->coursescore_searchTest();
         $this->coursescore_view_by_uidTest();
+        $this->coursescore_rank_list_single_view_by_classTest();
+        $this->coursescore_rank_list_semester_view_by_classTest();
+        $this->coursescore_rank_list_all_view_by_classTest();
+
     }
 
     public function course_addTest()
@@ -254,7 +258,8 @@ class CourseServiceTest extends TestCase
         $this->assertEquals(3200, $result);
     }
 
-    public function coursescore_searchTest(){
+    public function coursescore_searchTest()
+    {
         $info = array();
         $info['condition']['peoplename'] = array('data' => '蒋雪', 'fuzzy' => false);
         $result = $this->courseService->coursescore_search($info);
@@ -304,11 +309,26 @@ class CourseServiceTest extends TestCase
         $this->assertEquals('计算机科学与技术-1', $result['data'][0]['classname']);
 
     }
-    public function coursescore_view_by_uidTest(){
+
+    public function coursescore_view_by_uidTest()
+    {
         $result = $this->courseService->coursescore_view_by_uid(10);
-        $this->assertEquals(32,count($result));
-        $this->assertEquals('黄德卫',$result[0]['peoplename']);
-
-
+        $this->assertEquals(32, count($result));
+        $this->assertEquals('黄德卫', $result[0]['peoplename']);
     }
+
+    public function coursescore_rank_list_single_view_by_classTest(){
+        $info=array('classid'=>1,'courseid'=>2);
+        $result = $this->courseService->coursescore_rank_list_single_view_by_class($info);
+    }
+
+    public function coursescore_rank_list_semester_view_by_classTest(){
+        $info=array('classid'=>1,'semesterid'=>2);
+        $result = $this->courseService->coursescore_rank_list_semester_view_by_class($info);
+    }
+    public function coursescore_rank_list_all_view_by_classTest(){
+        $info=array('classid'=>1);
+        $result = $this->courseService->coursescore_rank_list_all_view_by_class($info);
+    }
+
 }

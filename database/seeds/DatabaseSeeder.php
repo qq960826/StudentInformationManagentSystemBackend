@@ -1944,7 +1944,7 @@ class DatabaseSeeder extends Seeder
                 $temp = array(
                     'uid' => $i,
                     'courseid' => $j,
-                    'semesterid' => $course_num % 8 + 1,
+                    'semesterid' => $j % 8 + 1,
                     'score' => rand(50, 100)
                 );
                 $inserted[] = $temp;
