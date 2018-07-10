@@ -557,7 +557,7 @@ class SchoolRollAndUserServiceTestSeeder extends Seeder
             'uid' => 12,
             'classid' => 10,
             'studentid' => '201501120610',
-            'enrollyear' => '20150912'
+            'enrollyear' => '2015'
         );
         DB::table('StudentInfo')->insert($student_class);
 
@@ -566,7 +566,7 @@ class SchoolRollAndUserServiceTestSeeder extends Seeder
             'uid' => 13,
             'classid' => 13,
             'studentid' => '201501120608',
-            'enrollyear' => '20150912'
+            'enrollyear' => '2015'
         );
         DB::table('StudentInfo')->insert($student_class);
         $student_class = array(
@@ -574,7 +574,7 @@ class SchoolRollAndUserServiceTestSeeder extends Seeder
             'uid' => 14,
             'classid' => 13,
             'studentid' => '201501020833',
-            'enrollyear' => '20150912'
+            'enrollyear' => '2015'
         );
         DB::table('StudentInfo')->insert($student_class);
         $student_class = array(
@@ -582,7 +582,7 @@ class SchoolRollAndUserServiceTestSeeder extends Seeder
             'uid' => 15,
             'classid' => 13,
             'studentid' => '201501120710',
-            'enrollyear' => '20150912'
+            'enrollyear' => '2015'
         );
         DB::table('StudentInfo')->insert($student_class);
         $student_class = array(
@@ -590,7 +590,7 @@ class SchoolRollAndUserServiceTestSeeder extends Seeder
             'uid' => 16,
             'classid' => 14,
             'studentid' => '201501120704',
-            'enrollyear' => '20150912'
+            'enrollyear' => '2015'
         );
         DB::table('StudentInfo')->insert($student_class);
     }

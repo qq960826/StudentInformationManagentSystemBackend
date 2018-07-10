@@ -61,7 +61,7 @@ class BaseService
                 $result[$filter_key]['order'] = 'ASC';
                 if (isset($order["order"]) && $order["order"] == 'DESC')
                     $result[$filter_key]['order'] = 'DESC';
-            } elseif (key_exists($order['by'], $filter_value) && $order["order"] == 'DESC') {
+            } elseif (key_exists($order['by'], $filter_value)) {
                 $result[$filter_key]['key'] = $filter_value[$order['by']];
                 $result[$filter_key]['order'] = 'ASC';
                 if (isset($order["order"]) && $order["order"] == 'DESC')

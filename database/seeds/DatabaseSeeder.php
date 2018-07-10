@@ -1938,7 +1938,7 @@ class DatabaseSeeder extends Seeder
     public function addScore()
     {
         $course_num = count($this->course);
-        for ($i = 3; $i <= 203; $i++) {
+        for ($i = 4; $i <= 203; $i++) {
             $inserted = array();
             for ($j = 1; $j <= $course_num; $j++) {
                 $temp = array(
@@ -1957,7 +1957,7 @@ class DatabaseSeeder extends Seeder
     {
         $course_num = count($this->course);
 
-        $course1 = ['课程删除测试', '课程修改测试'];
+        $course1 = ['课程删除测试', '课程修改测试','成绩添加测试'];
         for ($i = 0; $i < count($course1); $i++) {
             $temp = array(
                 'id' => $i + $course_num+1,

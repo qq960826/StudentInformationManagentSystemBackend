@@ -445,7 +445,7 @@ class SchoolRollServiceTest extends TestCase
         $info = array(
             'studentid' => '22222222222213134325435364564',
             'classid' => 13,
-            'enrollyear' => '20150912'
+            'enrollyear' => '2015'
         );
         $result = $this->schoolrollService->studentinfo_add($info);
         $this->assertEquals(2202, $result);
@@ -454,7 +454,7 @@ class SchoolRollServiceTest extends TestCase
         $info = array(
             'studentid' => '222222222',
             'classid' => 233,
-            'enrollyear' => '20150912'
+            'enrollyear' => '2015'
         );
         $result = $this->schoolrollService->studentinfo_add($info);
         $this->assertEquals(2203, $result);
@@ -462,7 +462,7 @@ class SchoolRollServiceTest extends TestCase
         $info = array(
             'studentid' => '201501120704',
             'classid' => 14,
-            'enrollyear' => '20150912'
+            'enrollyear' => '2015'
         );
         $result = $this->schoolrollService->studentinfo_add($info);
         $this->assertEquals(2204, $result);
@@ -471,7 +471,7 @@ class SchoolRollServiceTest extends TestCase
         $info = array(
             'studentid' => '201501104',
             'classid' => 14,
-            'enrollyear' => '20150912'
+            'enrollyear' => '2015'
         );
         $result = $this->schoolrollService->studentinfo_add($info);
         $this->assertEquals(2205, $result);
@@ -479,7 +479,7 @@ class SchoolRollServiceTest extends TestCase
         $info = array(
             'studentid' => '201501121002',
             'classid' => 14,
-            'enrollyear' => '201509122'
+            'enrollyear' => '20151212'
         );
         $result = $this->schoolrollService->studentinfo_add($info);
         $this->assertEquals(2206, $result);
@@ -487,7 +487,7 @@ class SchoolRollServiceTest extends TestCase
         $info = array(
             'studentid' => '201501121002',
             'classid' => 14,
-            'enrollyear' => '20150912'
+            'enrollyear' => '2015'
         );
         $result = $this->schoolrollService->studentinfo_add($info);
         $this->assertEquals(2200, $result);

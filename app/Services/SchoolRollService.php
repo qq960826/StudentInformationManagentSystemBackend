@@ -252,7 +252,7 @@ class SchoolRollService extends BaseService
         if (!isset($info['classid']) || !isset($info['studentid']) || !isset($info['enrollyear']) ||
             $info['classid'] == '' || $info['studentid'] == '' || $info['enrollyear'] == '')
             return 2201;//参数不完整
-        if(!strtotime($info['enrollyear']))
+        if(strlen($info['enrollyear'])!=4)
             return 2206;//学期参数错误
         if (strlen($info['studentid']) > 20)
             return 2202;//学号长度不能大于20

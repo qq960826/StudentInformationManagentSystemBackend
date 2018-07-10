@@ -121,7 +121,7 @@ class CourseService extends BaseService
             return 3101;//成绩成绩id非法
         if (!$this->courseRepository->courseScore->exist_by_id($id))
             return 3102;//成绩成绩id不存在
-        $this->courseRepository->course_delete($id);
+        $this->courseRepository->coursescore_delete($id);
         return 3100;//成绩删除成功
     }
 
@@ -129,23 +129,23 @@ class CourseService extends BaseService
     {
         $courseupdate = array();
         if (!isset($id) || is_null($id) || $id == '')
-            return 3101;//成绩id非法
+            return 3201;//成绩id非法
         if (!$this->courseRepository->courseScore->exist_by_id($id))
-            return 3102;//成绩id不存在
+            return 3202;//成绩id不存在
         if (isset($info['uid']) && $info['uid'] != '') {
             $user_account = $this->schoolRollRepository->studentInfo->get_by_id_first($info['uid'], 'uid');
             if (is_null($user_account))
-                return 3103;//学生id不存在
+                return 3203;//学生id不存在
             $courseupdate['uid'] = $info['uid'];
         }
         if (isset($info['semesterid']) && $info['semesterid'] != '') {
             if (!$this->schoolRollRepository->semester->exist_by_id($info['semesterid']))
-                return 3104;//学期不存在
+                return 3204;//学期不存在
             $courseupdate['semesterid'] = $info['semesterid'];
         }
         if (isset($info['courseid']) && $info['courseid'] != '') {
             if (!$this->courseRepository->course->exist_by_id($info['courseid']))
-                return 3105;//课程不存在
+                return 3205;//课程不存在
             $courseupdate['courseid'] = $info['courseid'];
         }
         $coursescoreInfo = $this->courseRepository->courseScore->get_by_id_first($id);
@@ -154,9 +154,9 @@ class CourseService extends BaseService
         $courseupdate['courseid'] = isset($courseupdate['courseid']) ? $courseupdate['courseid'] : $coursescoreInfo['courseid'];
 
         if ($this->courseRepository->courseScore->exist_by_condition([['uid', '=', $courseupdate['uid']], ['courseid', '=', $courseupdate['courseid']], ['id', '!=', $id]]))
-            return 3106;//该成绩信息已存在
+            return 3206;//该成绩信息已存在
         $this->courseRepository->courseScore->update_by_id($id, $courseupdate);
-        return 3100;//成绩编辑成功
+        return 3200;//成绩编辑成功
     }
 
     function coursescore_search($info)
@@ -181,11 +181,11 @@ class CourseService extends BaseService
         if (isset($info["by"])) {
             $order = $this->order_process($filter, $info);
         }
-        $query = $this->schoolRollRepository->instructor_search($condition, $order);
+        $query = $this->courseRepository->coursescore_search($condition, $order);
         $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
         $data = $paginate->toArray()['data'];
 
-        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
+        $result = array('sep' => $paginate->perPage(),'total'=>$paginate->total(), 'laspage' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
         return $result;
     }
 }

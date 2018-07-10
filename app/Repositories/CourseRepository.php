@@ -55,15 +55,13 @@ class CourseRepository extends BaseRepository
         return $query;
     }
 
-    function coursescore_add($uid, $courseid, $semesterid, $score,$enrollyear)
+    function coursescore_add($uid, $courseid, $semesterid, $score)
     {
         $this->courseScore = new CourseScore();
         $this->courseScore->uid = $uid;
         $this->courseScore->courseid = $courseid;
         $this->courseScore->semesterid = $semesterid;
         $this->courseScore->score = $score;
-        $this->courseScore->enrollyear = $enrollyear;
-
         $this->courseScore->save();
     }
 
@@ -89,7 +87,7 @@ class CourseRepository extends BaseRepository
 
 
         ];
-        $query = $this->studentInfo->newsearch(
+        $query = $this->courseScore->newsearch(
             array(
                 'Classes' => [ 'name as classname','id as classid'],
                 'UserInfo' => ['name as peoplename'],

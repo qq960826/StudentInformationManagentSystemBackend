@@ -191,13 +191,13 @@ class HelperService
         $messagemap[3102] = "成绩id不存在";
 
 
-        $messagemap[3100] = "成绩编辑成功";
-        $messagemap[3101] = "成绩id非法";
-        $messagemap[3102] = "成绩id不存在";
-        $messagemap[3103] = "学生id不存在";
-        $messagemap[3104] = "学期不存在";
-        $messagemap[3105] = "课程不存在";
-        $messagemap[3106] = "该成绩信息已存在";
+        $messagemap[3200] = "成绩编辑成功";
+        $messagemap[3201] = "成绩id非法";
+        $messagemap[3202] = "成绩id不存在";
+        $messagemap[3203] = "学生id不存在";
+        $messagemap[3204] = "学期不存在";
+        $messagemap[3205] = "课程不存在";
+        $messagemap[3206] = "该成绩信息已存在";
 
         return $messagemap[$code];
     }

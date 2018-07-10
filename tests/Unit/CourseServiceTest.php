@@ -28,55 +28,72 @@ class CourseServiceTest extends TestCase
         $this->courseTest();
         $this->coursescoreTest();
     }
-    public function courseTest(){
+
+    public function courseTest()
+    {
         $this->course_addTest();
         $this->course_editTest();
         $this->course_deleteTest();
-    }
-    public function course_addTest(){
-        $result=$this->courseService->course_add('');
-        $this->assertEquals(2601,$result);
-        $result=$this->courseService->course_add('1212112121121211212112121121211212112121121211212112121121211212112121121211212112121121211212112121121211212112121121211212112121121211212112121');
-        $this->assertEquals(2602,$result);
-        $result=$this->courseService->course_add('企业资源规划');
-        $this->assertEquals(2603,$result);
-        $result=$this->courseService->course_add('信息安全导论');
-        $this->assertEquals(2600,$result);
-    }
-    public function course_editTest(){
-        $info=array();
-        $result=$this->courseService->course_edit('',"");
-        $this->assertEquals(2801,$result);
-
-        $result=$this->courseService->course_edit(100,"");
-        $this->assertEquals(2804,$result);
-
-        $result=$this->courseService->course_edit(34,"1212112121121211212112121121211212112121121211212112121121211212112121121211212112121121211212112121121211212112121121211212112121121211212112121");
-        $this->assertEquals(2805,$result);
-
-        $result=$this->courseService->course_edit(100,"课程修改测试");
-        $this->assertEquals(2802,$result);
-
-        $result=$this->courseService->course_edit(34,"课程删除测试");
-        $this->assertEquals(2803,$result);
-
-        $result=$this->courseService->course_edit(34,"课程修改测试1");
-        $this->assertEquals(2800,$result);
+        $this->course_searchTest();
     }
 
-    public function course_deleteTest(){
-        $result=$this->courseService->course_delete('');
-        $this->assertEquals(2701,$result);
+    public function coursescoreTest()
+    {
+        $this->coursescore_addTest();
+        $this->coursescore_deleteTest();
+        $this->coursescore_editTest();
+        $this->coursescore_searchTest();
+    }
 
-        $result=$this->courseService->course_delete(1222);
-        $this->assertEquals(2702,$result);
+    public function course_addTest()
+    {
+        $result = $this->courseService->course_add('');
+        $this->assertEquals(2601, $result);
+        $result = $this->courseService->course_add('1212112121121211212112121121211212112121121211212112121121211212112121121211212112121121211212112121121211212112121121211212112121121211212112121');
+        $this->assertEquals(2602, $result);
+        $result = $this->courseService->course_add('企业资源规划');
+        $this->assertEquals(2603, $result);
+        $result = $this->courseService->course_add('信息安全导论');
+        $this->assertEquals(2600, $result);
+    }
 
-        $result=$this->courseService->course_delete(35);
-        $this->assertEquals(2700,$result);
+    public function course_editTest()
+    {
+        $info = array();
+        $result = $this->courseService->course_edit('', "");
+        $this->assertEquals(2801, $result);
+
+        $result = $this->courseService->course_edit(100, "");
+        $this->assertEquals(2804, $result);
+
+        $result = $this->courseService->course_edit(34, "1212112121121211212112121121211212112121121211212112121121211212112121121211212112121121211212112121121211212112121121211212112121121211212112121");
+        $this->assertEquals(2805, $result);
+
+        $result = $this->courseService->course_edit(100, "课程修改测试");
+        $this->assertEquals(2802, $result);
+
+        $result = $this->courseService->course_edit(34, "课程删除测试");
+        $this->assertEquals(2803, $result);
+
+        $result = $this->courseService->course_edit(34, "课程修改测试1");
+        $this->assertEquals(2800, $result);
+    }
+
+    public function course_deleteTest()
+    {
+        $result = $this->courseService->course_delete('');
+        $this->assertEquals(2701, $result);
+
+        $result = $this->courseService->course_delete(1222);
+        $this->assertEquals(2702, $result);
+
+        $result = $this->courseService->course_delete(36);
+        $this->assertEquals(2700, $result);
 
     }
 
-    public function coursescoreTest(){
+    public function course_searchTest()
+    {
         $info = array();
         $info['condition']['name'] = array('data' => '计算机', 'fuzzy' => false);
         $result = $this->courseService->course_search($info);
@@ -128,6 +145,162 @@ class CourseServiceTest extends TestCase
         $result = $this->courseService->course_search($info);
         $this->assertEquals(1, count($result['data']));
         $this->assertEquals(26, $result['data'][0]['id']);
+
+    }
+
+    public function coursescore_addTest()
+    {
+        $info = array();
+        $result = $this->courseService->coursescore_add($info);
+        $this->assertEquals(3001, $result);
+
+        $info = array(
+            'uid' => 1000,
+            'courseid' => 34,
+            'semesterid' => 1,
+            'score' => 12
+        );
+        $result = $this->courseService->coursescore_add($info);
+        $this->assertEquals(3002, $result);
+
+        $info = array(
+            'uid' => 4,
+            'courseid' => 12,
+            'semesterid' => 144,
+            'score' => 12
+        );
+        $result = $this->courseService->coursescore_add($info);
+        $this->assertEquals(3003, $result);
+
+
+        $info = array(
+            'uid' => 4,
+            'courseid' => 133,
+            'semesterid' => 1,
+            'score' => 12
+        );
+        $result = $this->courseService->coursescore_add($info);
+        $this->assertEquals(3004, $result);
+        $info = array(
+            'uid' => 4,
+            'courseid' => 1,
+            'semesterid' => 1,
+            'score' => 12
+        );
+        $result = $this->courseService->coursescore_add($info);
+        $this->assertEquals(3005, $result);
+
+        $info = array(
+            'uid' => 4,
+            'courseid' => 35,
+            'semesterid' => 1,
+            'score' => 12
+        );
+        $result = $this->courseService->coursescore_add($info);
+        $this->assertEquals(3000, $result);
+
+
+        $info = array(
+            'uid' => 4,
+            'courseid' => 34,
+            'semesterid' => 1,
+            'score' => 12
+        );
+        $result = $this->courseService->coursescore_add($info);
+        $this->assertEquals(3000, $result);
+    }
+
+    public function coursescore_deleteTest()
+    {
+        $result = $this->courseService->coursescore_delete('');
+        $this->assertEquals(3101, $result);
+
+        $result = $this->courseService->coursescore_delete(122222);
+        $this->assertEquals(3102, $result);
+
+        $result = $this->courseService->coursescore_delete(6401);
+        $this->assertEquals(3100, $result);
+    }
+
+    public function coursescore_editTest()
+    {
+        $info = array();
+        $result = $this->courseService->coursescore_edit('', $info);
+        $this->assertEquals(3201, $result);
+
+        $info = array();
+        $result = $this->courseService->coursescore_edit(64342, $info);
+        $this->assertEquals(3202, $result);
+
+        $info = array('uid' => 1000);
+        $result = $this->courseService->coursescore_edit(6402, $info);
+        $this->assertEquals(3203, $result);
+
+        $info = array('uid' => 5, 'semesterid' => 1000);
+        $result = $this->courseService->coursescore_edit(6402, $info);
+        $this->assertEquals(3204, $result);
+
+        $info = array('uid' => 5, 'semesterid' => 2, 'courseid' => 12121);
+        $result = $this->courseService->coursescore_edit(6402, $info);
+        $this->assertEquals(3205, $result);
+
+        $info = array('uid' => 5, 'semesterid' => 2, 'courseid' => 3);
+        $result = $this->courseService->coursescore_edit(6402, $info);
+        $this->assertEquals(3206, $result);
+
+        $info = array('uid' => 5, 'semesterid' => 2, 'courseid' => 35);
+        $result = $this->courseService->coursescore_edit(6402, $info);
+        $this->assertEquals(3200, $result);
+    }
+
+    public function coursescore_searchTest(){
+        $info = array();
+        $info['condition']['peoplename'] = array('data' => '蒋雪', 'fuzzy' => false);
+        $result = $this->courseService->coursescore_search($info);
+        $this->assertEquals(32, count($result['data']));
+
+        $info = array();
+        $info['condition']['coursename'] = array('data' => '企业资源规划', 'fuzzy' => false);
+        $info['condition']['classname'] = array('data' => '计算机科学与技术-1', 'fuzzy' => false);
+
+        $result = $this->courseService->coursescore_search($info);
+        $this->assertEquals(40, count($result['data']));
+
+
+        $info = array();
+        $info['condition']['semestername'] = array('data' => '大一', 'fuzzy' => true);
+        $info['condition']['coursename'] = array('data' => '企业资源规划', 'fuzzy' => false);
+
+        $result = $this->courseService->coursescore_search($info);
+        $this->assertEquals(200, $result['total']);
+
+        $info = array();
+        $info['condition']['coursename'] = array('data' => '计算机', 'fuzzy' => true);
+        $result = $this->courseService->coursescore_search($info);
+        $this->assertEquals(600, $result['total']);
+
+        $info = array();
+        $info['condition']['coursename'] = array('data' => '计算机', 'fuzzy' => true);
+        $info['by'] = 'classname';
+        $info['order'] = 'ASC';
+        $result = $this->courseService->coursescore_search($info);
+        $this->assertEquals('计算机科学与技术-1', $result['data'][0]['classname']);
+
+        $info = array();
+        $info['condition']['coursename'] = array('data' => '计算机', 'fuzzy' => true);
+        $info['by'] = 'classname';
+        $info['order'] = 'DESC';
+        $result = $this->courseService->coursescore_search($info);
+        $this->assertEquals('计算机科学与技术-5', $result['data'][0]['classname']);
+
+        $info = array();
+        $info['condition']['coursename'] = array('data' => '计算机', 'fuzzy' => true);
+        $info['by'] = 'classname';
+        $info['order'] = 'DESC';
+        $info['currentpage'] = 15;
+        $info['sep'] = 40;
+        $result = $this->courseService->coursescore_search($info);
+        $this->assertEquals('计算机科学与技术-1', $result['data'][0]['classname']);
 
     }
 }
