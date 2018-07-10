@@ -101,7 +101,7 @@ class BaseModel extends Model
         $query = $this;
 
         foreach ($joined as $item) {
-            $query = $query->leftJoin($item['table'], $item['table'] . '.' . $item['foreign'], $item['condition'],(isset($item['localtable'])? $item['localtable']: $this->table) . '.' . $item['local']);
+            $query = $query->leftJoin($item['table'], $item['table'] . '.' . $item['foreign'], $item['condition'], (isset($item['localtable']) ? $item['localtable'] : $this->table) . '.' . $item['local']);
         }
         $select_transformed = array();
         if (!is_null($select))
@@ -109,7 +109,7 @@ class BaseModel extends Model
             foreach ($select as $key => $value) {
                 $selected_table = $key == 'this' ? $this->table : $key;
                 foreach ($value as $item) {
-                    $select_transformed[] = $selected_table . '.' . $item;
+                    $select_transformed[] = ($key != "raw") ? ($selected_table . '.' . $item) : $item;
                 }
             }
         $query = $query->select($select_transformed);
@@ -126,6 +126,7 @@ class BaseModel extends Model
                 $query = $query->orderBy($selected_table . '.' . $value['key'], $value['order']);
                 break;
             }
+
         return $query;
     }
 }

@@ -43,6 +43,7 @@ class CourseServiceTest extends TestCase
         $this->coursescore_deleteTest();
         $this->coursescore_editTest();
         $this->coursescore_searchTest();
+        $this->coursescore_view_by_uidTest();
     }
 
     public function course_addTest()
@@ -301,6 +302,13 @@ class CourseServiceTest extends TestCase
         $info['sep'] = 40;
         $result = $this->courseService->coursescore_search($info);
         $this->assertEquals('计算机科学与技术-1', $result['data'][0]['classname']);
+
+    }
+    public function coursescore_view_by_uidTest(){
+        $result = $this->courseService->coursescore_view_by_uid(10);
+        $this->assertEquals(32,count($result));
+        $this->assertEquals('黄德卫',$result[0]['peoplename']);
+
 
     }
 }

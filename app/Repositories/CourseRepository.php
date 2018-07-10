@@ -77,30 +77,51 @@ class CourseRepository extends BaseRepository
 
     function coursescore_search($condition = null, $order = null)
     {
-        $join_table=[
-            ['table'=>'Course','foreign'=>'id','local'=>"courseid",'condition'=>"="],
-            ['table'=>'UserInfo','foreign'=>'uid','local'=>"uid",'condition'=>"="],
-            ['table'=>'StudentInfo','foreign'=>'uid','local'=>"uid",'condition'=>"="],
-            ['table'=>'Classes','foreign'=>'id','localtable'=>'StudentInfo','local'=>"classid",'condition'=>"="],
-            ['table'=>'Semester','foreign'=>'id','local'=>"semesterid",'condition'=>"="],
-
-
-
+        $join_table = [
+            ['table' => 'Course', 'foreign' => 'id', 'local' => "courseid", 'condition' => "="],
+            ['table' => 'UserInfo', 'foreign' => 'uid', 'local' => "uid", 'condition' => "="],
+            ['table' => 'StudentInfo', 'foreign' => 'uid', 'local' => "uid", 'condition' => "="],
+            ['table' => 'Classes', 'foreign' => 'id', 'localtable' => 'StudentInfo', 'local' => "classid", 'condition' => "="],
+            ['table' => 'Semester', 'foreign' => 'id', 'local' => "semesterid", 'condition' => "="],
         ];
         $query = $this->courseScore->newsearch(
             array(
-                'Classes' => [ 'name as classname','id as classid'],
+                'Classes' => ['name as classname', 'id as classid'],
                 'UserInfo' => ['name as peoplename'],
-                'StudentInfo' => ['studentid','enrollyear'],
-                'Semester'=>['name as semestername',],
-                'Course'=>['name as coursename'],
-                'this'=>['id','courseid','semesterid','score']
+                'StudentInfo' => ['studentid', 'enrollyear'],
+                'Semester' => ['name as semestername',],
+                'Course' => ['name as coursename'],
+                'this' => ['id', 'courseid', 'semesterid', 'score']
             ),
 
             $join_table,
             $condition,
             $order
         );
+        return $query;
+    }
+
+    function coursescore_sum($condition = null)
+    {
+        $join_table = [
+            ['table' => 'UserInfo', 'foreign' => 'uid', 'local' => "uid", 'condition' => "="],
+            ['table' => 'StudentInfo', 'foreign' => 'uid', 'local' => "uid", 'condition' => "="],
+            ['table' => 'Classes', 'foreign' => 'id', 'localtable' => 'StudentInfo', 'local' => "classid", 'condition' => "="],
+            ['table' => 'Semester', 'foreign' => 'id', 'local' => "semesterid", 'condition' => "="],
+        ];
+        $query = $this->courseScore
+            ->newsearch(
+                array(
+                    'UserInfo' => ['name as peoplename'],
+                    'StudentInfo' => ['studentid', 'enrollyear'],
+                    'this' => ['score'],
+                ),
+                $join_table,
+                $condition,
+                null)
+            ->select('SUM(`CourseScore`.`score`) as sum')
+            ->groupBy('Semester.uid')
+            ->orderBy('sum');
         return $query;
     }
 

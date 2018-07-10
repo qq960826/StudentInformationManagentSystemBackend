@@ -159,7 +159,7 @@ class CourseService extends BaseService
         return 3200;//成绩编辑成功
     }
 
-    function coursescore_search($info)
+    function coursescore_search($info, $ispaginate = true)
     {
         $condition = array();
         $order = null;
@@ -182,12 +182,41 @@ class CourseService extends BaseService
             $order = $this->order_process($filter, $info);
         }
         $query = $this->courseRepository->coursescore_search($condition, $order);
-        $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
-        $data = $paginate->toArray()['data'];
-
-        $result = array('sep' => $paginate->perPage(),'total'=>$paginate->total(), 'laspage' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
+        if ($ispaginate) {
+            $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
+            $data = $paginate->toArray()['data'];
+            $result = array('sep' => $paginate->perPage(), 'total' => $paginate->total(), 'laspage' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
+        } else {
+            $data = $query->get()->toArray();
+            $result = array('data' => $data);
+        }
         return $result;
     }
+
+    public function coursescore_view_by_uid($id)
+    {
+        $parameter = array();
+        $parameter['condition']['uid'] = array('data' => $id, 'fuzzy' => false);
+        $parameter['by'] = 'courseid';
+        $parameter['order'] = 'ASC';
+        $data = $this->coursescore_search($parameter);
+        $result = $data['data'];
+        return $result;
+    }
+
+    public function coursescore_sum($info,$method){//单科排名
+        $condition=array();
+        $condition['StudentInfo']=['classid','=',$info['classid']];//所有科目都要的
+        if($method==0){//单科求和
+            $condition['this']=[['courseid','=',$info['courseid']]];
+        }elseif ($method==1){//学期求和
+            $condition['this']=['semesterid','=',$info['semesterid']];
+        }else{//全部求和
+            //do nothing
+        }
+        $query = $this->courseRepository->coursescore_sum($condition);
+    }
+
 }
 
 
