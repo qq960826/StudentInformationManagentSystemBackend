@@ -105,7 +105,7 @@ class UserService extends BaseService
 
         $user_info = array();
         $user_account = array();
-        if (!isset($id) || $id == '')
+        if (is_null($id) || $id == '')
             return 909;
         if (isset($info['username']) && $info['username'] != '') {
             if (strlen($info['username']) > 16)

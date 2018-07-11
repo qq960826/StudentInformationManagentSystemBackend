@@ -81,7 +81,7 @@ class HelperService
         $messagemap[800] = "用户信息获取成功";
         $messagemap[801] = "用户不存在";
 
-        $messagemap[900] = "用户添加成功";
+        $messagemap[900] = "用户修改成功";
         $messagemap[901] = "身份证已存在";
         $messagemap[902] = "身份证信息非法";
         $messagemap[903] = "用户名已存在";
@@ -231,6 +231,14 @@ class HelperService
         if ($request->is('common/viewinfo')) return 5;
         if ($request->is('common/changespassword')) return 6;
         if ($request->is('common/changehobby')) return 7;
+
+        if ($request->is('manager/user/add')) return 100;
+        if ($request->is('manager/user/edit')) return 101;
+        if ($request->is('manager/user/resetpassword')) return 102;
+        if ($request->is('manager/user/delete')) return 103;
+        if ($request->is('manager/user/search')) return 104;
+
+
         return 0;
     }
 
