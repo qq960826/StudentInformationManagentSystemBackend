@@ -52,9 +52,9 @@ class CommonController extends Controller
         $info = $request->json()->all();
         $res = $this->userService->login($info);
         if ($res == 100) {//登录成功
-            $userinfo = $this->userService->getdata();
+            $userinfo = $this->userService->getdata()->toArray();
             if ($userinfo['type'] == 1) {//加载学生学籍
-                $studentinfo = $this->schoolRollService->studentid_view_by_id($userinfo['uid']);
+                $studentinfo = $this->schoolRollService->studentid_view_by_id($userinfo['id']);
                 $request->session()->put('studentinfo', $studentinfo);
             } elseif ($userinfo['type'] == 2) {//加载老师所管理班级
                 $search['condition']['uid'] = ['data' => $userinfo['uid'], 'fuzzy' => false];
@@ -76,5 +76,41 @@ class CommonController extends Controller
         $request->session()->regenerate(); //重置session_id
         return $this->helper->MakeJSONMessage(200);
 
+    }
+
+    public function viewinfo(Request $request)
+    {
+        $result = $this->userService->viewinfo($request->userinfo['id']);
+        if ($result == 800) {
+            $userinfo = $this->userService->getdata();
+            unset($userinfo['id'],$userinfo['type']);
+            if ($request->roleid == 1) {
+                $studentinfo = $this->schoolRollService->studentid_view_by_id($request->userinfo['id']);
+                unset($studentinfo['id'],$studentinfo['uid'],$studentinfo['classid'],$studentinfo['peoplename']);
+
+                $userinfo=array_merge($userinfo,$studentinfo);
+            }
+            return $this->helper->MakeJSONMessage($result,$userinfo);
+        }
+        return $this->helper->MakeJSONMessage($result);
+    }
+
+    public function changespassword(Request $request){
+        $info = $request->json()->all();
+        $result=$this->userService->changespassword(
+            $request->userinfo['id'],
+            $info['oldpassword'],
+            $info['newpassword']
+        );
+        return $this->helper->MakeJSONMessage($result);
+    }
+
+    public function changehobby(Request $request){
+        $info = $request->json()->all();
+        $result=$this->userService->changehobby(
+            $request->userinfo['id'],
+            $info['hobby']
+        );
+        return $this->helper->MakeJSONMessage($result);
     }
 }

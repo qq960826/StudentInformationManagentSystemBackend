@@ -42,7 +42,7 @@ class UserService extends BaseService
 
     public function changespassword($id, $oldpassword, $newpassword)
     {
-        if (!isset($id) || !isset($oldpassword) || !isset($newpassword) || $id == '' || $oldpassword == '' || $newpassword == '')
+        if (is_null($id) || is_null($oldpassword) || is_null($newpassword) || $id == '' || $oldpassword == '' || $newpassword == '')
             return 304;
         if (strlen($newpassword) > 32 || strlen($newpassword) < 6)
             return 303;
@@ -174,7 +174,7 @@ class UserService extends BaseService
         $hobby = (!isset($hobby) || $hobby == '') ? '' : $hobby;
         if (strlen($hobby) > 100)
             return 702;//爱好长度不能超过100
-        $this->changehobby($id, $hobby);
+        $this->userRepository->change_hobby($id, $hobby);
         return 700;//爱好修改成功
     }
 

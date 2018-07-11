@@ -87,9 +87,10 @@ class UserRepository extends BaseRepository
 
     public function change_hobby($id, $hobby)
     {
-        $account = $this->useraccount->find($id);
-        $account->hobby = $hobby;
-        return $account->save();
+//        $userinfo = $this->userinfo->get_by_id_first($id,'uid');
+//        $userinfo->hobby = $hobby;
+
+        return $this->change_userinfo($id,['hobby'=>$hobby]);
     }
 
     public function change_userinfo($id, $info)

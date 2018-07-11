@@ -71,12 +71,12 @@ class HelperService
         $messagemap[510] = "爱好长度不能超过100";
 
         $messagemap[600] = "用户删除成功";
-        $messagemap[601] = "用户不存在";
+        $messagemap[601] = "id参数不完整";
         $messagemap[602] = "用户不存在";
 
         $messagemap[700] = "爱好修改成功";
         $messagemap[701] = "用户不存在";
-        $messagemap[702] = "用户删除参数不完整";
+        $messagemap[702] = "爱好长度不能超过100";
 
         $messagemap[800] = "用户信息获取成功";
         $messagemap[801] = "用户不存在";
@@ -228,7 +228,9 @@ class HelperService
         if ($request->is('common/captcha')) return 2;
         if ($request->is('common/login')) return 3;
         if ($request->is('common/logout')) return 4;
-
+        if ($request->is('common/viewinfo')) return 5;
+        if ($request->is('common/changespassword')) return 6;
+        if ($request->is('common/changehobby')) return 7;
         return 0;
     }
 

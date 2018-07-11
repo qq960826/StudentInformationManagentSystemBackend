@@ -30,10 +30,19 @@ class PermissionCheck
         } else {
             $user_role_id = $request->session()->get('role_id');
         }
+        $request->roleid = $user_role_id;
 
         if (!$this->check_permission($user_role_id, $page_permission_id)) {
             return $this->helper->MakeMessageResponse(0);
         }
+        if ($user_role_id == 1) {//加载学生信息
+            $request->studentinfo = $request->session()->get('studentinfo');
+
+        } elseif ($user_role_id == 2) {//加载教师所在班级信息
+            $request->instructorinfo = $request->session()->get('instructorinfo');
+
+        }
+        $request->userinfo = $request->session()->get('userinfo');
 
         return $next($request);
     }
@@ -55,7 +64,7 @@ class PermissionCheck
 
     //permission table
     private $guest = [1, 2, 3];
-    private $student = [1, 2, 3, 4];
-    private $instructor = [1, 2, 3, 4];
-    private $manager = [1, 2, 3, 4];
+    private $student = [1, 2, 3, 4, 5, 6, 7];
+    private $instructor = [1, 2, 3, 4, 5, 6, 7];
+    private $manager = [1, 2, 3, 4, 5, 6, 7];
 }
