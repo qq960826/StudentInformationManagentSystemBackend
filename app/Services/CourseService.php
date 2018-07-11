@@ -273,10 +273,10 @@ class CourseService extends BaseService
         return 3604;//用户成绩不存在
     }
 
-    public function coursescore_rank_list_all_view_by_id($info,$uid){
+    public function coursescore_rank_list_all_view_by_class($info,$uid){
         if (is_null($uid)||$uid=='')
             return 3605;//用户id不存在
-        $data=$this->coursescore_rank_list_all_view_by_class($info);
+        $data=$this->coursescore_rank_list_semester_view_by_class($info);
         if(!is_array($data))
             return $data;
         foreach ($data as $index=>$value){

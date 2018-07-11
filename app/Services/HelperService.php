@@ -24,9 +24,10 @@ class HelperService
         $result = array();
         $result['code'] = intval($code);
         $result['message'] = $message;
-        if (!is_null($data) && is_array($data)) {
-            foreach ($data as $key => $val)
-                $result[$key] = $data[$key];
+        if (!is_null($data)) {
+            $result['data'] = $data;
+//            foreach ($data as $key => $val)
+//                $result[$key] = $data[$key];
         }
         return $result;
     }
@@ -36,11 +37,15 @@ class HelperService
         $messagemap = array();
         $messagemap[0] = "权限不够";
         $messagemap[1] = "验证码错误";
+        $messagemap[10] = "验证码获取成功";
 
         $messagemap[100] = "登陆成功";
         $messagemap[101] = "帐号或密码错误";
         $messagemap[102] = "帐号已锁定";
         $messagemap[103] = "登录信息不完整";
+
+        $messagemap[200] = "注销成功";
+
 
         $messagemap[300] = "密码修改成功";
         $messagemap[301] = "原始密码错误";
@@ -178,7 +183,6 @@ class HelperService
         $messagemap[2805] = "班级名称长度不能大于100";
 
 
-
         $messagemap[3000] = "课程成绩添加成功";
         $messagemap[3001] = "用户id参数不完整";
         $messagemap[3002] = "学生id不存在";
@@ -221,9 +225,9 @@ class HelperService
     public function get_page_id($request)
     {
         if ($request->is('/')) return 1;
-        if ($request->is('common/security/captcha')) return 2;
-        if ($request->is('common/security/login')) return 3;
-        if ($request->is('common/security/logout')) return 4;
+        if ($request->is('common/captcha')) return 2;
+        if ($request->is('common/login')) return 3;
+        if ($request->is('common/logout')) return 4;
 
         return 0;
     }
@@ -268,21 +272,25 @@ class HelperService
     {
         return ((int)substr($idcard, 16, 1)) % 2 == 0 ? false : true;
     }
-    function array_flatten($array) {
+
+    function array_flatten($array)
+    {
         if (!is_array($array)) {
             return false;
         }
         $result = array();
         foreach ($array as $key => $value) {
             if (is_array($value)) {
-                $result = array_merge($result,$this->array_flatten($value));
+                $result = array_merge($result, $this->array_flatten($value));
             } else {
                 $result = array_merge($result, array($key => $value));
             }
         }
         return $result;
     }
-    function search_condition_process($item){
+
+    function search_condition_process($item)
+    {
         if (!isset($item['fuzzy']) || $item['fuzzy'] == false)
             $fuzzy = false;
         else
@@ -291,7 +299,7 @@ class HelperService
             return null;
         if (!isset($item['key']) || $item['key'] == '')
             return null;
-        $condition = [$item['key'], $fuzzy ? 'like' : '=',$fuzzy? $item['data'].'%':$item['data']];
+        $condition = [$item['key'], $fuzzy ? 'like' : '=', $fuzzy ? $item['data'] . '%' : $item['data']];
         return $condition;
     }
 }

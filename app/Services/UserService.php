@@ -36,6 +36,7 @@ class UserService extends BaseService
             return 101;
         if ($user->locked == true)
             return 102;
+        $this->setdata($user);
         return 100;
     }
 
@@ -183,7 +184,6 @@ class UserService extends BaseService
         if (!isset($result))
             return 801;//用户不存在
         $result->makeHidden(['password', 'locked']);
-        $result->userinfo->makeHidden(['uid']);
         $result = $result->toArray();
         $result = $this->helperService->array_flatten($result);
         $this->setdata($result);

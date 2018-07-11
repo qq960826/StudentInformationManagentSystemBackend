@@ -161,9 +161,9 @@ class SchoolRollRepository
         ];
         $query = $this->instructor->newsearch(
             array(
-                'UserAccount' => ['id', 'username as username'],
-                'Classes' => ['id', 'name as classname'],
-                'UserInfo' => ['uid', 'name as peoplename'],
+                'UserAccount' => ['username as username'],
+                'Classes' => ['name as classname'],
+                'UserInfo' => ['name as peoplename'],
                 'this' => ['id', 'uid', 'classid']),
             $join_table,
             $condition,

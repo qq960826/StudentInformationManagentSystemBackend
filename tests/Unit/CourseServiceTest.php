@@ -17,31 +17,31 @@ class CourseServiceTest extends TestCase
     public function setup()
     {
         parent::setUp();
-//        $this->artisan('migrate:refresh');
-//        $this->artisan('db:seed');
+        $this->artisan('migrate:refresh');
+       $this->artisan('db:seed');
         $this->courseService = $this->app->make('App\Services\CourseService');
 
     }
 
     public function testBasicTest()
     {
-//        $this->courseTest();
+        $this->courseTest();
         $this->coursescoreTest();
     }
 
     public function courseTest()
     {
-//        $this->course_addTest();
-//        $this->course_editTest();
-//        $this->course_deleteTest();
-//        $this->course_searchTest();
+        $this->course_addTest();
+        $this->course_editTest();
+        $this->course_deleteTest();
+        $this->course_searchTest();
     }
 
     public function coursescoreTest()
     {
-//        $this->coursescore_addTest();
-//        $this->coursescore_deleteTest();
-//        $this->coursescore_editTest();
+        $this->coursescore_addTest();
+        $this->coursescore_deleteTest();
+        $this->coursescore_editTest();
         $this->coursescore_searchTest();
         $this->coursescore_view_by_uidTest();
         $this->coursescore_rank_list_single_view_by_classTest();
@@ -334,7 +334,7 @@ class CourseServiceTest extends TestCase
 
     public function coursescore_rank_list_single_view_by_idTest(){
         $info=array('classid'=>1,'courseid'=>2);
-        $result = $this->courseService->coursescore_rank_list_single_view_by_id($info,126);
+        $result = $this->courseService->coursescore_rank_list_single_view_by_id($info,116);
         $this->assertEquals(2,$result['rank']);
 
     }

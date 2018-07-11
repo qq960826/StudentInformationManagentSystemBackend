@@ -41,6 +41,6 @@ class VerifyCaptcha
         return $next($request);
     }
 
-    protected $PageNeedCaptcha = [3];
+    protected $PageNeedCaptcha = [];
 
 }

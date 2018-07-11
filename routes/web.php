@@ -15,5 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//验证码
-Route::get('common/security/captcha', 'CaptchaController@captcha');
+
+Route::get('common/captcha', 'CommonController@captcha');//验证码
+Route::post('common/login', 'CommonController@login');//用户登录
+Route::get('common/logout', 'CommonController@logout');//用户注销
