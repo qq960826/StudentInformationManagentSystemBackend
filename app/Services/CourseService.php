@@ -205,7 +205,9 @@ class CourseService extends BaseService
     }
 
     public function coursescore_rank_list_single_view_by_class($info)
+
     {
+
         if (!isset($info['courseid']) || !isset($info['classid']) || $info['courseid'] == '' || $info['classid'] == '') {
             return 3601;//用户id参数不完整
         }
@@ -224,7 +226,7 @@ class CourseService extends BaseService
             return 3601;//用户id参数不完整
         }
         if (!$this->schoolRollRepository->semester->exist_by_id($info['semesterid']))
-            return 3602;//课程不存在
+            return 3602;//学期不存在
         if (!$this->schoolRollRepository->classes->exist_by_id($info['classid']))
             return 3603;//班级不存在
         $query=$this->courseRepository->coursescore_sum($info,1);
@@ -236,12 +238,53 @@ class CourseService extends BaseService
     {
         if (!isset($info['classid'])||  $info['classid'] == '')
             return 3601;//用户id参数不完整
-
         if (!$this->schoolRollRepository->classes->exist_by_id($info['classid']))
             return 3603;//班级不存在
         $query=$this->courseRepository->coursescore_sum($info,3);
         $data=$query->get()->toArray();
         return $data;
+    }
+
+    public function coursescore_rank_list_single_view_by_id($info,$uid){
+        if (is_null($uid)||$uid=='')
+            return 3605;//用户id不存在
+        $data=$this->coursescore_rank_list_single_view_by_class($info);
+        if(!is_array($data))
+            return $data;
+        foreach ($data as $index=>$value){
+            if($uid==$value['uid']){
+                return array('rank'=>$index+1);
+            }
+        }
+        return 3604;//用户成绩不存在
+    }
+
+    public function coursescore_rank_list_semester_view_by_id($info,$uid){
+        if (is_null($uid)||$uid=='')
+            return 3605;//用户id不存在
+        $data=$this->coursescore_rank_list_semester_view_by_class($info);
+        if(!is_array($data))
+            return $data;
+        foreach ($data as $index=>$value){
+            if($uid==$value['uid']){
+                return array('rank'=>$index+1);
+            }
+        }
+        return 3604;//用户成绩不存在
+    }
+
+    public function coursescore_rank_list_all_view_by_id($info,$uid){
+        if (is_null($uid)||$uid=='')
+            return 3605;//用户id不存在
+        $data=$this->coursescore_rank_list_all_view_by_class($info);
+        if(!is_array($data))
+            return $data;
+        foreach ($data as $index=>$value){
+            if($uid==$value['uid']){
+                return array('rank'=>$index+1);
+            }
+        }
+        return 3604;//用户成绩不存在
     }
 }
 

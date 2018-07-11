@@ -114,7 +114,7 @@ class CourseRepository extends BaseRepository
                 array(
                     'UserInfo' => ['name as peoplename'],
                     'StudentInfo' => ['studentid', 'enrollyear'],
-                    'this' => [],
+                    'this' => ['uid'],
                 ),
                 $join_table,
                 $condition,

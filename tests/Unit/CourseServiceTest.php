@@ -47,6 +47,7 @@ class CourseServiceTest extends TestCase
         $this->coursescore_rank_list_single_view_by_classTest();
         $this->coursescore_rank_list_semester_view_by_classTest();
         $this->coursescore_rank_list_all_view_by_classTest();
+        $this->coursescore_rank_list_single_view_by_idTest();
 
     }
 
@@ -329,6 +330,13 @@ class CourseServiceTest extends TestCase
     public function coursescore_rank_list_all_view_by_classTest(){
         $info=array('classid'=>1);
         $result = $this->courseService->coursescore_rank_list_all_view_by_class($info);
+    }
+
+    public function coursescore_rank_list_single_view_by_idTest(){
+        $info=array('classid'=>1,'courseid'=>2);
+        $result = $this->courseService->coursescore_rank_list_single_view_by_id($info,126);
+        $this->assertEquals(2,$result['rank']);
+
     }
 
 }
