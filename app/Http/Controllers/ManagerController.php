@@ -117,12 +117,16 @@ class ManagerController extends Controller
     public function classes_edit(Request $request)
     {
         $info = $request->json()->all();
-        $id = null;
+        $id = null;$name=null;
         if (isset($info['id'])) {
             $id = $info['id'];
             unset($info['id']);
         }
-        $result = $this->schoolRollService->classes_edit($id, $info);
+        if (isset($info['name'])) {
+            $name = $info['name'];
+            unset($info['name']);
+        }
+        $result = $this->schoolRollService->classes_edit($id, $name);
         return $this->helper->MakeJSONMessage($result);
 
     }
@@ -260,12 +264,16 @@ class ManagerController extends Controller
     public function semester_edit(Request $request)
     {
         $info = $request->json()->all();
-        $id = null;
+        $id = null;$name=null;
         if (isset($info['id'])) {
             $id = $info['id'];
             unset($info['id']);
         }
-        $result = $this->schoolRollService->semester_edit($id, $info);
+        if (isset($info['name'])) {
+            $name = $info['name'];
+            unset($info['name']);
+        }
+        $result = $this->schoolRollService->semester_edit($id, $name);
         return $this->helper->MakeJSONMessage($result);
 
     }

@@ -253,10 +253,10 @@ class HelperService
         if ($request->is('manager/instructor/delete')) return 115;
         if ($request->is('manager/instructor/search')) return 116;
 
-        if ($request->is('manager/semester/add')) return 117;
-        if ($request->is('manager/semester/edit')) return 118;
-        if ($request->is('manager/semester/delete')) return 119;
-        if ($request->is('manager/semester/search')) return 120;
+        if ($request->is('manager/semester/add')) return 113;
+        if ($request->is('manager/semester/edit')) return 114;
+        if ($request->is('manager/semester/delete')) return 115;
+        if ($request->is('manager/semester/search')) return 116;
         return 0;
     }
 
