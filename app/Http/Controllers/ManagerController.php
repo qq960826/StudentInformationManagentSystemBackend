@@ -78,7 +78,8 @@ class ManagerController extends Controller
         return $this->helper->MakeJSONMessage($result);
     }
 
-    public function user_search(Request $request){
+    public function user_search(Request $request)
+    {
         $info = $request->json()->all();
         $result = $this->userService->usersearch(
             $info
@@ -86,4 +87,195 @@ class ManagerController extends Controller
         return json_encode($result);
     }
 
+    public function classes_add(Request $request)
+    {
+        $info = $request->json()->all();
+        $name = null;
+        if (isset($info['name'])) {
+            $name = $info['name'];
+            unset($info['name']);
+        }
+        $result = $this->schoolRollService->classes_add(
+            $name
+        );
+        return $this->helper->MakeJSONMessage($result);
+
+    }
+
+    public function classes_delete(Request $request)
+    {
+        $info = $request->json()->all();
+        $id = null;
+        if (isset($info['id'])) {
+            $id = $info['id'];
+            unset($info['id']);
+        }
+        $result = $this->schoolRollService->classes_delete($id);
+        return $this->helper->MakeJSONMessage($result);
+    }
+
+    public function classes_edit(Request $request)
+    {
+        $info = $request->json()->all();
+        $id = null;
+        if (isset($info['id'])) {
+            $id = $info['id'];
+            unset($info['id']);
+        }
+        $result = $this->schoolRollService->classes_edit($id, $info);
+        return $this->helper->MakeJSONMessage($result);
+
+    }
+
+    public function classes_search(Request $request)
+    {
+        $info = $request->json()->all();
+        $result = $this->schoolRollService->classes_search(
+            $info
+        );
+        return json_encode($result);
+    }
+
+
+    public function student_add(Request $request)
+    {
+        $info = $request->json()->all();
+        $result = $this->schoolRollService->studentinfo_add($info);
+        return $this->helper->MakeJSONMessage($result);
+    }
+
+    public function student_delete(Request $request)
+    {
+        $info = $request->json()->all();
+        $id = null;
+        if (isset($info['id'])) {
+            $id = $info['id'];
+            unset($info['id']);
+        }
+        $result = $this->schoolRollService->studentinfo_delete($id);
+        return $this->helper->MakeJSONMessage($result);
+
+    }
+
+    public function student_edit(Request $request)
+    {
+        $info = $request->json()->all();
+        $id = null;
+        if (isset($info['id'])) {
+            $id = $info['id'];
+            unset($info['id']);
+        }
+        $result = $this->schoolRollService->studentinfo_edit($id, $info);
+        return $this->helper->MakeJSONMessage($result);
+    }
+
+    public function student_search(Request $request)
+    {
+        $info = $request->json()->all();
+        $result = $this->schoolRollService->studentinfo_search(
+            $info
+        );
+        return json_encode($result);
+    }
+
+    public function instructor_add(Request $request)
+    {
+        $info = $request->json()->all();
+        $userid = null;
+        $classid = null;
+        if (isset($info['uid'])) {
+            $userid = $info['uid'];
+            unset($info['uid']);
+        }
+        if (isset($info['classid'])) {
+            $classid = $info['classid'];
+            unset($info['classid']);
+        }
+        $result = $this->schoolRollService->instructor_add(
+            $userid, $classid
+        );
+        return $this->helper->MakeJSONMessage($result);
+    }
+
+    public function instructor_edit(Request $request)
+    {
+        $info = $request->json()->all();
+        $id = null;
+        if (isset($info['id'])) {
+            $id = $info['id'];
+            unset($info['id']);
+        }
+        $result = $this->schoolRollService->instructor_edit($id, $info);
+        return $this->helper->MakeJSONMessage($result);
+    }
+
+    public function instructor_delete(Request $request)
+    {
+        $info = $request->json()->all();
+        $id = null;
+        if (isset($info['id'])) {
+            $id = $info['id'];
+            unset($info['id']);
+        }
+        $result = $this->schoolRollService->instructor_delete($id);
+        return $this->helper->MakeJSONMessage($result);
+    }
+
+    public function instructor_search(Request $request)
+    {
+        $info = $request->json()->all();
+        $result = $this->schoolRollService->instructor_search(
+            $info
+        );
+        return json_encode($result);
+    }
+
+    public function semester_add(Request $request)
+    {
+        $info = $request->json()->all();
+        $name = null;
+        if (isset($info['name'])) {
+            $name = $info['name'];
+            unset($info['name']);
+        }
+        $result = $this->schoolRollService->semester_add(
+            $name
+        );
+        return $this->helper->MakeJSONMessage($result);
+
+    }
+
+    public function semester_delete(Request $request)
+    {
+        $info = $request->json()->all();
+        $id = null;
+        if (isset($info['id'])) {
+            $id = $info['id'];
+            unset($info['id']);
+        }
+        $result = $this->schoolRollService->semester_delete($id);
+        return $this->helper->MakeJSONMessage($result);
+    }
+
+    public function semester_edit(Request $request)
+    {
+        $info = $request->json()->all();
+        $id = null;
+        if (isset($info['id'])) {
+            $id = $info['id'];
+            unset($info['id']);
+        }
+        $result = $this->schoolRollService->semester_edit($id, $info);
+        return $this->helper->MakeJSONMessage($result);
+
+    }
+
+    public function semester_search(Request $request)
+    {
+        $info = $request->json()->all();
+        $result = $this->schoolRollService->semester_search(
+            $info
+        );
+        return json_encode($result);
+    }
 }

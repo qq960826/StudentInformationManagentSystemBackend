@@ -136,7 +136,7 @@ class HelperService
         $messagemap[1901] = "辅导员id非法";
         $messagemap[1902] = "辅导员id不存在";
 
-        $messagemap[2000] = "学期编辑成功";
+        $messagemap[2000] = "辅导员编辑成功";
         $messagemap[2001] = "辅导员id非法";
         $messagemap[2002] = "辅导员id不存在";
         $messagemap[2003] = "用户id不存在";
@@ -144,12 +144,12 @@ class HelperService
         $messagemap[2005] = "班级不存在";
         $messagemap[2006] = "辅导员信息已存在";
 
-        $messagemap[2200] = "学期编辑成功";
+        $messagemap[2200] = "学籍信息添加成功";
         $messagemap[2201] = "参数不完整";
         $messagemap[2202] = "学号长度不能大于20";
         $messagemap[2203] = "班级id不存在";
         $messagemap[2204] = "该学生学籍信息已存在";
-        $messagemap[2205] = "学籍信息添加成功";
+        $messagemap[2205] = "该学生用户信息不存在";
         $messagemap[2206] = "学期参数错误";
 
         $messagemap[2300] = "学籍信息删除成功";
@@ -238,7 +238,25 @@ class HelperService
         if ($request->is('manager/user/delete')) return 103;
         if ($request->is('manager/user/search')) return 104;
 
+        if ($request->is('manager/class/add')) return 105;
+        if ($request->is('manager/class/edit')) return 106;
+        if ($request->is('manager/class/delete')) return 107;
+        if ($request->is('manager/class/search')) return 108;
 
+        if ($request->is('manager/student/add')) return 109;
+        if ($request->is('manager/student/edit')) return 110;
+        if ($request->is('manager/student/delete')) return 111;
+        if ($request->is('manager/student/search')) return 112;
+
+        if ($request->is('manager/instructor/add')) return 113;
+        if ($request->is('manager/instructor/edit')) return 114;
+        if ($request->is('manager/instructor/delete')) return 115;
+        if ($request->is('manager/instructor/search')) return 116;
+
+        if ($request->is('manager/semester/add')) return 117;
+        if ($request->is('manager/semester/edit')) return 118;
+        if ($request->is('manager/semester/delete')) return 119;
+        if ($request->is('manager/semester/search')) return 120;
         return 0;
     }
 

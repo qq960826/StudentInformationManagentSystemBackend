@@ -290,7 +290,7 @@ class SchoolRollService extends BaseService
                 return 2406;//班级id不存在
             $studentinfoupdate['classid'] = $info['classid'];
         }
-        if(isset($info['enrollyear'])&&!strtotime($info['enrollyear']))
+        if(isset($info['enrollyear'])&&strlen($info['enrollyear'])!=4)
             return 2407;//学期参数错误
         if (isset($info['studentid']) && $info['studentid'] != '') {
             if (strlen($info['studentid']) > 20)

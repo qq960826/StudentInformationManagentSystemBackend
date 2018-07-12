@@ -30,3 +30,24 @@ Route::post('manager/user/resetpassword', 'ManagerController@user_resetpassword'
 Route::post('manager/user/delete', 'ManagerController@user_delete');//用户删除
 Route::post('manager/user/search', 'ManagerController@user_search');//用户查找
 
+Route::post('manager/class/add', 'ManagerController@classes_add');//添加班级
+Route::post('manager/class/edit', 'ManagerController@classes_edit');//修改班级名称
+Route::post('manager/class/delete', 'ManagerController@classes_delete');//删除班级
+Route::post('manager/class/search', 'ManagerController@classes_search');//班级查找
+
+
+Route::post('manager/student/add', 'ManagerController@student_add');//添加学生
+Route::post('manager/student/edit', 'ManagerController@student_edit');//修改学生信息
+Route::post('manager/student/delete', 'ManagerController@student_delete');//删除学生信息
+Route::post('manager/student/search', 'ManagerController@student_search');//学生查找
+
+Route::post('manager/instructor/add', 'ManagerController@instructor_add');//添加辅导员
+Route::post('manager/instructor/edit', 'ManagerController@instructor_edit');//修改辅导员
+Route::post('manager/instructor/delete', 'ManagerController@instructor_delete');//删除辅导员
+Route::post('manager/instructor/search', 'ManagerController@instructor_search');//辅导员查找
+
+
+Route::post('manager/semester/add', 'ManagerController@semester_add');//添加学期
+Route::post('manager/semester/edit', 'ManagerController@semester_edit');//修改学期
+Route::post('manager/semester/delete', 'ManagerController@semester_delete');//删除学期
+Route::post('manager/semester/search', 'ManagerController@semester_search');//学期查找
