@@ -51,3 +51,9 @@ Route::post('manager/semester/add', 'ManagerController@semester_add');//添加�
 Route::post('manager/semester/edit', 'ManagerController@semester_edit');//修改学期
 Route::post('manager/semester/delete', 'ManagerController@semester_delete');//删除学期
 Route::post('manager/semester/search', 'ManagerController@semester_search');//学期查找
+
+
+Route::post('manager/course/add', 'ManagerController@course_add');//添加课程
+Route::post('manager/course/edit', 'ManagerController@course_edit');//修改课程
+Route::post('manager/course/delete', 'ManagerController@course_delete');//删除课程
+Route::post('manager/course/search', 'ManagerController@course_search');//课程查找

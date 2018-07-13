@@ -165,7 +165,7 @@ class HelperService
         $messagemap[2406] = "班级id不存在";
         $messagemap[2407] = "学期参数错误";
 
-        $messagemap[2600] = "学籍信息修改成功";
+        $messagemap[2600] = "课程添加成功";
         $messagemap[2601] = "课程名称参数不完整";
         $messagemap[2602] = "课程名称长度不能大于100";
         $messagemap[2603] = "课程名称已存在";
@@ -175,11 +175,11 @@ class HelperService
         $messagemap[2702] = "课程id不存在";
 
 
-        $messagemap[2800] = "学籍信息修改成功";
+        $messagemap[2800] = "课程信息修改成功";
         $messagemap[2801] = "课程id非法";
         $messagemap[2802] = "课程id不存在";
         $messagemap[2803] = "课程名称已存在";
-        $messagemap[2404] = "课程名称不能为空";
+        $messagemap[2804] = "课程名称不能为空";
         $messagemap[2805] = "班级名称长度不能大于100";
 
 
@@ -253,10 +253,16 @@ class HelperService
         if ($request->is('manager/instructor/delete')) return 115;
         if ($request->is('manager/instructor/search')) return 116;
 
-        if ($request->is('manager/semester/add')) return 113;
-        if ($request->is('manager/semester/edit')) return 114;
-        if ($request->is('manager/semester/delete')) return 115;
-        if ($request->is('manager/semester/search')) return 116;
+        if ($request->is('manager/semester/add')) return 117;
+        if ($request->is('manager/semester/edit')) return 118;
+        if ($request->is('manager/semester/delete')) return 119;
+        if ($request->is('manager/semester/search')) return 120;
+
+        if ($request->is('manager/course/add')) return 121;
+        if ($request->is('manager/course/edit')) return 122;
+        if ($request->is('manager/course/delete')) return 123;
+        if ($request->is('manager/course/search')) return 124;
+
         return 0;
     }
 

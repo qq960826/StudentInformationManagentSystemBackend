@@ -83,6 +83,8 @@ class CourseRepository extends BaseRepository
             ['table' => 'StudentInfo', 'foreign' => 'uid', 'local' => "uid", 'condition' => "="],
             ['table' => 'Classes', 'foreign' => 'id', 'localtable' => 'StudentInfo', 'local' => "classid", 'condition' => "="],
             ['table' => 'Semester', 'foreign' => 'id', 'local' => "semesterid", 'condition' => "="],
+            ['table' => 'Instructor', 'foreign' => 'classid', 'localtable' => 'Classes', 'local' => "id", 'condition' => "="],
+
         ];
         $query = $this->courseScore->newsearch(
             array(

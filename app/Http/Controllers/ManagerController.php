@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 use App\Services\HelperService;
 use App\Services\UserService;
 use App\Services\SchoolRollService;
+use App\Services\CourseService;
 use Illuminate\Http\Request;
 
 class ManagerController extends Controller
@@ -18,13 +19,14 @@ class ManagerController extends Controller
     protected $helper;
     protected $userService;
     protected $schoolRollService;
+    protected $courseService;
 
-
-    public function __construct(HelperService $helperService, UserService $userService, SchoolRollService $schoolRollService)
+    public function __construct(HelperService $helperService, UserService $userService, SchoolRollService $schoolRollService, CourseService $courseService)
     {
         $this->helper = $helperService;
         $this->userService = $userService;
         $this->schoolRollService = $schoolRollService;
+        $this->courseService = $courseService;
     }
 
     public function user_add(Request $request)
@@ -117,7 +119,8 @@ class ManagerController extends Controller
     public function classes_edit(Request $request)
     {
         $info = $request->json()->all();
-        $id = null;$name=null;
+        $id = null;
+        $name = null;
         if (isset($info['id'])) {
             $id = $info['id'];
             unset($info['id']);
@@ -264,7 +267,8 @@ class ManagerController extends Controller
     public function semester_edit(Request $request)
     {
         $info = $request->json()->all();
-        $id = null;$name=null;
+        $id = null;
+        $name = null;
         if (isset($info['id'])) {
             $id = $info['id'];
             unset($info['id']);
@@ -282,6 +286,57 @@ class ManagerController extends Controller
     {
         $info = $request->json()->all();
         $result = $this->schoolRollService->semester_search(
+            $info
+        );
+        return json_encode($result);
+    }
+
+    public function course_add(Request $request)
+    {
+        $info = $request->json()->all();
+        $name = null;
+        if (isset($info['name'])) {
+            $name = $info['name'];
+            unset($info['name']);
+        }
+        $result = $this->courseService->course_add($name);
+        return $this->helper->MakeJSONMessage($result);
+    }
+
+    public function course_delete(Request $request)
+    {
+        $info = $request->json()->all();
+        $id = null;
+        if (isset($info['id'])) {
+            $id = $info['id'];
+            unset($info['id']);
+        }
+        $result = $this->courseService->course_delete($id);
+        return $this->helper->MakeJSONMessage($result);
+    }
+
+    public function course_edit(Request $request)
+    {
+        $info = $request->json()->all();
+        $id = null;
+        $name = null;
+        if (isset($info['id'])) {
+            $id = $info['id'];
+            unset($info['id']);
+        }
+        if (isset($info['name'])) {
+            $name = $info['name'];
+            unset($info['name']);
+        }
+        $result = $this->courseService->course_edit($id, $name);
+        return $this->helper->MakeJSONMessage($result);
+
+    }
+
+    public function course_search(Request $request)
+    {
+        $info = $request->json()->all();
+        $result = $this->courseService->course_search(
             $info
         );
         return json_encode($result);
