@@ -86,7 +86,7 @@ class SchoolRollService extends BaseService
 
         $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
         $data = $paginate->toArray()['data'];
-        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
+        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->total(), 'current' => $paginate->currentPage(), 'data' => $data);
 
         return $result;
 
@@ -153,7 +153,7 @@ class SchoolRollService extends BaseService
         $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
 
         $data = $paginate->toArray()['data'];
-        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
+        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->total(), 'current' => $paginate->currentPage(), 'data' => $data);
 
         return $result;
     }
@@ -242,7 +242,7 @@ class SchoolRollService extends BaseService
         $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
         $data = $paginate->toArray()['data'];
 
-        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
+        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->total(), 'current' => $paginate->currentPage(), 'data' => $data);
         return $result;
     }
 
@@ -318,7 +318,7 @@ class SchoolRollService extends BaseService
         $filter = array(
             'this' => ['id', 'uid', 'classid', 'studentid', 'enrollyear'],
             'Classes' => ['classname' => 'name'],
-            'UserInfo' => ['peoplename' => 'name','identity'],
+            'UserInfo' => ['peoplename' => 'name','identity','sex','nativeplace'],
         );
         if (!isset($info["currentpage"]) || $info["currentpage"] == '')
             $info["currentpage"] = 0;
@@ -334,7 +334,7 @@ class SchoolRollService extends BaseService
         $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
         $data = $paginate->toArray()['data'];
 
-        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
+        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->total(), 'current' => $paginate->currentPage(), 'data' => $data);
         return $result;
     }
 

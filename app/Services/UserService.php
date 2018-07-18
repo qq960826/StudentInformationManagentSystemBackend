@@ -195,7 +195,7 @@ class UserService extends BaseService
         $condition = array();
         $order = null;
         $filter = array(
-            'UserInfo' => ['name', 'identity', 'nativeplace'],
+            'UserInfo' => ['name', 'identity', 'nativeplace','sex'],
             'this' => ['id', 'username', 'type'],
         );
 
@@ -213,7 +213,7 @@ class UserService extends BaseService
         $paginate = $query->paginate($info["sep"], ['*'], 'page', $info["currentpage"]);
         $data = $paginate->toArray()['data'];
 
-        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->lastPage(), 'current' => $paginate->currentPage(), 'data' => $data);
+        $result = array('sep' => $paginate->perPage(), 'total' => $paginate->total(), 'current' => $paginate->currentPage(), 'data' => $data);
 
         return $result;
     }

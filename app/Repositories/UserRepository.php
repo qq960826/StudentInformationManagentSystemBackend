@@ -111,7 +111,7 @@ class UserRepository extends BaseRepository
         ];
         $query = $this->useraccount->newsearch(
             array(
-                'UserInfo' => ['uid', 'name', 'identity', 'sex', 'nativeplace', 'birthday'],
+                'UserInfo' => ['uid', 'name', 'identity', 'sex', 'nativeplace', 'birthday','hobby'],
                 'this' => ['type', 'username']),
             $join_table,
             $condition,

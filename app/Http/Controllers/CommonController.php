@@ -64,6 +64,8 @@ class CommonController extends Controller
             } elseif ($userinfo['type'] == 3) {
 
             }
+            unset($userinfo['password']);
+            unset($userinfo['locked']);
             $request->session()->put('role_id', $userinfo['type']);
             $request->session()->put('userinfo', $userinfo);
         }
@@ -83,7 +85,7 @@ class CommonController extends Controller
         $result = $this->userService->viewinfo($request->userinfo['id']);
         if ($result == 800) {
             $userinfo = $this->userService->getdata();
-            unset($userinfo['id'],$userinfo['type']);
+            unset($userinfo['id']);
             if ($request->roleid == 1) {
                 $studentinfo = $this->schoolRollService->studentid_view_by_id($request->userinfo['id']);
                 unset($studentinfo['id'],$studentinfo['uid'],$studentinfo['classid'],$studentinfo['peoplename']);
@@ -102,6 +104,10 @@ class CommonController extends Controller
             $info['oldpassword'],
             $info['newpassword']
         );
+        if($result==300){
+            $request->session()->flush(); //清空session
+            $request->session()->regenerate(); //重置session_id
+        }
         return $this->helper->MakeJSONMessage($result);
     }
 

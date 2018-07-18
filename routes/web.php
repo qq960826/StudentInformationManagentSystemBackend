@@ -21,6 +21,7 @@ Route::post('common/login', 'CommonController@login');//用户登录
 Route::get('common/logout', 'CommonController@logout');//用户注销
 Route::post('common/changehobby', 'CommonController@changehobby');//修改爱好
 Route::post('common/changespassword', 'CommonController@changespassword');//修改密码
+Route::get('common/viewinfo', 'CommonController@viewinfo');//查看个人信息
 
 
 //管理员功能
